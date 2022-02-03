@@ -1,0 +1,29 @@
+{
+  "env": {
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:vue/base",
+    "plugin:vue/vue3-essential",
+    "plugin:vue/vue3-strongly-recommended"
+  ],
+  "root": true,
+  "rules": {
+    "vue/html-closing-bracket-newline": "off",
+    "vue/html-indent": "off",
+    "vue/html-self-closing": [
+      "warn",
+      {
+        "html": {
+          "component": "always",
+          "normal": "always",
+          "void": "always"
+        }
+      }
+    ],
+    "vue/max-attributes-per-line": "off",
+    "vue/multiline-html-element-content-newline": "off",
+    "vue/singleline-html-element-content-newline": "off"
+  }
+}
