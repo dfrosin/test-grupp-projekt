@@ -1,6 +1,4 @@
-<script>
-  import store from '../store'
-</script>
+<script></script>
 <template>
   <input
     type="button"
