@@ -1,13 +1,4 @@
-<script>
-  export default {
-    props: {
-      msg: {
-        required: true,
-        type: String
-      }
-    }
-  }
-</script>
+<script></script>
 
 <style>
   p {
@@ -16,6 +7,9 @@
 </style>
 
 <template>
-  <img alt="" src="/assets/fox.jpeg" />
-  <p>{{ msg }}</p>
+  <h1>Hej</h1>
+  <button @click="sendApi">Skicka</button>
+  <input v-model="userName" />
 </template>
+
+const firebaseConfig = {

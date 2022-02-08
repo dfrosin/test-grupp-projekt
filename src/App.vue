@@ -1,13 +1,13 @@
 <script>
-  import CitiesList from './components/CitiesList.vue'
-  import CounterButton from './components/CounterButton.vue'
-  import HelloWorld from './components/HelloWorld.vue'
+  import UserCreate from './components/UserCreate.vue'
+  import UserList from './components/UserList.vue'
+  import EditName from './components/EditName.vue'
 
   export default {
     components: {
-      CitiesList,
-      CounterButton,
-      HelloWorld
+      UserCreate,
+      UserList,
+      EditName
     }
   }
 </script>
@@ -26,9 +26,9 @@
       </li>
     </ul>
   </nav>
-  <HelloWorld msg="Hello World!" />
-  <CitiesList />
-  <CounterButton />
+  <UserCreate />
+  <UserList />
+  <EditName />
   <main>
     <RouterView />
   </main>

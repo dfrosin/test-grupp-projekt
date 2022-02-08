@@ -1,0 +1,35 @@
+root {
+  --black-coffee: #38302e;
+  --dim-gray: #8d80a290;
+  --dim-gray-visible: #8d80a2;
+  --black: #333;
+  --light-color: #666;
+  --night: #141414;
+  --white: #ebebeb;
+  --ultra-white: #fff;
+  --grey: #eee;
+  --red: #a41f66;
+  --fontcolor: #c6e1da;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  /* ändra font */
+  font-family: 'ReadexPro', sans-serif, Verdana, Geneva, Tahoma, sans-serif;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  transition: all 0.2s linear;
+}
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+  scroll-padding-top: 5.5rem;
+  scroll-behavior: smooth;
+  height: 200vh;
+  background-color: var(--white);
+  margin-bottom: 2rem;
+}
