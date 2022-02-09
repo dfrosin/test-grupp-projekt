@@ -46,3 +46,9 @@
     </form>
   </div>
 </template>
+
+<style scoped>
+  * {
+    color: black;
+  }
+</style>
