@@ -13,7 +13,7 @@ export default createRouter({
     },
     {
       component: ContactView,
-      path: '/contact/:id'
+      path: '/contact'
     },
     {
       component: HomeView,

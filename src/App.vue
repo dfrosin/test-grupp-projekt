@@ -1,14 +1,6 @@
 <script>
-  import UserCreate from './components/UserCreate.vue'
-  import UserList from './components/UserList.vue'
-  import EditName from './components/EditName.vue'
-
   export default {
-    components: {
-      UserCreate,
-      UserList,
-      EditName
-    }
+    components: {}
   }
 </script>
 
@@ -26,9 +18,6 @@
       </li>
     </ul>
   </nav>
-  <UserCreate />
-  <UserList />
-  <EditName />
   <main>
     <RouterView />
   </main>
