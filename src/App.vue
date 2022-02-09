@@ -1,10 +1,12 @@
 <script>
+  import NavbarComponent from './components/NavbarComponent.vue'
   export default {
-    components: {}
+    components: { NavbarComponent }
   }
 </script>
 
 <template>
+  <NavbarComponent />
   <nav>
     <ul>
       <li>
