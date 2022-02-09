@@ -2,30 +2,20 @@
   import UserCreate from './components/UserCreate.vue'
   import UserList from './components/UserList.vue'
   import EditName from './components/EditName.vue'
+  import NavbarComponent from './components/NavbarComponent.vue'
 
   export default {
     components: {
       UserCreate,
       UserList,
-      EditName
+      EditName,
+      NavbarComponent
     }
   }
 </script>
 
 <template>
-  <nav>
-    <ul>
-      <li>
-        <RouterLink to="/">Hem</RouterLink>
-      </li>
-      <li>
-        <RouterLink to="/about">Om</RouterLink>
-      </li>
-      <li>
-        <RouterLink to="/contact">Kontakt</RouterLink>
-      </li>
-    </ul>
-  </nav>
+  <NavbarComponent />
   <UserCreate />
   <UserList />
   <EditName />
@@ -33,3 +23,8 @@
     <RouterView />
   </main>
 </template>
+<style lang="scss">
+  body {
+    margin-top: 50px;
+  }
+</style>
