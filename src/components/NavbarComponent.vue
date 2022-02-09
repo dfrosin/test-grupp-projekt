@@ -1,13 +1,15 @@
 <template lang="">
   <nav>
-    <div>logo</div>
+    <div>
+      <img id="nav-logo" src="/assets/navbarlogo.png" alt="" />
+    </div>
     <ul>
       <li><RouterLink to="/">My Projects</RouterLink></li>
       <li><RouterLink to="/about">Create Project</RouterLink></li>
       <li><RouterLink to="/contact">Sign In </RouterLink></li>
       <li><RouterLink to="/contact">Dont have an account?</RouterLink></li>
       <li><RouterLink to="/contact">Adam</RouterLink></li>
-      <img src="/assets/Frame 112.png" alt="Adam Agerling" />
+      <img id="profile-pic" src="/assets/Frame 112.png" alt="Adam Agerling" />
     </ul>
   </nav>
 </template>
@@ -19,7 +21,11 @@
   div {
     color: #ffffff;
   }
-  img {
+  #nav-logo {
+    height: 30px;
+    width: 140px;
+  }
+  #profile-pic {
     height: 37px;
     width: 37px;
     margin-left: 10px;
