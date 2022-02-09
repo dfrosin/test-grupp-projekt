@@ -22,3 +22,8 @@
     <RouterView />
   </main>
 </template>
+<style lang="scss">
+  body {
+    margin-top: 50px;
+  }
+</style>
