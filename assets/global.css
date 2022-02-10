@@ -32,6 +32,6 @@ html {
   scroll-padding-top: 5.5rem;
   scroll-behavior: smooth;
   height: 200vh;
-  background-color: var(--white);
+  background-color: var(--black);
   margin-bottom: 2rem;
 }

@@ -1,31 +1,18 @@
 <script>
   import NavbarComponent from './components/NavbarComponent.vue'
+  /* import LogInComponent from './components/LogInComponent.vue' */
   export default {
     components: { NavbarComponent }
   }
 </script>
 
 <template>
-  <NavbarComponent />
-  <nav>
-    <ul>
-      <li>
-        <RouterLink to="/">Hem</RouterLink>
-      </li>
-      <li>
-        <RouterLink to="/about">Om</RouterLink>
-      </li>
-      <li>
-        <RouterLink to="/contact">Kontakt</RouterLink>
-      </li>
-    </ul>
-  </nav>
-  <main>
-    <RouterView />
-  </main>
+  <div class="main-app-continer">
+    <NavbarComponent />
+
+    <main class="main-continer-view">
+      <RouterView />
+    </main>
+  </div>
 </template>
-<style lang="scss">
-  body {
-    margin-top: 50px;
-  }
-</style>
+<style lang="scss"></style>

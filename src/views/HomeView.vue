@@ -1,12 +1,16 @@
 <script>
-  import TestTest from '../components/TestTest.vue'
+  /* import TestTest from '../components/TestTest.vue' */
+  import ButtonComponent from '../components/ButtonComponent.vue'
 
   export default {
-    components: { TestTest }
+    components: { ButtonComponent } /* { TestTest } */
   }
 </script>
 
 <template>
-  <h1>Hem</h1>
-  <TestTest />
+  <div class="home-view-container">
+    <h1>hemma bäst</h1>
+    <ButtonComponent name="test" />
+  </div>
+  <!--  <TestTest /> -->
 </template>

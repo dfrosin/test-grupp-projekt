@@ -16,6 +16,10 @@ export default createRouter({
   history: createWebHashHistory(),
   routes: [
     {
+      component: HomeView,
+      path: '/'
+    },
+    {
       component: AboutView,
       path: '/about'
     },
@@ -23,10 +27,7 @@ export default createRouter({
       component: ContactView,
       path: '/contact/:id'
     },
-    {
-      component: HomeView,
-      path: '/'
-    },
+
     {
       component: GetStartedView,
       path: '/getstarted'

@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
   import { reactive, computed, onMounted } from 'vue'
   import { getUser, updateUser } from '../firebase'
   import route from '../router'
@@ -52,3 +52,4 @@
     color: black;
   }
 </style>
+ -->
