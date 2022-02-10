@@ -3,28 +3,39 @@
     <form @submit.prevent="onSubmit">
       <div class="inputs">
         <label>Username</label>
-        <input placeholder="Name" v-model="userName" class="form-control" />
+        <input placeholder="Username" v-model="userName" class="form-control" />
       </div>
       <div class="inputs">
-        <label>Email</label>
-        <input placeholder="Email" v-model="email" class="form-control" />
+        <label>Password</label>
+        <input placeholder="password" v-model="password" class="form-control" />
       </div>
     </form>
-    <button type="submit" class="btn btn-success mt-3">Log In</button>
+    <button input @click="onSubmit" class="btn btn-success mt-3">Log In</button>
   </div>
 </template>
 
 <script>
+  import { firestore } from '../firebase'
+  import { getDocs, query, collection, where, limit } from 'firebase/firestore'
   export default {
     data() {
       return {
         userName: '',
-        email: ''
+        password: ''
       }
     },
     methods: {
-      onsubmit() {
-        console.log('Här kommer det hända massa roliga programmatiska saker!')
+      async onSubmit() {
+        const customerOrdersQuery = query(
+          collection(firestore, 'Andreas'),
+          where('userName', '==', this.userName),
+          limit(10)
+        )
+        const querySnapshot = await getDocs(customerOrdersQuery)
+        querySnapshot.forEach((snap) => {
+          console.log(` ${JSON.stringify(snap.data())}`)
+          this.$store.commit('setLoggedInUser', snap.data())
+        })
       }
     }
   }
@@ -55,3 +66,11 @@
     }
   }
 </style>
+
+<!--
+  Todo
+- Alla fält ska vara obligatoriska - check
+- Uppgifterna sparas i backend - check
+- Uppgifterna sparas i webstorage - check
+- google-inlogg?
+-->
