@@ -15,7 +15,12 @@
       <button v-if="editing === false" @click="onEdit">edit</button>
     </div>
     <div class="img-container">
-      <img :src="url" alt="profile picture" />
+      <img v-if="uploading === false" :src="url" alt="profile picture" />
+      <img
+        v-if="uploading === true"
+        :src="newPhoto"
+        alt="new profile picture"
+      />
       <input
         id="editButton"
         v-if="editing === true"
@@ -23,7 +28,9 @@
         @change="previewPhoto"
         accept="image/png, image/jpeg"
       />
-      <button v-if="editing === true" type="submit">save</button>
+      <button v-if="editing === true" @click="savePhoto" type="submit">
+        save
+      </button>
     </div>
     <div class="card-body">
       <div v-if="editing === false" class="saved-information">
@@ -31,8 +38,8 @@
         <p>{{ email }}</p>
       </div>
       <div v-if="editing === true" class="editing-information">
-        <input type="text" v-model="fullName" />
-        <input type="text" v-model="email" />
+        <input type="text" v-model="newName" :placeholder="fullName" />
+        <input type="email" v-model="newEmail" :placeholder="email" />
       </div>
     </div>
   </div>
@@ -112,6 +119,10 @@
         editing: false,
         fullName: 'Adam Agerling',
         email: 'alltidvakenhehe@gmail.com',
+        uploading: false,
+        newPhoto: null,
+        newName: '',
+        newEmail: '',
         url: '/assets/Frame 112.png'
       }
     },
@@ -121,13 +132,31 @@
       },
       onCancel() {
         this.editing = false
+        this.uploading = false
+        this.clearInputs()
       },
       onSave() {
         this.editing = false
+        if (this.newName !== '') {
+          this.fullName = this.newName
+        }
+        if (this.newEmail !== '') {
+          this.email = this.newEmail
+        }
+        this.clearInputs()
+      },
+      savePhoto() {
+        this.url = this.newPhoto
+        this.uploading = false
       },
       previewPhoto(photo) {
+        this.uploading = true
         const file = photo.target.files[0]
-        this.url = URL.createObjectURL(file)
+        this.newPhoto = URL.createObjectURL(file)
+      },
+      clearInputs() {
+        this.newName = ''
+        this.newEmail = ''
       }
     }
   }
