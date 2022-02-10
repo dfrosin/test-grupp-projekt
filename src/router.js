@@ -11,6 +11,7 @@ import ProfileView from './views/ProfileView.vue'
 import CreateProductBacklogView from './views/CreateProductBacklogView.vue'
 import CreateSprintView from './views/CreateSprintView.vue'
 import SprintOverviewView from './views/SprintOverviewView.vue'
+import FirebaseButtons from './views/FirebaseButtons.vue'
 
 export default createRouter({
   history: createWebHashHistory(),
@@ -25,7 +26,7 @@ export default createRouter({
     },
     {
       component: ContactView,
-      path: '/contact/:id'
+      path: '/contact/'
     },
 
     {
@@ -35,10 +36,6 @@ export default createRouter({
     {
       component: CreateAccountView,
       path: '/createaccount'
-    },
-    {
-      component: LogInView,
-      path: '/login'
     },
     {
       component: DashboardView,
@@ -63,6 +60,10 @@ export default createRouter({
     {
       component: SprintOverviewView,
       path: '/sprint'
+    },
+    {
+      component: FirebaseButtons,
+      path: '/firebase'
     }
   ]
 })

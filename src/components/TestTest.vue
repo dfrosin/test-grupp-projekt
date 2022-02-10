@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  import { firestore } from '../firebase2'
+  import { firestore } from '../firebase'
   import {
     collection,
     doc,
