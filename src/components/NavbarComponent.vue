@@ -16,7 +16,7 @@
           >
         </li>
         <li>
-          <RouterLink to="/contact">
+          <RouterLink to="/profile">
             <span v-if="$store.state.loggedInUser != null">{{
               $store.state.loggedInUser.userName
             }}</span>

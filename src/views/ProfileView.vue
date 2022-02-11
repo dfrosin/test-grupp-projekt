@@ -7,7 +7,7 @@
 -->
 
 <template>
-  <div class="profile-card">
+  <div v-if="$store.state.loggedInUser !== null" class="profile-card">
     <h1>my profile</h1>
     <div class="buttons">
       <button v-if="editing === true" @click="onSave">save</button>
@@ -34,6 +34,8 @@
     </div>
     <div class="card-body">
       <div v-if="editing === false" class="saved-information">
+        <!-- <p>{{ $store.state.loggedInUser.userName }}</p> -->
+        <!-- <p>{{ $store.state.loggedInUser.email }}</p> -->
         <p>{{ fullName }}</p>
         <p>{{ email }}</p>
       </div>
@@ -42,6 +44,10 @@
         <input type="email" v-model="newEmail" :placeholder="email" />
       </div>
     </div>
+  </div>
+  <div class="profile-card" v-if="$store.state.loggedInUser === null">
+    <p>You have to be logged in to view this page</p>
+    <router-link to="/login">Log in page</router-link>
   </div>
 </template>
 
@@ -93,7 +99,7 @@
         flex-direction: column;
         p {
           height: 20px;
-          margin: 0;
+          margin: 1px 0 1px 0;
           padding: 0;
           font-size: 1rem;
           padding-left: 5px;
@@ -117,13 +123,18 @@
     data() {
       return {
         editing: false,
-        fullName: 'Adam Agerling',
-        email: 'alltidvakenhehe@gmail.com',
+        fullName: this.$store.state.loggedInUser.userName,
+        email: this.$store.state.loggedInUser.email,
         uploading: false,
         newPhoto: null,
         newName: '',
         newEmail: '',
         url: '/assets/Frame 112.png'
+      }
+    },
+    created() {
+      if (this.$store.state.loggedInUser === null) {
+        this.$router.push('/login')
       }
     },
     methods: {
@@ -138,10 +149,10 @@
       onSave() {
         this.editing = false
         if (this.newName !== '') {
-          this.fullName = this.newName
+          this.$store.state.loggedInUser.userName = this.newName
         }
         if (this.newEmail !== '') {
-          this.email = this.newEmail
+          this.$store.state.loggedInUser.email = this.newEmail
         }
         this.clearInputs()
       },
