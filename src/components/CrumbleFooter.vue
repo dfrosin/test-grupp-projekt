@@ -10,5 +10,6 @@
   p {
     font-size: 31px;
     display: flex;
+    font-weight: bold;
   }
 </style>
