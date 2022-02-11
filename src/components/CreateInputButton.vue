@@ -1,34 +1,89 @@
-<!-- skapa kort, knapp som klickas på så kommer ett textfält upp där man skapar task -->
-
 <script>
+  import { ref } from 'vue'
   export default {
-    data() {
-      return {
-        isTrue: false
+    setup() {
+      const newTask = ref('')
+      const input = [
+        {
+          done: false,
+          content: ''
+        }
+      ]
+      const tasksData = JSON.parse(localStorage.getItem('tasks')) || input
+      const tasks = ref(tasksData)
+      function addTask() {
+        if (newTask.value) {
+          tasks.value.push({
+            done: false,
+            content: newTask.value
+          })
+          newTask.value = ''
+        }
+        saveData()
       }
-    },
-    methods: {
-      createInput() {
-        this.isTrue = true
+      function inputTrue() {
+        // isTrue = true isTrue is not defined :(
+        console.log(
+          'THE FUNCTION IS CALLED BUT THE FUCKING VARIABLE IS NOT DEFINED?? HOW TO RETURN A VARIABLE IN SETUP???'
+        )
+      }
+      // function doneTask(task) {
+      //   task.done = !task.done
+      //   saveData()
+      // }
+      function removeTask(index) {
+        tasks.value.splice(index, 1)
+        saveData()
+      }
+      function saveData() {
+        const storageData = JSON.stringify(tasks.value)
+        localStorage.setItem('tasks', storageData)
+      }
+
+      return {
+        isTrue: false, //how to return this cause its undefined in function inputTrue
+        tasks,
+        newTask,
+        inputTrue,
+        addTask,
+        // doneTask,
+        removeTask,
+        saveData
       }
     }
   }
 </script>
 
 <template>
-  <div>
-    <button @click="createInput" type="submit" class="btn btn-success mt-3">
-      Create task
+  <div class="div1">
+    <button @click="inputTrue" class="btn btn-primary mt-3">Create Task</button>
+    <input v-if="isTrue === true" v-model="newTask" name="newTask" />
+    <button v-if="newTask" @click="addTask" class="btn btn-primary mt-3">
+      Add task
     </button>
-    <input v-if="isTrue === !false" type="text" />
+  </div>
+  <div class="div2">
+    <ul>
+      <li v-for="(task, index) in tasks" :key="index">
+        <span :class="{ done: task.done }" @click="doneTask"
+          >hej{{ task.content }}</span
+        >
+        <button @click="removeTask" class="btn btn-primary mt-3">Remove</button>
+      </li>
+    </ul>
   </div>
 </template>
 
 <style lang="scss" scoped>
-  div {
+  .div1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 1rem;
+  }
+
+  .div2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 </style>
