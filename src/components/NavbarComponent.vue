@@ -15,8 +15,19 @@
             >Dont have an account?</routerLink
           >
         </li>
-        <li><routerLink class="link" to="/contact">Adam</routerLink></li>
-        <img id="profile-pic" src="/assets/Frame 112.png" alt="Adam Agerling" />
+        <li>
+          <RouterLink to="/contact">
+            <span v-if="$store.state.loggedInUser != null">{{
+              $store.state.loggedInUser.userName
+            }}</span>
+
+            <img
+              id="profile-pic"
+              src="/assets/Frame 112.png"
+              alt="Adam Agerling"
+            />
+          </RouterLink>
+        </li>
       </ul>
       <div class="icon">
         <i
@@ -39,8 +50,8 @@
             >
           </li>
           <li>
-            <RouterLink to="/contact"
-              ><span v-if="$store.state.loggedInUser != null">{{
+            <RouterLink to="/contact">
+              <span v-if="$store.state.loggedInUser != null">{{
                 $store.state.loggedInUser.userName
               }}</span>
             </RouterLink>
