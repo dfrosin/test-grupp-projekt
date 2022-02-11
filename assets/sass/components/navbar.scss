@@ -1,4 +1,163 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+header {
+  background-color: #ffffff;
+  z-index: 100;
+  width: 100%;
+  position: fixed;
+  transition: 0.5s ease all;
+  color: #ffffff;
+
+  nav {
+    background-color: rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 100;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0.2rem 10%;
+    @media (min-width: 1520px) {
+      max-width: 1520px;
+    }
+
+    #profile-pic {
+      height: 37px;
+      width: 37px;
+      margin-left: 10px;
+      margin-top: 2px;
+      padding: 0;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    ul,
+    .link {
+      font-weight: 500;
+      color: rgb(255, 255, 255);
+      list-style: none;
+      text-decoration: none;
+    }
+
+    li {
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px;
+      margin-left: 16px;
+    }
+
+    .link {
+      font-size: 14px;
+      transition: 0.5s ease all;
+      padding-bottom: 4px;
+      border-bottom: 1px solid transparent;
+
+      &:hover {
+        color: #00afea;
+        border-color: #00afea;
+      }
+    }
+
+    .branding {
+      display: flex;
+      align-items: center;
+    }
+
+    .NavbarComponent {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      justify-content: flex-end;
+    }
+
+    #nav-logo {
+      height: 30px;
+      transition: 0.5s ease all;
+    }
+    .icon {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      right: 24px;
+      height: 100%;
+
+      i {
+        cursor: pointer;
+        font-size: 24 px;
+        transition: 10 ease all;
+      }
+    }
+
+    .icon-active {
+      transform: rotate(180deg);
+    }
+    .dropdown-nav {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      width: 100%;
+      max-width: 200px;
+      height: 100%;
+      background-color: white;
+      top: 0;
+      left: 0;
+
+      li {
+        margin-left: 0;
+        .link {
+          color: black;
+        }
+      }
+    }
+
+    .mobile-nav-enter-active,
+    .mobile-nav-leave-active {
+      transition: 1s ease all;
+    }
+
+    .mobile-nav-enter-from,
+    .mobile-nav-leave-to {
+      transform: translateX(-400px);
+    }
+
+    .mobile-nav-enter-to {
+      transform: translateX(0);
+    }
+  }
+}
+
+.scrolled-nav {
+  box-shadow: 0 4px 6px -1px, 0 8px 4px -5px;
+
+  nav {
+    padding: 20px 10px;
+
+    .branding {
+      #nav-logo {
+        width: 40px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      }
+    }
+  }
+}
+
+/*
+
+
+
+första designen
+men ville ha animation med det så drf kollade jag massa videos och precis som jag har gjort med min javascript-projekt gjorde jag denna med animation för d är snyggare.
+så ovanför detta är den jag tycker är bra!!!!! men behåller här nere för att bara ha den för det är nice vettu!!!!!!!!
+
+
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 div {
   color: #ffffff;
 }
@@ -54,3 +213,4 @@ nav {
     }
   }
 }
+*/
