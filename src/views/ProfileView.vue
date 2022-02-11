@@ -123,8 +123,8 @@
     data() {
       return {
         editing: false,
-        fullName: this.$store.state.loggedInUser.userName,
-        email: this.$store.state.loggedInUser.email,
+        fullName: '',
+        email: '',
         uploading: false,
         newPhoto: null,
         newName: '',
@@ -133,6 +133,8 @@
       }
     },
     created() {
+      this.fullName = this.$store.state.loggedInUser.fullName
+      this.email = this.$store.state.loggedInUser.email
       if (this.$store.state.loggedInUser === null) {
         this.$router.push('/login')
       }
@@ -149,7 +151,7 @@
       onSave() {
         this.editing = false
         if (this.newName !== '') {
-          this.$store.state.loggedInUser.userName = this.newName
+          this.$store.state.loggedInUser.fullName = this.newName
         }
         if (this.newEmail !== '') {
           this.$store.state.loggedInUser.email = this.newEmail

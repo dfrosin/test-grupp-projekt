@@ -77,6 +77,7 @@
         const newUser = {
           userName: this.userName,
           email: this.email,
+          fullName: this.fullName,
           password: this.password,
           confirmPassword: this.confirmPassword
         }
