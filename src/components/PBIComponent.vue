@@ -30,9 +30,11 @@
         pbItem: '',
         backlogItemInfo: {
           antalTasks: 0,
-          color: ''
+          color: '',
+          tid: null
         },
         arrayOfPbItems: [],
+        copyOfArray: null,
         docId: ''
       }
     },
@@ -40,13 +42,12 @@
       createAccount() {
         // --------------- SKAPA NY ANVÄNDARE------------------------------ //
         const whereToAddData = doc(firestore, `PBI/${this.pbItem}`)
+        this.timeStamp()
         setDoc(whereToAddData, this.backlogItemInfo)
         this.pbItem = ''
         this.$refs.firstInput.focus()
         this.getAllDocumentsInCollection()
-        // this.listenToADocument()
-
-        // this.getArrayofAllDocumentsInCollection()
+        this.arrayOfPbItems = []
       },
       //skickar tillbaka en Array med alla PB Items. Alltså hur många PB det finns.
       //Hur många divvar den skall skapa. Denn funktionen körs varje gång jag trycker enter.
@@ -66,12 +67,17 @@
           .then((snapshot) => {
             snapshot.docs.forEach((doc) => {
               this.arrayOfPbItems.push(doc.id)
-              console.log(doc.id)
             })
+            console.log(this.arrayOfPbItems)
           })
+      },
+
+      timeStamp() {
+        let d = new Date()
+        this.backlogItemInfo.tid = d.getTime()
+        console.log(this.backlogItemInfo.tid)
       }
       //listenToADocument är som en watch, den känner av ändringar som blivit gjorda i firebase och skickar tillbaka informationen till konsollen
-      // listenToADocument() {
       //   const query = db.collection('PBI').where('antalTasks', '==', 0)
 
       //   const observer = query.onSnapshot(
@@ -85,7 +91,14 @@
       //   )
       // }
     },
-    components: { ButtonComponent, BackLogList }
+    components: { ButtonComponent, BackLogList },
+    computed: {
+      witchArray() {
+        let sorted = this.copyOfArray
+        sorted.sort((a, b) => a.recipe.calories - b.recipe.calories)
+        return sorted
+      }
+    }
   }
 </script>
 
@@ -121,6 +134,8 @@
     .backlog-container {
       grid-column: 2;
       grid-row: 2/10;
+      height: 40rem;
+      overflow-y: scroll;
       .pb-item {
         grid-row: 9;
         padding: 0.3rem;
