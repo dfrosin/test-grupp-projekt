@@ -15,7 +15,6 @@ export const config = {
 }
 
 export const firebaseApp = firebase.initializeApp(config)
-console.log(firebaseApp)
 
 export const firestore = getFirestore()
 

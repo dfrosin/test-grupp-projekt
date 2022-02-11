@@ -9,9 +9,9 @@
       ref="firstInput"
       @keyup.enter="createAccount"
     />
-    <div v-if="this.items" class="backlog-container">
-      <ul v-for="lists in this.items" :key="lists.id">
-        <BackLogList :items="items" />
+    <div v-if="arrayOfPbItems" class="backlog-container">
+      <ul>
+        <BackLogList :array="arrayOfPbItems" />
       </ul>
     </div>
     <ButtonComponent buttonvalue="Create Task" />
@@ -20,8 +20,8 @@
 
 <script>
   import ButtonComponent from './ButtonComponent.vue'
-  import { firestore } from '../firebase'
-  import { doc, setDoc, query, where, limit, getDocs } from 'firebase/firestore'
+  import { db, firestore } from '../firebase'
+  import { doc, setDoc } from 'firebase/firestore'
   import BackLogList from './BackLogList.vue'
 
   export default {
@@ -32,7 +32,8 @@
           antalTasks: 0,
           color: ''
         },
-        items: []
+        arrayOfPbItems: [],
+        docId: ''
       }
     },
     methods: {
@@ -42,23 +43,48 @@
         setDoc(whereToAddData, this.backlogItemInfo)
         this.pbItem = ''
         this.$refs.firstInput.focus()
-        this.queryForDocuments()
-      },
-      async queryForDocuments() {
-        const customerOrdersQuery = query(
-          doc(firestore, 'PBI'),
-          where('antalTasks', '==', 0),
-          limit(10)
-        )
-        const querySnapshot = await getDocs(customerOrdersQuery)
-        querySnapshot.forEach((snap) => {
-          this.items.push(JSON.stringify(snap.data()))
-          // console.log(` ${JSON.stringify(snap.data())}`)
-        })
-        console.log('Detta är listan över pbItems' + this.items)
-      }
-    },
+        this.getAllDocumentsInCollection()
+        // this.listenToADocument()
 
+        // this.getArrayofAllDocumentsInCollection()
+      },
+      //skickar tillbaka en Array med alla PB Items. Alltså hur många PB det finns.
+      //Hur många divvar den skall skapa. Denn funktionen körs varje gång jag trycker enter.
+      //Kanske borde byta till att den lyssnar på uppdateringar?
+      // getArrayofAllDocumentsInCollection() {
+      //   db.collection('PBI')
+      //     .get()
+      //     .then((snapshot) => {
+      //       console.log(snapshot.docs)
+      //     })
+      // },
+
+      //Hämtar "överskriften" alltså id:t till PBI.
+      getAllDocumentsInCollection() {
+        db.collection('PBI')
+          .get()
+          .then((snapshot) => {
+            snapshot.docs.forEach((doc) => {
+              this.arrayOfPbItems.push(doc.id)
+              console.log(doc.id)
+            })
+          })
+      }
+      //listenToADocument är som en watch, den känner av ändringar som blivit gjorda i firebase och skickar tillbaka informationen till konsollen
+      // listenToADocument() {
+      //   const query = db.collection('PBI').where('antalTasks', '==', 0)
+
+      //   const observer = query.onSnapshot(
+      //     (querySnapshot) => {
+      //       console.log(`Received query snapshot of id ${querySnapshot.id}`)
+      //       console.log('Detta är Observer' + observer)
+      //     },
+      //     (err) => {
+      //       console.log(`Encountered error: ${err}`)
+      //     }
+      //   )
+      // }
+    },
     components: { ButtonComponent, BackLogList }
   }
 </script>
