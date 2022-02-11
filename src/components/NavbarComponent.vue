@@ -38,11 +38,36 @@
               >Dont have an account?</routerLink
             >
           </li>
-          <li><routerLink class="link" to="/contact">Adam</routerLink></li>
+          <li>
+            <RouterLink to="/contact"
+              ><span v-if="$store.state.loggedInUser != null">{{
+                $store.state.loggedInUser.userName
+              }}</span>
+            </RouterLink>
+          </li>
         </ul>
       </transition>
     </nav>
   </header>
+  <!-- <nav>
+    <div>
+      <img id="nav-logo" src="/assets/navbarlogo.png" alt="" />
+    </div>
+    <ul>
+      <li><RouterLink to="/">My Projects</RouterLink></li>
+      <li><RouterLink to="/about">Create Project</RouterLink></li>
+      <li><RouterLink to="/contact">Sign In </RouterLink></li>
+      <li><RouterLink to="/contact">Dont have an account?</RouterLink></li>
+      <li>
+        <RouterLink to="/contact"
+          ><span v-if="$store.state.loggedInUser != null">{{
+            $store.state.loggedInUser.userName
+          }}</span>
+        </RouterLink>
+      </li>
+      <img id="profile-pic" src="/assets/Frame 112.png" alt="Adam Agerling" />
+    </ul>
+  </nav> -->
 </template>
 <script>
   export default {

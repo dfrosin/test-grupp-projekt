@@ -1,12 +1,12 @@
 import { createStore } from 'vuex'
 
 const mutations = {
-    increment(state) {
-      state.counter += 1
+    setLoggedInUser(state, user) {
+      state.loggedInUser = user
     }
   },
   state = {
-    counter: 0
+    loggedInUser: null
   }
 
 export default createStore({ mutations, state, strict: true })

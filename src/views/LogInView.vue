@@ -1,7 +1,6 @@
 <template>
   <h1>Sign In</h1>
   <LogInComponent />
-  <p>or</p>
 </template>
 
 <script>
