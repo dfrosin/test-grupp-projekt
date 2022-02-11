@@ -13,7 +13,6 @@
         return items.value.filter((item) => item.list == list)
       }
       const startDrag = (event, item) => {
-        console.log(item)
         event.dataTransfer.dropEffect = 'moved'
         event.dataTransfer.effectAllowed = 'move'
         event.dataTransfer.setData('itemID', item.id)
@@ -121,25 +120,27 @@
   .flex-container {
     background-color: rgba(235, 235, 235, 0.3);
     margin: auto;
-    height: 85rem;
-    width: 150rem;
+    // height: 85rem;
+    // width: 150rem;
     display: flex;
     justify-content: space-between;
     margin-top: 10rem;
     text-align: center;
     border-radius: 10px;
     flex-wrap: wrap;
+    margin-bottom: 1rem;
   }
 
   .drop-zone {
-    background-color: rgb(175, 175, 175);
-    display: flex;
+    background-color: rgb(233, 144, 144);
     height: 75rem;
     width: 30rem;
     color: black;
     display: flex;
     border-radius: 10px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    min-height: 10px;
+    margin-bottom: 5rem;
   }
 
   .drag-element {
@@ -148,9 +149,14 @@
     color: black;
     width: 30rem;
     height: 7rem;
+    background-color: white;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: blue;
+    min-height: 10px;
   }
 
-  .drag-el:nth-last-of-type(1) {
+  .drag-element:nth-last-of-type(1) {
     margin-bottom: 0;
   }
 </style>
