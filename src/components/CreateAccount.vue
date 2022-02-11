@@ -13,7 +13,7 @@
           <label>Fullname</label>
           <input
             placeholder="Fullname"
-            v-model="fullname"
+            v-model="fullName"
             class="form-control"
             required
           />
