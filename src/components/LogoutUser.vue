@@ -9,10 +9,9 @@
     },
     methods: {
       handleLogout() {
-        console.log('du är utloggad')
-        this.$store.commit('setLoggedInUser')
+        this.$store.commit('setLoggedInUser', null)
         this.$router.push('/login')
-        console.log(this.$store.state.loggedInUser)
+        console.log()
       }
     }
   }
