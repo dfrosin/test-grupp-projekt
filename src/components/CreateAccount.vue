@@ -9,36 +9,45 @@
           class="form-control"
           required
         />
-      </div>
-      <div class="inputs">
-        <label>Email</label>
-        <input
-          placeholder="Email"
-          v-model="email"
-          class="form-control"
-          type="email"
-          required
-        />
-      </div>
-      <div class="inputs">
-        <label>Password</label>
-        <input
-          placeholder="Name"
-          v-model="password"
-          class="form-control"
-          type="password"
-          required
-        />
-      </div>
-      <div class="inputs">
-        <label>Confirm password</label>
-        <input
-          placeholder="Name"
-          v-model="confirmPassword"
-          class="form-control"
-          type="password"
-          required
-        />
+        <div class="inputs">
+          <label>Fullname</label>
+          <input
+            placeholder="Fullname"
+            v-model="fullname"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="inputs">
+          <label>Email</label>
+          <input
+            placeholder="Email"
+            v-model="email"
+            class="form-control"
+            type="email"
+            required
+          />
+        </div>
+        <div class="inputs">
+          <label>Password</label>
+          <input
+            placeholder="Name"
+            v-model="password"
+            class="form-control"
+            type="password"
+            required
+          />
+        </div>
+        <div class="inputs">
+          <label>Confirm password</label>
+          <input
+            placeholder="Name"
+            v-model="confirmPassword"
+            class="form-control"
+            type="password"
+            required
+          />
+        </div>
       </div>
     </form>
     <button @click="createAccount" class="btn btn-success mt-3">
@@ -55,6 +64,7 @@
     data() {
       return {
         userName: '',
+        fullName: '',
         email: '',
         password: '',
         confirmPassword: ''
@@ -62,7 +72,7 @@
     },
     methods: {
       createAccount() {
-        console.log('hej')
+        console.log('Ny användare skapad')
         // --------------- SKAPA NY ANVÄNDARE------------------------------ //
         const newUser = {
           userName: this.userName,
@@ -109,5 +119,6 @@
 - Alla fält ska vara obligatoriska - check
 - Uppgifterna sparas i backend - check
 - Uppgifterna sparas i webstorage - check
+- Username syns i navbaren när man är inloggad - check
 - google-inlogg?
 -->

@@ -3,14 +3,25 @@
     <form @submit.prevent="onSubmit">
       <div class="inputs">
         <label>Username</label>
-        <input placeholder="Username" v-model="userName" class="form-control" />
+        <input
+          placeholder="Username"
+          required
+          v-model="userName"
+          class="form-control"
+        />
       </div>
       <div class="inputs">
         <label>Password</label>
-        <input placeholder="password" v-model="password" class="form-control" />
+        <input
+          placeholder="password"
+          type="password"
+          required
+          v-model="password"
+          class="form-control"
+        />
       </div>
     </form>
-    <button input @click="onSubmit" class="btn btn-success mt-3">Log In</button>
+    <button @click="onSubmit" class="btn btn-success mt-3">Log In</button>
   </div>
 </template>
 
@@ -72,5 +83,6 @@
 - Alla fält ska vara obligatoriska - check
 - Uppgifterna sparas i backend - check
 - Uppgifterna sparas i webstorage - check
+- Username syns i navbaren när man är inloggad -check
 - google-inlogg?
 -->
