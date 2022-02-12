@@ -39,17 +39,21 @@
       </div>
       <transition name="mobile-nav"
         ><ul v-show="mobileNav" class="dropdown-nav">
-          <li><routerLink class="link" to="/">My Projects</routerLink></li>
-          <li>
+          <li @click="toggleMobileNav">
+            <routerLink class="link" to="/">My Projects</routerLink>
+          </li>
+          <li @click="toggleMobileNav">
             <routerLink class="link" to="/about">Create Project</routerLink>
           </li>
-          <li><routerLink class="link" to="/contact">Sign In </routerLink></li>
-          <li>
+          <li @click="toggleMobileNav">
+            <routerLink class="link" to="/contact">Sign In </routerLink>
+          </li>
+          <li @click="toggleMobileNav">
             <routerLink class="link" to="/contact"
               >Dont have an account?</routerLink
             >
           </li>
-          <li>
+          <li @click="toggleMobileNav">
             <RouterLink to="/contact">
               <span v-if="$store.state.loggedInUser != null">{{
                 $store.state.loggedInUser.userName
