@@ -1,12 +1,12 @@
 <template>
   <h1>Sign In</h1>
-  <LogInComponent />
+  <LoginUser />
 </template>
 
 <script>
-  import LogInComponent from '../components/LogInComponent.vue'
+  import LoginUser from '../components/LoginUser.vue'
 
-  export default { components: { LogInComponent } }
+  export default { components: { LoginUser } }
 </script>
 <style lang="scss" scoped>
   h1 {
