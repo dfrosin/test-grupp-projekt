@@ -49,7 +49,6 @@
 <style lang="scss" scoped>
   .form-select {
     width: 100px;
-
     align-items: center;
   }
 </style>

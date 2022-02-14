@@ -24,10 +24,9 @@
     <button @click="onSubmit" type="submit" class="btn btn-success mt-3">
       Log In
     </button>
-    <div id="createAccount">
-      <p>Don´t have an account?</p>
-      <routerLink class="link" to="/createaccount">Create account</routerLink>
-    </div>
+
+    <p>Don´t you have an account?</p>
+    <routerLink class="link" to="/createaccount">Create account</routerLink>
   </div>
 </template>
 
@@ -63,14 +62,21 @@
   #container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+
     button {
       width: 10%;
       margin: 0 45%;
     }
-    #createAccount {
-      display: flex;
-      flex-direction: column;
+    p {
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin-top: 4.2rem;
+      text-align: center;
+    }
+    .link {
+      font-size: 1.6rem;
+      font-weight: bold;
+      text-align: center;
     }
   }
   .inputs {
