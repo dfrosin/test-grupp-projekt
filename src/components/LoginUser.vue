@@ -24,6 +24,10 @@
     <button @click="onSubmit" type="submit" class="btn btn-success mt-3">
       Log In
     </button>
+    <div id="createAccount">
+      <p>Don´t have an account?</p>
+      <routerLink class="link" to="/createaccount">Create account</routerLink>
+    </div>
   </div>
 </template>
 
@@ -64,6 +68,10 @@
       width: 10%;
       margin: 0 45%;
     }
+    #createAccount {
+      display: flex;
+      flex-direction: column;
+    }
   }
   .inputs {
     display: flex;
@@ -79,7 +87,6 @@
       color: black;
     }
   }
-
   button {
     &:hover {
       transform: translateY(-1px);
@@ -165,4 +172,5 @@
 - google-inlogg?
 - styling knappen
 - lägg till push router till dashboard - check
+- router-link till createaccount
 -->
