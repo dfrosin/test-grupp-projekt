@@ -77,6 +77,7 @@ A
     </button>
   </div>
 </template>
+
 <script>
   import { ref } from 'vue'
   export default {
@@ -126,18 +127,4 @@ A
   }
 </script>
 
-<style lang="scss" scoped>
-  .div1 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .div2 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .btn {
-  }
-</style>
+<style lang="scss" scoped></style>
