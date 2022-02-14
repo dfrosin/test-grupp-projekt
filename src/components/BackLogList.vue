@@ -1,6 +1,6 @@
 <template>
-  <li v-for="items in array" :key="items.id">
-    {{ items }}
+  <li v-for="items in array" :key="items.idex">
+    {{ items.id }}
     <img src="/assets/trash-can.png" />
   </li>
 </template>

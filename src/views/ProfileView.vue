@@ -7,7 +7,7 @@
 -->
 
 <template>
-  <div v-if="$store.state.loggedInUser !== null" class="profile-card">
+  <div class="profile-card">
     <h1>my profile</h1>
     <div class="buttons">
       <button v-if="editing === true" @click="onSave">save</button>
@@ -21,21 +21,21 @@
         :src="newPhoto"
         alt="new profile picture"
       />
-      <input
-        id="editButton"
-        v-if="editing === true"
-        type="file"
-        @change="previewPhoto"
-        accept="image/png, image/jpeg"
-      />
-      <button v-if="editing === true" @click="savePhoto" type="submit">
-        save
-      </button>
+      <div class="upload-buttons">
+        <input
+          id="editButton"
+          v-if="editing === true"
+          type="file"
+          @change="previewPhoto"
+          accept="image/png, image/jpeg"
+        />
+        <button v-if="this.newPhoto !== null" @click="savePhoto" type="submit">
+          save
+        </button>
+      </div>
     </div>
     <div class="card-body">
       <div v-if="editing === false" class="saved-information">
-        <!-- <p>{{ $store.state.loggedInUser.userName }}</p> -->
-        <!-- <p>{{ $store.state.loggedInUser.email }}</p> -->
         <p>{{ fullName }}</p>
         <p>{{ email }}</p>
       </div>
@@ -44,10 +44,6 @@
         <input type="email" v-model="newEmail" :placeholder="email" />
       </div>
     </div>
-  </div>
-  <div class="profile-card" v-if="$store.state.loggedInUser === null">
-    <p>You have to be logged in to view this page</p>
-    <router-link to="/login">Log in page</router-link>
   </div>
 </template>
 
@@ -86,11 +82,19 @@
     .img-container {
       display: flex;
       flex-direction: column;
+      text-align: center;
+      .upload-buttons {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        padding: 15%;
+      }
     }
     img {
       width: 15rem;
       height: 15rem;
       margin: 2rem;
+      border-radius: 7.5rem;
     }
     .card-body {
       margin-top: 7.5rem;
@@ -119,24 +123,43 @@
 </style>
 
 <script>
+  import {
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL
+  } from 'firebase/storage'
+
+  const storage = getStorage()
+
   export default {
     data() {
       return {
         editing: false,
         fullName: '',
         email: '',
+        userName: '',
         uploading: false,
         newPhoto: null,
         newName: '',
         newEmail: '',
-        url: '/assets/Frame 112.png'
+        url: '/assets/Frame 112.png',
+        file: null
       }
     },
-    created() {
-      this.fullName = this.$store.state.loggedInUser.fullName
-      this.email = this.$store.state.loggedInUser.email
+    mounted() {
       if (this.$store.state.loggedInUser === null) {
         this.$router.push('/login')
+      } else {
+        this.fullName = this.$store.state.loggedInUser.fullName
+        this.email = this.$store.state.loggedInUser.email
+        this.userName = this.$store.state.loggedInUser.userName
+        getDownloadURL(
+          ref(storage, `${this.$store.state.loggedInUser.userName}`)
+        ).then((url) => {
+          this.url = url
+          console.log(this.url)
+        })
       }
     },
     methods: {
@@ -158,14 +181,27 @@
         }
         this.clearInputs()
       },
+      previewPhoto(photo) {
+        this.file = photo.target.files[0]
+        this.uploading = true
+        const imageFile = photo.target.files[0]
+        this.newPhoto = URL.createObjectURL(imageFile)
+      },
       savePhoto() {
         this.url = this.newPhoto
         this.uploading = false
-      },
-      previewPhoto(photo) {
-        this.uploading = true
-        const file = photo.target.files[0]
-        this.newPhoto = URL.createObjectURL(file)
+        this.newPhoto = null
+        console.log(this.file)
+        this.pictureInfo = [this.userName, this.file]
+
+        const storageRef = ref(
+          storage,
+          `${this.$store.state.loggedInUser.userName}`
+        )
+
+        uploadBytes(storageRef, this.file).then(() => {
+          console.log('Uploaded a picture')
+        })
       },
       clearInputs() {
         this.newName = ''

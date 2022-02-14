@@ -52,7 +52,7 @@
         querySnapshot.forEach((snap) => {
           console.log(` ${JSON.stringify(snap.data())}`)
           this.$store.commit('setLoggedInUser', snap.data())
-          this.$router.push('/dashboard')
+          this.$router.push('/profile')
         })
       }
     }
