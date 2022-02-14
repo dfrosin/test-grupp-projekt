@@ -84,7 +84,7 @@
         const whereToAddData = doc(firestore, `Andreas/${this.userName}`)
         setDoc(whereToAddData, newUser)
         this.$store.commit('setLoggedInUser', newUser)
-        this.$router.push('/dashboard')
+        this.$router.push('/profile')
       }
     }
   }
