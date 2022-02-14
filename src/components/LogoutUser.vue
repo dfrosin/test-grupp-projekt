@@ -1,7 +1,5 @@
 <template>
-  <button @click="handleLogout" type="submit" class="btn btn-success mt-3">
-    Log out
-  </button>
+  <button @click="handleLogout" class="btn btn-success mt-3">Log out</button>
 </template>
 
 <script>
