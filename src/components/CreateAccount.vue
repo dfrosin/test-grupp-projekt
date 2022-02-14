@@ -10,9 +10,9 @@
           required
         />
         <div class="inputs">
-          <label>Fullname</label>
+          <label>Full name</label>
           <input
-            placeholder="Fullname"
+            placeholder="Full name"
             v-model="fullName"
             class="form-control"
             required
@@ -25,13 +25,14 @@
             v-model="email"
             class="form-control"
             type="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 4}$"
             required
           />
         </div>
         <div class="inputs">
           <label>Password</label>
           <input
-            placeholder="Name"
+            placeholder="Password"
             v-model="password"
             class="form-control"
             type="password"
@@ -41,7 +42,7 @@
         <div class="inputs">
           <label>Confirm password</label>
           <input
-            placeholder="Name"
+            placeholder="Password"
             v-model="confirmPassword"
             class="form-control"
             type="password"
@@ -72,19 +73,23 @@
     },
     methods: {
       createAccount() {
-        console.log('Ny användare skapad')
-        // --------------- SKAPA NY ANVÄNDARE------------------------------ //
-        const newUser = {
-          userName: this.userName,
-          email: this.email,
-          fullName: this.fullName,
-          password: this.password,
-          confirmPassword: this.confirmPassword
+        if (this.password === this.confirmPassword) {
+          console.log('Ny användare skapad')
+          // --------------- SKAPA NY ANVÄNDARE------------------------------ //
+          const newUser = {
+            userName: this.userName,
+            email: this.email,
+            fullName: this.fullName,
+            password: this.password
+          }
+          const whereToAddData = doc(firestore, `Andreas/${this.userName}`)
+          setDoc(whereToAddData, newUser)
+          this.$store.commit('setLoggedInUser', newUser)
+          this.$router.push('/profile')
+        } else {
+          alert("Passwords doesn't match")
+          ;(this.password = ''), (this.confirmPassword = '')
         }
-        const whereToAddData = doc(firestore, `Andreas/${this.userName}`)
-        setDoc(whereToAddData, newUser)
-        this.$store.commit('setLoggedInUser', newUser)
-        this.$router.push('/profile')
       }
     }
   }

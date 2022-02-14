@@ -13,7 +13,7 @@
       <div class="inputs">
         <label>Password</label>
         <input
-          placeholder="password"
+          placeholder="Password"
           type="password"
           required
           v-model="password"

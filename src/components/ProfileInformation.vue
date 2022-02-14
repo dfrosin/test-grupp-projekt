@@ -1,10 +1,3 @@
-<!--
-  1.Skapa en overview för profil med namn, profilbild, kontaktuppgifter osv.
-  2.Skapa möjligheten att ändra namn och kontaktuppgifter med inputfält.
-  3.Skapa en overview med vilka tasks man har och hur långt det är
-  kvar på sprinten.
-
--->
 <template>
   <div class="profile-card">
     <h1>my profile</h1>
@@ -53,6 +46,7 @@
     margin: 0 10%;
     display: flex;
     flex-wrap: wrap;
+    margin-top: 8rem;
     edit-button {
       background-color: transparent;
     }

@@ -6,6 +6,7 @@
   div {
     display: flex;
     justify-content: center;
+    margin-top: 10rem;
   }
   p {
     font-size: 31px;
