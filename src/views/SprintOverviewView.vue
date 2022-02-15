@@ -1,114 +1,169 @@
 <script>
-  import { ref } from 'vue'
+  import { db } from '../firebase.js'
+  import SprintList from '../components/SprintList.vue'
+  import SprintCard from '../components/SprintCard.vue'
+  import { VueDraggableNext } from 'vue-draggable-next'
   export default {
-    setup() {
-      const items = ref([
-        { id: 0, title: 'Create Navbar', list: 1 },
-        { id: 1, title: 'Create Drag and drop function', list: 2 },
-        { id: 2, title: 'Create Footer', list: 3 },
-        { id: 3, title: 'Set up Backend with Firebase', list: 4 }
-      ])
-
-      const getList = (list) => {
-        return items.value.filter((item) => item.list == list)
-      }
-      const startDrag = (event, item) => {
-        event.dataTransfer.dropEffect = 'moved'
-        event.dataTransfer.effectAllowed = 'move'
-        event.dataTransfer.setData('itemID', item.id)
-      }
-      const onDrop = (event, list) => {
-        const itemID = event.dataTransfer.getData('itemID')
-        const item = items.value.find((item) => item.id == itemID)
-        item.list = list
-      }
+    data() {
       return {
-        getList,
-        onDrop,
-        startDrag
+        enabled: true,
+        todo: [],
+        inProgress: [],
+        review: [],
+        done: [],
+        dragging: false
       }
+    },
+    mounted() {
+      this.cardboard.onSnapshot((snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === 'added') {
+            if (change.doc.data().status === 'TODO') {
+              this.todo.push({
+                id: change.doc.id,
+                ...change.doc.data()
+              })
+            } else if (change.doc.data().status === 'DONE') {
+              this.done.push({
+                id: change.doc.id,
+                ...change.doc.data()
+              })
+            } else if (change.doc.data().status === 'REVIEW') {
+              this.review.push({
+                id: change.doc.id,
+                ...change.doc.data()
+              })
+            } else {
+              this.inProgress.push({
+                id: change.doc.id,
+                ...change.doc.data()
+              })
+            }
+          }
+        })
+      })
+    },
+    watch: {
+      todo(value) {
+        value.map((todo) => {
+          this.cardboard.doc(todo.id).update({
+            status: 'TODO',
+            todo: todo.todo
+          })
+        })
+      },
+      inProgress(value) {
+        value.map((todo) => {
+          this.cardboard.doc(todo.id).update({
+            status: 'IN_PROGRESS',
+            todo: todo.todo
+          })
+        })
+      },
+      review(value) {
+        value.map((todo) => {
+          this.cardboard.doc(todo.id).update({
+            status: 'REVIEW',
+            todo: todo.todo
+          })
+        })
+      },
+      done(value) {
+        value.map((todo) => {
+          this.cardboard.doc(todo.id).update({
+            status: 'DONE',
+            todo: todo.todo
+          })
+        })
+      }
+    },
+    computed: {
+      cardboard() {
+        console.log(db)
+        return db.collection('Adamstest')
+      }
+    },
+    components: {
+      SprintList,
+      SprintCard,
+      draggable: VueDraggableNext
     }
   }
 </script>
 
 <template>
   <article class="flex-container">
-    <section>
-      <h3>Todo</h3>
-      <div
-        class="drop-zone"
-        @drop="onDrop($event, 1)"
-        @dragenter.prevent
-        @dragover.prevent
-      >
-        <div
-          v-for="item in getList(1)"
-          :key="item.id"
-          class="drag-element"
-          draggable="true"
-          @dragstart="startDrag($event, item)"
+    <sprint-list title="Todo">
+      <section class="drop-zone">
+        <draggable
+          :list="todo"
+          group="walla"
+          ghost-class="on-drag"
+          class="drop-zone-height"
         >
-          {{ item.title }}
-        </div>
-      </div>
-    </section>
-    <section>
-      <h3>In Progress</h3>
-      <div
-        class="drop-zone"
-        @drop="onDrop($event, 2)"
-        @dragenter.prevent
-        @dragover.prevent
-      >
-        <div
-          v-for="item in getList(2)"
-          :key="item.id"
-          class="drag-element"
-          draggable="true"
-          @dragstart="startDrag($event, item)"
+          <sprint-card
+            v-for="card in todo"
+            :key="card.id"
+            :item="card"
+            class="drag-element"
+          />
+        </draggable>
+      </section>
+    </sprint-list>
+
+    <sprint-list title="In Progress">
+      <section class="drop-zone">
+        <draggable
+          :list="inProgress"
+          group="walla"
+          ghost-class="on-drag"
+          class="drop-zone-height"
         >
-          {{ item.title }}
-        </div>
-      </div>
-    </section>
-    <section>
-      <h3>Review</h3>
-      <div
-        class="drop-zone"
-        @drop="onDrop($event, 3)"
-        @dragenter.prevent
-        @dragover.prevent
-      >
-        <div
-          v-for="item in getList(3)"
-          :key="item.id"
-          class="drag-element"
-          draggable="true"
-          @dragstart="startDrag($event, item)"
+          <sprint-card
+            v-for="card in inProgress"
+            :key="card.id"
+            :item="card"
+            class="drag-element"
+          />
+        </draggable>
+      </section>
+    </sprint-list>
+
+    <sprint-list title="Review">
+      <section class="drop-zone">
+        <draggable
+          :list="review"
+          group="walla"
+          ghost-class="on-drag"
+          class="drop-zone-height"
         >
-          {{ item.title }}
-        </div>
-      </div>
-    </section>
-    <section>
-      <h3>Done</h3>
-      <div
-        class="drop-zone"
-        @drop="onDrop($event, 4)"
-        @dragenter.prevent
-        @dragover.prevent
-      >
-        <div
-          v-for="item in getList(4)"
-          :key="item.id"
-          class="drag-element"
-          draggable="true"
-          @dragstart="startDrag($event, item)"
+          <sprint-card
+            v-for="card in review"
+            :key="card.id"
+            :item="card"
+            class="drag-element"
+          />
+        </draggable>
+      </section>
+    </sprint-list>
+
+    <sprint-list title="Done">
+      <section class="drop-zone">
+        <draggable
+          :list="done"
+          group="walla"
+          ghost-class="on-drag"
+          class="drop-zone-height"
         >
-          {{ item.title }}
-        </div>
-      </div>
-    </section>
+          <sprint-card
+            v-for="card in done"
+            :key="card.id"
+            :item="card"
+            class="drag-element"
+          />
+        </draggable>
+      </section>
+    </sprint-list>
   </article>
 </template>
 
@@ -119,12 +174,10 @@
   }
   .flex-container {
     background-color: rgba(235, 235, 235, 0.3);
-    margin: auto;
-    // height: 85rem;
-    // width: 150rem;
+    margin: 30px;
     display: flex;
-    justify-content: space-between;
-    margin-top: 10rem;
+    grid-template-columns: auto auto auto auto;
+    justify-content: space-evenly;
     text-align: center;
     border-radius: 10px;
     flex-wrap: wrap;
@@ -136,10 +189,9 @@
     height: 75rem;
     width: 30rem;
     color: black;
-    display: flex;
     border-radius: 10px;
-    flex-direction: column;
     min-height: 10px;
+    flex-wrap: wrap;
     margin-bottom: 5rem;
   }
 
@@ -154,10 +206,15 @@
     border-style: solid;
     border-color: blue;
     min-height: 10px;
+    cursor: move;
   }
-
-  .drag-element:nth-last-of-type(1) {
-    margin-bottom: 0;
+  .on-drag {
+    background-color: rgb(81, 89, 194);
+    color: #fff;
+    z-index: 10;
+  }
+  .drop-zone-height {
+    height: 75rem;
   }
 </style>
 <!-- Todo:
