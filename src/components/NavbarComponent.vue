@@ -5,28 +5,30 @@
         <img id="nav-logo" src="/assets/navbarlogo.png" alt="" />
       </div>
       <ul v-show="!mobile" class="NavbarComponent">
-        <li><routerLink class="link" to="/">My Projects</routerLink></li>
-        <li>
-          <routerLink class="link" to="/about">Create Project</routerLink>
+        <li v-if="$store.state.loggedInUser != null">
+          <routerLink class="link" to="/sprint">My Projects</routerLink>
         </li>
-        <li><routerLink class="link" to="/login">Sign In </routerLink></li>
-        <li>
+        <li v-if="$store.state.loggedInUser != null">
+          <routerLink class="link" to="/createbacklog"
+            >Create Project</routerLink
+          >
+        </li>
+        <li v-if="$store.state.loggedInUser === null">
+          <routerLink class="link" to="/login">Sign In </routerLink>
+        </li>
+        <li v-if="$store.state.loggedInUser === null">
           <routerLink class="link" to="/createaccount"
             >Dont have an account?</routerLink
           >
         </li>
         <li v-if="$store.state.loggedInUser != null"><LogoutUser /></li>
-        <li>
+        <li v-if="$store.state.loggedInUser != null">
           <RouterLink to="/profile">
             <span class="link" v-if="$store.state.loggedInUser != null">{{
               $store.state.loggedInUser.userName
             }}</span>
 
-            <img
-              id="profile-pic"
-              src="/assets/Frame 112.png"
-              alt="Adam Agerling"
-            />
+            <img id="profile-pic" :src="profilePicture" alt="Adam Agerling" />
           </RouterLink>
         </li>
       </ul>
@@ -40,22 +42,30 @@
       </div>
       <transition name="mobile-nav"
         ><ul v-show="mobileNav" class="dropdown-nav">
-          <li @click="toggleMobileNav">
-            <routerLink class="link" to="/">My Projects</routerLink>
+          <li v-if="$store.state.loggedInUser != null" @click="toggleMobileNav">
+            <routerLink class="link" to="/sprint">My Projects</routerLink>
           </li>
-          <li @click="toggleMobileNav">
-            <routerLink class="link" to="/about">Create Project</routerLink>
+          <li v-if="$store.state.loggedInUser != null" @click="toggleMobileNav">
+            <routerLink class="link" to="/createbacklog"
+              >Create Project</routerLink
+            >
           </li>
-          <li @click="toggleMobileNav">
-            <routerLink class="link" to="/contact">Sign In </routerLink>
+          <li
+            v-if="$store.state.loggedInUser === null"
+            @click="toggleMobileNav"
+          >
+            <routerLink class="link" to="/login">Sign In </routerLink>
           </li>
-          <li @click="toggleMobileNav">
-            <routerLink class="link" to="/contact"
+          <li
+            v-if="$store.state.loggedInUser === null"
+            @click="toggleMobileNav"
+          >
+            <routerLink class="link" to="/createaccount"
               >Dont have an account?</routerLink
             >
           </li>
-          <li @click="toggleMobileNav">
-            <RouterLink to="/contact">
+          <li v-if="$store.state.loggedInUser != null" @click="toggleMobileNav">
+            <RouterLink to="/profile">
               <span v-if="$store.state.loggedInUser != null">
                 {{ $store.state.loggedInUser.userName }}
               </span>
@@ -100,7 +110,8 @@
         scrolledNav: null,
         mobile: null,
         mobileNav: null,
-        windowWidth: null
+        windowWidth: null,
+        profilePicture: '/assets/Frame 112.png'
       }
     },
     created() {

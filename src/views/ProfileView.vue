@@ -7,7 +7,7 @@
 -->
 <template>
   <div class="profile-card">
-    <h1>my profile</h1>
+    <h1>My Profile</h1>
     <div class="buttons">
       <button v-if="editing === true" @click="onSave">save</button>
       <button v-if="editing === false" @click="onEdit">edit</button>
@@ -56,16 +56,18 @@
 
 <style lang="scss" scoped>
   .profile-card {
+    font-family: Roboto, sans-serif;
+    color: rgba(255, 255, 255, 0.9);
     background-color: rgba(255, 255, 255, 0.31);
     width: 80%;
     margin: 0 10%;
     display: flex;
     flex-wrap: wrap;
+    border-radius: 10px;
     edit-button {
       background-color: transparent;
     }
     h1 {
-      text-transform: uppercase;
       text-align: center;
       width: 60%;
       margin-left: 20%;
@@ -89,7 +91,8 @@
       display: flex;
       flex-direction: column;
       text-align: center;
-      margin-left: 5rem;
+      margin: auto;
+      flex-wrap: wrap;
       .upload-buttons {
         display: flex;
         flex-direction: column;
@@ -100,7 +103,7 @@
     img {
       width: 15rem;
       height: 15rem;
-      margin: 2rem;
+      margin: 5%;
       border-radius: 7.5rem;
     }
     .card-body {
@@ -122,7 +125,13 @@
         input {
           height: 20px;
           font-size: 1rem;
-          padding-left: 5px;
+          background-color: transparent;
+          border-bottom: 2px solid white;
+          width: 80%;
+          color: white;
+        }
+        ::placeholder {
+          color: white;
         }
       }
     }
@@ -160,16 +169,7 @@
       } else {
         this.userCollection = { ...this.$store.state.loggedInUser }
         console.log(this.$store.state.loggedInUser)
-        if (this.$store.state.loggedInUser.profilePicture === false) {
-          this.url = '/assets/Frame 112.png'
-        } else {
-          getDownloadURL(
-            ref(storage, `${this.$store.state.loggedInUser.userName}`)
-          ).then((url) => {
-            this.url = url
-            console.log(this.url)
-          })
-        }
+        this.url = this.$store.state.loggedInUser.profilePicture
       }
     },
     methods: {
@@ -217,6 +217,13 @@
         )
         uploadBytes(storageRef, this.file).then(() => {
           console.log('Uploaded a picture')
+          getDownloadURL(
+            ref(storage, `${this.$store.state.loggedInUser.userName}`)
+          ).then((url) => {
+            this.url = url
+            this.userCollection.profilePicture = this.url
+            console.log(this.url)
+          })
         })
       },
       clearInputs() {
