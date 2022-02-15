@@ -5,7 +5,9 @@
     "firebase": "^9.6.6",
     "uuid": "^8.3.2",
     "vue": "^3.2.25",
+    "vue-draggable-next": "^2.1.1",
     "vue-router": "^4.0.12",
+    "vuedraggable": "^2.24.3",
     "vuex": "^4.0.2"
   },
   "devDependencies": {

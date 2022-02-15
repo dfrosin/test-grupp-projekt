@@ -41,7 +41,7 @@ A
     </ul>
   </div> -->
 <!-- </template> -->
-
+<!--
 <template>
   <div id="appContainer">
     <h1>ToDo List</h1>
@@ -128,5 +128,22 @@ A
     }
   }
 </script>
+-->
 
-<style lang="scss" scoped></style>
+<!-- <style lang="scss" scoped></style> -->
+
+<script>
+  export default {
+    data() {
+      return {
+        title: 'Add task'
+      }
+    }
+  }
+</script>
+
+<template>
+  <h3>{{ title }}</h3>
+</template>
+
+<style></style>

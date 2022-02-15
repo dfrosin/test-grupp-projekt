@@ -18,6 +18,8 @@
 <script>
   import { firestore } from '../firebase'
   import { getDocs, collection } from 'firebase/firestore'
+  // import store from '../store'
+
   export default {
     data() {
       return {
@@ -32,6 +34,7 @@
       //Snapshot of all documents as Objects & Keys.
       getDatabase() {
         const colRef = collection(firestore, 'PBI')
+        // const colRef = collection(firestore, store.state.projectName)
 
         getDocs(colRef).then((snapshot) => {
           let PBI = []
