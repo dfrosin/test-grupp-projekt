@@ -28,7 +28,9 @@
   <form @submit.prevent="addTask">
     <label for="newTask">New Task</label>
     <input v-model="newTask" type="text" name="newTask" id="newTask" />
-    <button type="submit" class="btn btn-success mt-3">Add task</button>
+    <button v-if="newTask" type="submit" class="btn btn-success mt-3">
+      Add task
+    </button>
   </form>
 
   <ul>
