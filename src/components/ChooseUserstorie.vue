@@ -31,9 +31,9 @@
     methods: {
       //Snapshot of all documents as Objects & Keys.
       getDatabase() {
-        const userStories = collection(firestore, 'PBI')
+        const colRef = collection(firestore, 'PBI')
 
-        getDocs(userStories).then((snapshot) => {
+        getDocs(colRef).then((snapshot) => {
           let PBI = []
           snapshot.docs.forEach((doc) => {
             PBI.push({ ...doc.data(), id: doc.id })
