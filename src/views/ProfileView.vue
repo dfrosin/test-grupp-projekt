@@ -10,8 +10,8 @@
     <h1>my profile</h1>
     <div class="buttons">
       <button v-if="editing === true" @click="onSave">save</button>
-      <button v-if="editing === true" @click="onCancel">cancel</button>
       <button v-if="editing === false" @click="onEdit">edit</button>
+      <button v-if="editing === true" @click="onCancel">cancel</button>
     </div>
     <div class="img-container">
       <img v-if="uploading === false" :src="url" alt="profile picture" />
@@ -35,12 +35,20 @@
     </div>
     <div class="card-body">
       <div v-if="editing === false" class="saved-information">
-        <p>{{ fullName }}</p>
-        <p>{{ email }}</p>
+        <p>{{ userCollection.fullName }}</p>
+        <p>{{ userCollection.email }}</p>
       </div>
       <div v-if="editing === true" class="editing-information">
-        <input type="text" v-model="newName" :placeholder="fullName" />
-        <input type="email" v-model="newEmail" :placeholder="email" />
+        <input
+          type="text"
+          v-model="newName"
+          :placeholder="userCollection.fullName"
+        />
+        <input
+          type="email"
+          v-model="newEmail"
+          :placeholder="userCollection.email"
+        />
       </div>
     </div>
   </div>
@@ -81,6 +89,7 @@
       display: flex;
       flex-direction: column;
       text-align: center;
+      margin-left: 5rem;
       .upload-buttons {
         display: flex;
         flex-direction: column;
@@ -127,6 +136,8 @@
     uploadBytes,
     getDownloadURL
   } from 'firebase/storage'
+  import { firestore } from '../firebase'
+  import { doc, setDoc } from 'firebase/firestore'
 
   const storage = getStorage()
 
@@ -134,30 +145,31 @@
     data() {
       return {
         editing: false,
-        fullName: '',
-        email: '',
-        userName: '',
         uploading: false,
         newPhoto: null,
         newName: '',
         newEmail: '',
-        url: '/assets/Frame 112.png',
-        file: null
+        url: null,
+        file: null,
+        userCollection: {}
       }
     },
     mounted() {
       if (this.$store.state.loggedInUser === null) {
         this.$router.push('/login')
       } else {
-        this.fullName = this.$store.state.loggedInUser.fullName
-        this.email = this.$store.state.loggedInUser.email
-        this.userName = this.$store.state.loggedInUser.userName
-        getDownloadURL(
-          ref(storage, `${this.$store.state.loggedInUser.userName}`)
-        ).then((url) => {
-          this.url = url
-          console.log(this.url)
-        })
+        this.userCollection = { ...this.$store.state.loggedInUser }
+        console.log(this.$store.state.loggedInUser)
+        if (this.$store.state.loggedInUser.profilePicture === false) {
+          this.url = '/assets/Frame 112.png'
+        } else {
+          getDownloadURL(
+            ref(storage, `${this.$store.state.loggedInUser.userName}`)
+          ).then((url) => {
+            this.url = url
+            console.log(this.url)
+          })
+        }
       }
     },
     methods: {
@@ -167,16 +179,24 @@
       onCancel() {
         this.editing = false
         this.uploading = false
+        this.newPhoto = null
         this.clearInputs()
       },
       onSave() {
         this.editing = false
         if (this.newName !== '') {
-          this.$store.state.loggedInUser.fullName = this.newName
+          this.userCollection.fullName = this.newName
         }
         if (this.newEmail !== '') {
-          this.$store.state.loggedInUser.email = this.newEmail
+          this.userCollection.email = this.newEmail
         }
+        const whereToAddData = doc(
+          firestore,
+          `Andreas/${this.userCollection.userName}`
+        )
+        setDoc(whereToAddData, this.userCollection)
+        this.$store.commit('setLoggedInUser', this.userCollection)
+        this.userCollection = { ...this.$store.state.loggedInUser }
         this.clearInputs()
       },
       previewPhoto(photo) {
@@ -190,13 +210,11 @@
         this.uploading = false
         this.newPhoto = null
         console.log(this.file)
-        this.pictureInfo = [this.userName, this.file]
-
+        this.userCollection.profilePicture = true
         const storageRef = ref(
           storage,
           `${this.$store.state.loggedInUser.userName}`
         )
-
         uploadBytes(storageRef, this.file).then(() => {
           console.log('Uploaded a picture')
         })

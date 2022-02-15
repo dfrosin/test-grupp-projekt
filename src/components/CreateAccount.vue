@@ -68,7 +68,8 @@
         fullName: '',
         email: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        profilePicture: false
       }
     },
     methods: {
@@ -80,7 +81,8 @@
             userName: this.userName,
             email: this.email,
             fullName: this.fullName,
-            password: this.password
+            password: this.password,
+            profilePicture: this.profilePicture
           }
           const whereToAddData = doc(firestore, `Andreas/${this.userName}`)
           setDoc(whereToAddData, newUser)
