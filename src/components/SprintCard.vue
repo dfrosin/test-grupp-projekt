@@ -1,6 +1,12 @@
 <script>
   export default {
-    props: ['item'],
+    props: {
+      title: {
+        type: String,
+        default: '',
+        required: true
+      }
+    },
     data() {
       return {}
     }
