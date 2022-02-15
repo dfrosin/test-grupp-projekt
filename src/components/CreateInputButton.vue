@@ -94,7 +94,9 @@ A
       localStorage.getItem('todos')
         ? (stroedTodos = JSON.parse(localStorage.getItem('todos')))
         : (stroedTodos = initialLoadData)
+
       const todos = ref(stroedTodos)
+
       function addTodos() {
         if (newTodo.value !== '') {
           todos.value.push({
