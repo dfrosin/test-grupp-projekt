@@ -43,6 +43,12 @@ header {
       font-family: 'Roboto', sans-serif;
       font-size: 14px;
       margin-left: 16px;
+      a {
+        color: #ffffff;
+        text-decoration: none;
+
+        border-bottom: 1px solid transparent;
+      }
     }
 
     .link {
@@ -52,6 +58,7 @@ header {
       padding-bottom: 4px;
       border-bottom: 1px solid transparent;
       text-decoration: none;
+
       &:hover {
         color: #00afea;
         border-color: #00afea;
@@ -105,6 +112,12 @@ header {
 
       li {
         margin-left: 0;
+        a {
+          color: #000000;
+          text-decoration: none;
+
+          border-bottom: 1px solid transparent;
+        }
         .link {
           color: black;
         }

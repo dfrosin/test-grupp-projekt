@@ -56,9 +56,9 @@
           </li>
           <li @click="toggleMobileNav">
             <RouterLink to="/contact">
-              <span v-if="$store.state.loggedInUser != null">{{
-                $store.state.loggedInUser.userName
-              }}</span>
+              <span v-if="$store.state.loggedInUser != null">
+                {{ $store.state.loggedInUser.userName }}
+              </span>
             </RouterLink>
           </li>
           <li v-if="$store.state.loggedInUser != null">
