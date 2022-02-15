@@ -19,7 +19,7 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    padding: 0.2rem 10%;
+    padding: 1rem 10%;
 
     #profile-pic {
       height: 37px;
@@ -46,11 +46,12 @@ header {
     }
 
     .link {
+      cursor: pointer;
       font-size: 14px;
       transition: 0.5s ease all;
       padding-bottom: 4px;
       border-bottom: 1px solid transparent;
-
+      text-decoration: none;
       &:hover {
         color: #00afea;
         border-color: #00afea;
@@ -83,7 +84,7 @@ header {
 
       i {
         cursor: pointer;
-        font-size: 24 px;
+        font: size 30px;
         transition: 10 ease all;
       }
     }
@@ -100,7 +101,7 @@ header {
       height: 100%;
       background-color: white;
       top: 0;
-      left: 0;
+      right: 0;
 
       li {
         margin-left: 0;
@@ -117,7 +118,7 @@ header {
 
     .mobile-nav-enter-from,
     .mobile-nav-leave-to {
-      transform: translateX(-400px);
+      transform: translateX(400px);
     }
 
     .mobile-nav-enter-to {
@@ -130,7 +131,7 @@ header {
   box-shadow: 0 4px 6px -1px, 0 8px 4px -5px;
 
   nav {
-    padding: 20px 10px;
+    padding: 1px 10px;
 
     .branding {
       #nav-logo {
