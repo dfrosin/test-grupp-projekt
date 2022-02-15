@@ -8,13 +8,17 @@
 </script>
 
 <template>
-  <div class="main-app-continer">
+  <div class="main-app-container">
     <NavbarComponent />
 
-    <main class="main-continer-view">
+    <main class="main-container-view">
       <RouterView />
     </main>
   </div>
   <CrumbleFooter />
 </template>
-<style lang="scss"></style>
+<style lang="scss">
+  .main-app-container {
+    margin-top: 10rem;
+  }
+</style>

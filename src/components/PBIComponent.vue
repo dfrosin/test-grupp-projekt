@@ -7,98 +7,86 @@
       type="text"
       placeholder="Som en ___ vill jag ___ för att ___"
       ref="firstInput"
-      @keyup.enter="createAccount"
+      @keyup.enter="createList"
     />
-    <div v-if="arrayOfPbItems" class="backlog-container">
+    <div class="backlog-container">
       <ul>
-        <BackLogList :array="arrayOfPbItems" />
+        <li v-for="item in arrayOfObjects" :key="item.idxd">
+          {{ item.id }}
+          <img
+            src="/assets/trash-can.png"
+            alt=""
+            @click="deleteItem"
+            :id="item.id"
+          />
+        </li>
       </ul>
     </div>
     <ButtonComponent buttonvalue="Create Task" />
+    <button @click="createAccount">Skicka in</button>
   </div>
 </template>
 
 <script>
   import ButtonComponent from './ButtonComponent.vue'
   import { db, firestore } from '../firebase'
-  import { doc, setDoc } from 'firebase/firestore'
-  import BackLogList from './BackLogList.vue'
+  import { collection, getDocs, setDoc, doc } from 'firebase/firestore'
+  import { v4 as uuidv4 } from 'uuid'
 
   export default {
     data() {
       return {
         pbItem: '',
         backlogItemInfo: {
-          antalTasks: 0,
-          color: '',
-          tid: null
+          id: '',
+          docId: '',
+          deleteId: ''
         },
-        arrayOfPbItems: [],
-        copyOfArray: null,
-        docId: ''
+        deletedArray: [],
+        arrayOfObjects: [],
+        isDeleted: false
       }
     },
     methods: {
+      createList() {
+        this.backlogItemInfo.id = this.pbItem
+        this.backlogItemInfo.docId = uuidv4()
+        let copiedObject = JSON.parse(JSON.stringify(this.backlogItemInfo))
+        this.arrayOfObjects.push(copiedObject)
+        this.pbItem = ''
+      },
       createAccount() {
         // --------------- SKAPA NY ANVÄNDARE------------------------------ //
-        const whereToAddData = doc(firestore, `PBI/${this.pbItem}`)
-        this.timeStamp()
-        setDoc(whereToAddData, this.backlogItemInfo)
-        this.pbItem = ''
-        this.$refs.firstInput.focus()
-        this.getAllDocumentsInCollection()
-        this.arrayOfPbItems = []
+        this.arrayOfObjects.forEach((allDocs) => {
+          setTimeout(() => {
+            const whereToAddData = doc(firestore, `PBI/${allDocs.id}`)
+            setDoc(whereToAddData, allDocs)
+          }, 2000)
+        })
       },
-      //skickar tillbaka en Array med alla PB Items. Alltså hur många PB det finns.
-      //Hur många divvar den skall skapa. Denn funktionen körs varje gång jag trycker enter.
-      //Kanske borde byta till att den lyssnar på uppdateringar?
-      // getArrayofAllDocumentsInCollection() {
-      //   db.collection('PBI')
-      //     .get()
-      //     .then((snapshot) => {
-      //       console.log(snapshot.docs)
-      //     })
-      // },
+      //Snapshot of all documents as Objects & Keys.
+      getDatabase() {
+        const colRef = collection(db, 'PBI')
 
-      //Hämtar "överskriften" alltså id:t till PBI.
-      getAllDocumentsInCollection() {
-        db.collection('PBI')
-          .get()
-          .then((snapshot) => {
-            snapshot.docs.forEach((doc) => {
-              this.arrayOfPbItems.push(doc.id)
-            })
-            console.log(this.arrayOfPbItems)
+        getDocs(colRef).then((snapshot) => {
+          let PBI = []
+          snapshot.docs.forEach((doc) => {
+            PBI.push({ ...doc.data(), id: doc.id })
           })
+          this.arrayOfObjects = PBI
+          console.log(PBI)
+        })
       },
-
-      timeStamp() {
-        let d = new Date()
-        this.backlogItemInfo.tid = d.getTime()
-        console.log(this.backlogItemInfo.tid)
+      deleteItem(e) {
+        this.deleted = true
+        let deleteItemId = e.target.id
+        var filtered = this.arrayOfObjects.filter(function (el) {
+          return el.id != deleteItemId
+        })
+        this.arrayOfObjects = filtered
       }
-      //listenToADocument är som en watch, den känner av ändringar som blivit gjorda i firebase och skickar tillbaka informationen till konsollen
-      //   const query = db.collection('PBI').where('antalTasks', '==', 0)
-
-      //   const observer = query.onSnapshot(
-      //     (querySnapshot) => {
-      //       console.log(`Received query snapshot of id ${querySnapshot.id}`)
-      //       console.log('Detta är Observer' + observer)
-      //     },
-      //     (err) => {
-      //       console.log(`Encountered error: ${err}`)
-      //     }
-      //   )
-      // }
     },
-    components: { ButtonComponent, BackLogList },
-    computed: {
-      witchArray() {
-        let sorted = this.copyOfArray
-        sorted.sort((a, b) => a.recipe.calories - b.recipe.calories)
-        return sorted
-      }
-    }
+    components: { ButtonComponent }
   }
 </script>
 
@@ -144,6 +132,25 @@
         width: 30rem;
         margin-left: 3.5rem;
       }
+    }
+  }
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    background-color: #ffff;
+    color: black;
+    padding: 3px;
+    margin-top: 10px;
+    width: 30rem;
+    height: 3rem;
+    border-radius: 10px;
+    font-size: 1.8rem;
+    img {
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
     }
   }
 </style>

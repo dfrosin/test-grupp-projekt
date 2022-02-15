@@ -18,7 +18,7 @@ export default createRouter({
   routes: [
     {
       component: HomeView,
-      path: '/'
+      path: '/home'
     },
     {
       component: AboutView,
@@ -31,7 +31,7 @@ export default createRouter({
 
     {
       component: GetStartedView,
-      path: '/getstarted'
+      path: '/'
     },
     {
       component: CreateAccountView,

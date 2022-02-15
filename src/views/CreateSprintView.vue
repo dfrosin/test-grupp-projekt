@@ -1,22 +1,37 @@
 <script>
   import CreateInputButton from '../components/CreateInputButton.vue'
+  import ChooseUserstorie from '../components/ChooseUserstorie.vue'
   export default {
     components: {
-      CreateInputButton
+      CreateInputButton,
+      ChooseUserstorie
     }
   }
 </script>
 
 <template>
-  <h2>CreateSprintView.vue</h2>
-  <CreateInputButton />
+  <div id="container">
+    <h2>CreateSprintView.vue</h2>
+    <ChooseUserstorie />
+    <CreateInputButton />
+  </div>
 </template>
 
 <style lang="scss" scoped>
-  h2 {
+  #container {
+    background-color: rgba(255, 235, 205, 0.39);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 5rem;
+    flex-direction: column;
+    margin-top: 4.2rem;
+    width: 80%;
+    margin: 0 10%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10rem;
+  }
+  h1 {
+    margin-top: 4.2rem;
   }
 </style>
