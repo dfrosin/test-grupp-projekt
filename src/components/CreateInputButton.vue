@@ -1,5 +1,3 @@
-A
-
 <!--  <div class="form-task-container">
     <form @submit.prevent="submit">
       <div class="item-field">
@@ -146,4 +144,6 @@ A
   <h3>{{ title }}</h3>
 </template>
 
-<style></style>
+<style>
+  rel="stylesheet" href="https://ez-css.now.sh"
+</style>
