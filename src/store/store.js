@@ -22,9 +22,8 @@ state.newUser
   }, */
 
 const state = reactive({
-  loggedInUser: null,
-  isLoading: false,
   pbItem: '',
+  pbHeading: '',
   backlogItemInfo: {
     id: '',
     docId: '',
@@ -32,7 +31,12 @@ const state = reactive({
   },
   deletedArray: [],
   arrayOfObjects: [],
-  isDeleted: false
+  isDeleted: false,
+  editMode: false,
+  isVisible: true,
+  showToolTip: false,
+  newName: '',
+  editProjectName: false
 })
 
 const mutations = {
@@ -92,6 +96,22 @@ const actions = {
       return el.id != deleteItemId
     })
     this.arrayOfObjects = filtered
+  },
+
+  /* editName() {
+    this.editProjectName = true
+    this.isVisible = false
+    store.commit('setProjectName', this.pbHeading)
+    console.log(store.state.projectName)
+  }, */
+  visible() {
+    this.isVisible = false
+  },
+  toolTipOpen() {
+    this.showToolTip = true
+  },
+  toolTipClose() {
+    this.showToolTip = false
   }
 }
 
