@@ -55,7 +55,7 @@ export default createRouter({
     },
     {
       component: CreateSprintView,
-      path: '/createbacklog'
+      path: '/createsprint'
     },
     {
       component: SprintOverviewView,
