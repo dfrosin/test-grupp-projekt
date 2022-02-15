@@ -1,7 +1,7 @@
 <template>
   <li v-for="items in array" :key="items.idex">
     {{ items.id }}
-    <img src="/assets/trash-can.png" />
+    <img src="/assets/trash-can.png" @click="deleteItem" />
   </li>
 </template>
 
@@ -9,6 +9,17 @@
   export default {
     data() {
       return {}
+    },
+    methods: {
+      deleteItem(e) {
+        this.deleted = true
+        let deleteItemId = e.target.id
+        var filtered = this.array.filter(function (el) {
+          return el.id != deleteItemId
+        })
+        this.arrayjsjs = filtered
+        console.log(filtered)
+      }
     },
     props: {
       array: {
@@ -26,17 +37,19 @@
     justify-content: space-between;
     align-items: center;
     list-style: none;
-    background-color: #ffff;
+    background-color: rgba(255, 255, 255, 0.76);
     color: black;
-    padding: 3px;
+    padding: 10px;
     margin-top: 10px;
-    width: 30rem;
-    height: 3rem;
+    width: 80%;
+    min-height: 3rem;
     border-radius: 10px;
-    font-size: 1.8rem;
+    font-size: 1.3rem;
     img {
       width: 15px;
       height: 15px;
+      cursor: pointer;
+      margin: 2px;
     }
   }
 </style>
