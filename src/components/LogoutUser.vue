@@ -1,5 +1,5 @@
 <template>
-  <button @click="handleLogout" class="btn btn-success mt-3">Log out</button>
+  <button @click="handleLogout" type="submit" class="btn">Log out</button>
 </template>
 
 <script>
@@ -18,80 +18,95 @@
 </script>
 
 <style lang="scss" scoped>
-  button {
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+  .btn {
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.5s ease all;
+    padding-bottom: 4px;
+    border-bottom: 1px solid transparent;
     &:hover {
-      transform: translateY(-1px);
-
-      &::after {
-        transform: scaleX(1.4) scaleY(1.6);
-        opacity: 0;
-      }
-    }
-
-    &:active {
-      transform: translateY(-1px);
-      box-shadow: 0 5px 10px rgba(#000, 0.404);
-    }
-
-    &--white {
-      background-color: #cd4c37;
-      color: #fff;
-      &::after {
-        background-color: #559cc5;
-      }
-    }
-
-    &--green {
-      background-color: #008081;
-      color: #fff;
-      &::after {
-        background-color: #008081;
-      }
-    }
-
-    &::after {
-      content: '';
-      display: inline-block;
-      height: 100%;
-      width: 100%;
-      border-radius: 3px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: -1;
-      transition: all 1s;
-    }
-
-    &--animated {
-      /* animation: movInBottom 1s ease-out 0.9s; */
-      animation-fill-mode: backwards;
+      color: #ffffff;
+      border-color: #00afea;
+      background-color: #00afea;
     }
   }
 
-  button-text {
-    &:link,
-    &:visited {
-      color: #fff;
-      text-decoration: none;
-      display: inline-block;
-      border-bottom: 1px solid #559cc5;
-      padding: 1rem;
-      //border-radius: 2px;
-      font-size: 1.6rem;
-      font-weight: bold;
-      background-color: #cd4c37;
-      transition: all 0.2s;
-    }
-    &:hover {
-      background-color: #ff7730;
-      color: #fff;
-      box-shadow: 0 1rem 2rem rgba(#000, 0.25);
-      /* transform: translateY(-5px); */
-      /* padding: 1rem; */
-      /* border: solid 2px $color-primary-chocolate; */
-      /* border-bottom: solid 2px $color-primary-chocolate; */
-    }
-  }
+  // button {
+  //   &:hover {
+  //     transform: translateY(-1px);
+
+  //     &::after {
+  //       transform: scaleX(1.4) scaleY(1.6);
+  //       opacity: 0;
+  //     }
+  //   }
+
+  //   &:active {
+  //     transform: translateY(-1px);
+  //     box-shadow: 0 5px 10px rgba(#000, 0.404);
+  //   }
+
+  //   &--white {
+  //     background-color: #cd4c37;
+  //     color: #fff;
+  //     &::after {
+  //       background-color: #559cc5;
+  //     }
+  //   }
+
+  //   &--green {
+  //     background-color: #008081;
+  //     color: #fff;
+  //     &::after {
+  //       background-color: #008081;
+  //     }
+  //   }
+
+  //   &::after {
+  //     content: '';
+  //     display: inline-block;
+  //     height: 100%;
+  //     width: 100%;
+  //     border-radius: 3px;
+  //     position: absolute;
+  //     top: 0;
+  //     left: 0;
+  //     z-index: -1;
+  //     transition: all 1s;
+  //   }
+
+  //   &--animated {
+  //     /* animation: movInBottom 1s ease-out 0.9s; */
+  //     animation-fill-mode: backwards;
+  //   }
+  // }
+
+  // button-text {
+  //   &:link,
+  //   &:visited {
+  //     color: #fff;
+  //     text-decoration: none;
+  //     display: inline-block;
+  //     border-bottom: 1px solid #559cc5;
+  //     padding: 1rem;
+  //     //border-radius: 2px;
+  //     font-size: 1.6rem;
+  //     font-weight: bold;
+  //     background-color: #cd4c37;
+  //     transition: all 0.2s;
+  //   }
+  //   &:hover {
+  //     background-color: #ff7730;
+  //     color: #fff;
+  //     box-shadow: 0 1rem 2rem rgba(#000, 0.25);
+  //     /* transform: translateY(-5px); */
+  //     /* padding: 1rem; */
+  //     /* border: solid 2px $color-primary-chocolate; */
+  //     /* border-bottom: solid 2px $color-primary-chocolate; */
+  //   }
+  // }
 </style>
 
 <!--

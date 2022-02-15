@@ -15,9 +15,10 @@
             >Dont have an account?</routerLink
           >
         </li>
+        <li v-if="$store.state.loggedInUser != null"><LogoutUser /></li>
         <li>
           <RouterLink to="/profile">
-            <span v-if="$store.state.loggedInUser != null">{{
+            <span class="link" v-if="$store.state.loggedInUser != null">{{
               $store.state.loggedInUser.userName
             }}</span>
 
@@ -60,6 +61,11 @@
               }}</span>
             </RouterLink>
           </li>
+          <li v-if="$store.state.loggedInUser != null">
+            <LogoutUser />
+          </li>
+
+          <li @click="toggleMobileNav"><p class="link">CLOSE</p></li>
         </ul>
       </transition>
     </nav>
@@ -85,7 +91,9 @@
   </nav> -->
 </template>
 <script>
+  import LogoutUser from './LogoutUser.vue'
   export default {
+    components: { LogoutUser },
     name: 'NavbarComponent',
     data() {
       return {
