@@ -25,8 +25,13 @@
     justify-content: center;
     flex-direction: column;
     margin-top: 4.2rem;
+    width: 80%;
+    margin: 0 10%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10rem;
   }
-  h2 {
+  h1 {
     margin-top: 4.2rem;
   }
 </style>

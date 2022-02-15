@@ -9,9 +9,9 @@
         <li>
           <routerLink class="link" to="/about">Create Project</routerLink>
         </li>
-        <li><routerLink class="link" to="/contact">Sign In </routerLink></li>
+        <li><routerLink class="link" to="/login">Sign In </routerLink></li>
         <li>
-          <routerLink class="link" to="/contact"
+          <routerLink class="link" to="/createaccount"
             >Dont have an account?</routerLink
           >
         </li>
