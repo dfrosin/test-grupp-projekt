@@ -4,6 +4,7 @@
 
 <style lang="scss" scoped>
   div {
+    color: white;
     display: flex;
     justify-content: center;
     margin-top: 10rem;

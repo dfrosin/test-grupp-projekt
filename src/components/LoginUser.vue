@@ -68,16 +68,23 @@
       font-weight: bold;
       margin-top: 4.2rem;
       text-align: center;
+      color: white;
     }
     .link {
       font-size: 1.6rem;
       font-weight: bold;
       text-align: center;
+      color: white;
     }
+  }
+
+  h1 {
+    color: #fff;
   }
   .inputs {
     display: flex;
     flex-direction: column;
+    color: black;
     input {
       width: 30%;
       margin: 1rem 35%;
@@ -86,7 +93,7 @@
   form {
     label {
       margin-left: 35%;
-      color: black;
+      color: #fff;
     }
   }
   button {

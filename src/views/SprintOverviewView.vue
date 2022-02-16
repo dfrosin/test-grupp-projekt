@@ -100,7 +100,7 @@
 </script>
 
 <template>
-  <h2>{{ this.$store.state.projectName }}</h2>
+  <h2>Project: {{ this.$store.state.projectName }}</h2>
   <article class="flex-container">
     <sprint-list title="Todo">
       <section class="drop-zone">
@@ -177,8 +177,12 @@
 </template>
 
 <style lang="scss" scoped>
+  h2 {
+    margin-left: 4rem;
+    color: white;
+  }
   h3 {
-    color: black;
+    color: white;
     margin: 3rem 0 1rem 0;
   }
   .flex-container {
@@ -198,7 +202,7 @@
     width: 200px;
     color: black;
     border-radius: 10px;
-    min-height: 20vh fit-content;
+    min-height: 60vh fit-content;
     flex-wrap: wrap;
     margin-bottom: 5rem;
   }
@@ -208,7 +212,7 @@
     text-align: center;
     color: black;
     width: 200px;
-    height: 7rem;
+    height: 6rem;
     background-color: white;
     border-radius: 10px;
     border-style: solid;
@@ -222,7 +226,7 @@
     z-index: 10;
   }
   .drop-zone-height {
-    height: 50vh;
+    height: 60vh;
   }
 </style>
 <!-- Todo:
