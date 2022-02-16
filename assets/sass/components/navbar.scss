@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-
 header {
-  background-color: #ffffff;
   z-index: 100;
   width: 100%;
   position: fixed;
@@ -10,10 +8,11 @@ header {
 
   nav {
     background-color: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    z-index: 100;
+    z-index: 200;
     overflow: hidden;
     position: fixed;
     top: 0;
@@ -101,26 +100,34 @@ header {
       transform: rotate(180deg);
     }
     .dropdown-nav {
+      padding-left: 0%;
       display: flex;
       flex-direction: column;
       position: fixed;
       width: 100%;
       max-width: 200px;
       height: 100%;
-      background-color: white;
+      backdrop-filter: blur (10px);
+      background-color: purple;
       top: 0;
       right: 0;
 
       li {
-        margin-left: 0;
+        padding-left: 10px;
         a {
-          color: #000000;
+          color: #ffffff;
           text-decoration: none;
-
+          padding-left: 8px;
+          border-bottom: 1px solid transparent;
+        }
+        p {
+          color: #ffffff;
+          text-decoration: none;
+          padding-left: 8px;
           border-bottom: 1px solid transparent;
         }
         .link {
-          color: black;
+          color: rgb(255, 255, 255);
         }
       }
     }
