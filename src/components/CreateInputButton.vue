@@ -23,11 +23,11 @@
 </script>
 
 <template>
-  <div class="main-div">
+  <section class="main-section">
     <h2 class="h2-add">Create Task</h2>
     <div class="add-div">
       <form @submit.prevent="addTask">
-        <label for="newTask">New Task</label>
+        <label for="newTask" />
         <input v-model="newTask" type="text" name="newTask" id="newTask" />
         <button v-if="newTask" type="submit" class="btn btn-success mt-3">
           Add task
@@ -44,15 +44,14 @@
         </li>
       </ul>
     </div>
-  </div>
+  </section>
 </template>
 
 <style lang="scss" scoped>
-  .main-div {
+  .main-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(10, 1fr);
-    // grid-template-areas: ;
     background-color: rgba(255, 235, 205, 0.39);
     width: 85%;
     height: 80vh;
@@ -75,8 +74,8 @@
   }
 
   .add-div {
-    grid-row: 2;
     grid-column: 1;
+    grid-row: 2;
     align-self: center;
     justify-self: center;
     color: rgb(255, 255, 255);
@@ -84,20 +83,59 @@
   }
 
   .remove-div {
-    grid-row: 1;
     grid-column: 2;
+    grid-row: 2/10;
+    height: 40rem;
+    overflow-y: scroll;
   }
 
-  ul {
-    grid-row: 2;
-    grid-column: 2;
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+    margin-top: auto;
+    list-style: none;
+    border: 1px solid white;
+    background-color: rgba(188, 130, 235, 0.315);
+    color: white;
+    padding: 10px;
+    margin-top: 10px;
+    width: 80%;
+    min-height: 3rem;
+    border-radius: 10px;
+    font-size: 1.3rem;
   }
 
   img {
     cursor: pointer;
-    width: 3rem;
-    height: auto;
     margin-top: 5px;
     margin-left: 5px;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    margin: 2px;
+  }
+
+  input {
+    grid-row: 4;
+    background-color: transparent;
+    border-bottom: 2px solid rgba(204, 201, 226, 0.616);
+    color: #fff;
+    font-size: 2rem;
+    width: 30rem;
+    align-self: center;
+    margin-left: 2rem;
+  }
+
+  .btn {
+    justify-self: center;
+    align-self: center;
+    color: aqua;
+    margin: auto;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
   }
 </style>
