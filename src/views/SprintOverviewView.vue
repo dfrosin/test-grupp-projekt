@@ -178,7 +178,7 @@
 
 <style lang="scss" scoped>
   h3 {
-    color: black;
+    color: white;
     margin: 3rem 0 1rem 0;
   }
   .flex-container {
@@ -198,7 +198,7 @@
     width: 200px;
     color: black;
     border-radius: 10px;
-    min-height: 20vh fit-content;
+    min-height: 40vh fit-content;
     flex-wrap: wrap;
     margin-bottom: 5rem;
   }
