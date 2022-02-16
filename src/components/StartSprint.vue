@@ -17,7 +17,7 @@
       <label for="end">End date</label>
       <input type="date" :value="this.endDate" />
       <label for="goal">Sprint Goal</label>
-      <input class="sprint-goal" id="goal" />
+      <input class="sprint-goal" v-model="sprintGoal" id="goal" />
     </div>
   </div>
 </template>
@@ -38,7 +38,8 @@
         clickedDateMillisec: '',
         oneWeekMillisec: '',
         totalMillisec: '',
-        endDate: ''
+        endDate: '',
+        sprintGoal: ''
       }
     },
     methods: {
@@ -60,6 +61,9 @@
         let newDateObject = new Date(this.totalMillisec)
         let calendarDate = newDateObject.toISOString().substr(0, 10)
         this.endDate = calendarDate
+      },
+      sendSprintGoal() {
+        this.$store.commit('setSprintGoal', this.sprintGoal)
       }
     },
     computed: {}
@@ -73,7 +77,6 @@
     height: 50vh;
   }
   .sprint-goal {
-    height: 10rem;
     width: 40rem;
   }
   .calendar {
@@ -93,7 +96,6 @@
     border: 1px solid white;
     cursor: pointer;
     width: 12rem;
-    text-align: center;
     margin-bottom: 1rem;
   }
   select {

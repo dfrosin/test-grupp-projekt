@@ -6,11 +6,15 @@ const mutations = {
     },
     setProjectName(state, name) {
       state.projectName = name
+    },
+    setSprintGoal(state, goal) {
+      state.sprintGoal = goal
     }
   },
   state = {
     loggedInUser: null,
-    projectName: null
+    projectName: null,
+    sprintGoal: null
   }
 
 export default createStore({ mutations, state, strict: true })

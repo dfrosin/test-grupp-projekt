@@ -87,9 +87,12 @@
       //AdamsCollection innehåller en absolut sökväg för vilken collection den lägger sig i.
       //Adam byts ut till den aktuella mappen man vill lägga in data i.
       async addANewDocument() {
-        const AdamsCollection = collection(firestore, 'Adam')
+        const AdamsCollection = collection(
+          firestore,
+          this.$store.state.projectName
+        )
         const newDoc = await addDoc(AdamsCollection, {
-          customer: 'Fredrik',
+          status: '',
           drink: 'Beer'
         })
         console.log(newDoc.path)

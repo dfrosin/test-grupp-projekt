@@ -113,7 +113,7 @@
             setDoc(whereToAddData, allDocs)
           }, 2000)
         })
-        // this.$router.push('/createsprint')
+        this.$router.push('/createsprint')
       },
       //Snapshot of all documents as Objects & Keys.
 
