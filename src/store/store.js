@@ -24,11 +24,7 @@ state.newUser
 const state = {
   pbItem: '',
   pbHeading: '',
-  backlogItemInfo: {
-    id: '',
-    docId: '',
-    deleteId: ''
-  },
+  backlogItemInfo: {},
   deletedArray: [],
   arrayOfObjects: [],
   isDeleted: false,
@@ -71,7 +67,6 @@ const mutations = {
 
 const actions = {
   createList({ commit }) {
-    commit('setLoading', true)
     this.backlogItemInfo.id = this.pbItem
     this.backlogItemInfo.docId = uuidv4()
     let copiedObject = JSON.parse(JSON.stringify(this.backlogItemInfo))
