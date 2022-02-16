@@ -2,7 +2,6 @@
   export default {
     data() {
       return {
-        title: 'Add task',
         newTask: '',
         tasks: [],
         remove: 'remove'
@@ -24,30 +23,74 @@
 </script>
 
 <template>
-  <h3>{{ title }}</h3>
+  <div class="main-div">
+    <h2 class="h2-add">Create Task</h2>
+    <div class="add-div">
+      <form @submit.prevent="addTask">
+        <label for="newTask">New Task</label>
+        <input v-model="newTask" type="text" name="newTask" id="newTask" />
+        <button v-if="newTask" type="submit" class="btn btn-success mt-3">
+          Add task
+        </button>
+      </form>
+    </div>
 
-  <form @submit.prevent="addTask">
-    <label for="newTask">New Task</label>
-    <input v-model="newTask" type="text" name="newTask" id="newTask" />
-    <button v-if="newTask" type="submit" class="btn btn-success mt-3">
-      Add task
-    </button>
-  </form>
-
-  <ul>
-    <li v-for="task in tasks" :key="task">
-      <span> {{ task.heading }} </span>
-      <img src="/assets/trash-can.png" alt="" @click="removeTask(task)" />
-    </li>
-  </ul>
+    <h2 class="h2-added">Added Tasks</h2>
+    <div class="remove-div">
+      <ul>
+        <li v-for="task in tasks" :key="task">
+          <span> {{ task.heading }} </span>
+          <img src="/assets/trash-can.png" alt="" @click="removeTask(task)" />
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-  li {
+  .main-div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(10, 1fr);
+    // grid-template-areas: ;
+    background-color: rgba(255, 235, 205, 0.39);
+    width: 85%;
+    height: 80vh;
     margin: auto;
-    list-style-type: none;
-    display: inline flow-root list-item;
-    border-style: double;
+    margin-top: auto;
+    margin-top: 10rem;
+  }
+
+  .h2-add {
+    grid-row: 1;
+    grid-column: 1;
+    align-self: center;
+    justify-self: center;
+  }
+  .h2-added {
+    grid-row: 1;
+    grid-column: 2;
+    align-self: center;
+    justify-self: center;
+  }
+
+  .add-div {
+    grid-row: 2;
+    grid-column: 1;
+    align-self: center;
+    justify-self: center;
+    color: rgb(255, 255, 255);
+    margin-right: 10px;
+  }
+
+  .remove-div {
+    grid-row: 1;
+    grid-column: 2;
+  }
+
+  ul {
+    grid-row: 2;
+    grid-column: 2;
   }
 
   img {
@@ -56,10 +99,5 @@
     height: auto;
     margin-top: 5px;
     margin-left: 5px;
-  }
-  span {
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 </style>
