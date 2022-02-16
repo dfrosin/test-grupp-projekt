@@ -195,8 +195,8 @@
 
   .drop-zone {
     background-color: rgb(233, 144, 144);
-    height: 75rem;
-    width: 30rem;
+    height: 90vh;
+    width: 20vw;
     color: black;
     border-radius: 10px;
     min-height: 10px;
@@ -223,7 +223,7 @@
     z-index: 10;
   }
   .drop-zone-height {
-    height: 75rem;
+    height: 90vh;
   }
 </style>
 <!-- Todo:
