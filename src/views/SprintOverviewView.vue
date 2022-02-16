@@ -185,7 +185,7 @@
     background-color: rgba(235, 235, 235, 0.3);
     margin: 30px;
     display: flex;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: auto;
     justify-content: space-evenly;
     text-align: center;
     border-radius: 10px;
@@ -195,11 +195,10 @@
 
   .drop-zone {
     background-color: rgb(233, 144, 144);
-    height: 90vh;
-    width: 20vw;
+    width: 200px;
     color: black;
     border-radius: 10px;
-    min-height: 10px;
+    min-height: 20vh;
     flex-wrap: wrap;
     margin-bottom: 5rem;
   }
@@ -223,7 +222,7 @@
     z-index: 10;
   }
   .drop-zone-height {
-    height: 90vh;
+    height: 50vh;
   }
 </style>
 <!-- Todo:
