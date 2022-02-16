@@ -44,8 +44,21 @@
           :class="{ 'icon-active': mobileNav }"
         />
       </div>
-      <transition name="mobile-nav"
-        ><ul v-show="mobileNav" class="dropdown-nav">
+
+      <transition name="mobile-nav">
+        <ul v-show="mobileNav" class="dropdown-nav">
+          <li v-if="$store.state.loggedInUser != null" @click="toggleMobileNav">
+            <RouterLink to="/profile">
+              <span v-if="$store.state.loggedInUser != null">
+                {{ $store.state.loggedInUser.userName }}
+              </span>
+              <img
+                id="profile-pic"
+                :src="$store.state.loggedInUser.profilePicture"
+                alt="Adam Agerling"
+              />
+            </RouterLink>
+          </li>
           <li v-if="$store.state.loggedInUser != null" @click="toggleMobileNav">
             <routerLink class="link" to="/sprint">My Projects</routerLink>
           </li>
@@ -68,18 +81,12 @@
               >Dont have an account?</routerLink
             >
           </li>
-          <li v-if="$store.state.loggedInUser != null" @click="toggleMobileNav">
-            <RouterLink to="/profile">
-              <span v-if="$store.state.loggedInUser != null">
-                {{ $store.state.loggedInUser.userName }}
-              </span>
-            </RouterLink>
-          </li>
+
           <li v-if="$store.state.loggedInUser != null">
             <LogoutUser />
           </li>
 
-          <li @click="toggleMobileNav"><p class="link">CLOSE</p></li>
+          <li @click="toggleMobileNav"><p class="link">Close</p></li>
         </ul>
       </transition>
     </nav>

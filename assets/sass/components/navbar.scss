@@ -29,6 +29,7 @@ header {
       padding: 0;
       align-items: center;
       justify-content: space-between;
+      object-fit: cover;
     }
 
     ul,
@@ -107,12 +108,13 @@ header {
       width: 100%;
       max-width: 200px;
       height: 100%;
-      backdrop-filter: blur (10px);
+      z-index: 1;
       background-color: purple;
       top: 0;
       right: 0;
 
       li {
+        font-family: 'Roboto', sans-serif;
         padding-left: 10px;
         a {
           color: #ffffff;
