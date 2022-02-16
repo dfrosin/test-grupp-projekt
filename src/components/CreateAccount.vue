@@ -83,7 +83,7 @@
             password: this.password,
             profilePicture: '/assets/Frame 112.png'
           }
-          const whereToAddData = doc(firestore, `Andreas/${this.userName}`)
+          const whereToAddData = doc(firestore, `users/${this.userName}`)
           setDoc(whereToAddData, newUser)
           this.$store.commit('setLoggedInUser', newUser)
           this.$router.push('/profile')

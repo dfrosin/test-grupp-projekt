@@ -86,10 +86,10 @@
       margin: auto;
       flex-wrap: wrap;
       .upload-buttons {
+        width: 15rem;
         display: flex;
         flex-direction: column;
         text-align: center;
-        padding: 15%;
       }
     }
     img {
@@ -99,28 +99,32 @@
       border-radius: 7.5rem;
     }
     .card-body {
-      margin-top: 7.5rem;
+      margin-top: 10%;
+      height: 10%;
       .saved-information {
         gap: 10px;
         flex-direction: column;
         p {
           height: 20px;
-          margin: 1px 0 1px 0;
+          width: 50%;
+          border-bottom: 2px solid rgba(255, 255, 255, 0);
+          margin: 0;
           padding: 0;
           font-size: 1rem;
           padding-left: 5px;
         }
       }
       .editing-information {
-        display: flex;
-        flex-direction: column;
         input {
           height: 20px;
+          width: 50%;
           font-size: 1rem;
           background-color: transparent;
           border-bottom: 2px solid white;
           width: 80%;
           color: white;
+          margin: 0;
+          padding: 0;
         }
         ::placeholder {
           color: white;
@@ -181,7 +185,7 @@
         this.editing = false
         const whereToAddData = doc(
           firestore,
-          `Andreas/${this.userCollection.userName}`
+          `users/${this.userCollection.userName}`
         )
         setDoc(whereToAddData, this.userCollection)
         this.$store.commit('setLoggedInUser', this.userCollection)

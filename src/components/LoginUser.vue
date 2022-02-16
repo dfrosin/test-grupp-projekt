@@ -43,7 +43,7 @@
     methods: {
       async onSubmit() {
         const customerOrdersQuery = query(
-          collection(firestore, 'Andreas'),
+          collection(firestore, 'users'),
           where('userName', '==', this.userName),
           limit(10)
         )
