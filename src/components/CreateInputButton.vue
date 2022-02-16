@@ -73,11 +73,7 @@
           <img src="/assets/trash-can.png" alt="" @click="removeTask(task)" />
         </li>
       </ul>
-      <button
-        @onclick="createAccount"
-        type="submit"
-        class="btn btn-success mt-3"
-      >
+      <button @click="createAccount" type="submit" class="btn btn-success mt-3">
         Create Task
       </button>
     </div>
