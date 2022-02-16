@@ -59,6 +59,9 @@
 </script>
 
 <style lang="scss" scoped>
+  * {
+    color: #fff;
+  }
   #container {
     display: flex;
     flex-direction: column;
@@ -75,6 +78,10 @@
       text-align: center;
     }
   }
+
+  h1 {
+    color: #fff;
+  }
   .inputs {
     display: flex;
     flex-direction: column;
@@ -86,7 +93,7 @@
   form {
     label {
       margin-left: 35%;
-      color: black;
+      color: #fff;
     }
   }
   button {

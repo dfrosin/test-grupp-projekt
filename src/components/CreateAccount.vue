@@ -102,6 +102,7 @@
     flex-direction: column;
     justify-content: center;
   }
+
   .inputs {
     display: flex;
     flex-direction: column;
@@ -113,9 +114,10 @@
   form {
     label {
       margin-left: 35%;
-      color: black;
+      color: #fff;
     }
   }
+
   button {
     width: 10%;
     margin: 0 45%;
