@@ -8,11 +8,6 @@
 <template>
   <div class="profile-card">
     <h1>My Profile</h1>
-    <div class="buttons">
-      <button v-if="editing === true" @click="onSave">save</button>
-      <button v-if="editing === false" @click="onEdit">edit</button>
-      <button v-if="editing === true" @click="onCancel">cancel</button>
-    </div>
     <div class="img-container">
       <img v-if="uploading === false" :src="url" alt="profile picture" />
       <img
@@ -20,10 +15,9 @@
         :src="newPhoto"
         alt="new profile picture"
       />
-      <div class="upload-buttons">
+      <div class="upload-buttons" v-if="editing === true">
         <input
-          id="editButton"
-          v-if="editing === true"
+          class="edit-button"
           type="file"
           @change="previewPhoto"
           accept="image/png, image/jpeg"
@@ -42,6 +36,11 @@
         <input type="text" v-model="userCollection.fullName" />
         <input type="email" v-model="userCollection.email" />
       </div>
+      <div class="buttons">
+        <button v-if="editing === true" @click="onSave">save</button>
+        <button v-if="editing === false" @click="onEdit">edit</button>
+        <button v-if="editing === true" @click="onCancel">cancel</button>
+      </div>
     </div>
   </div>
 </template>
@@ -56,9 +55,6 @@
     display: flex;
     flex-wrap: wrap;
     border-radius: 10px;
-    edit-button {
-      background-color: transparent;
-    }
     h1 {
       text-align: center;
       width: 60%;
@@ -76,32 +72,53 @@
     .buttons {
       width: 20%;
       display: flex;
-      justify-content: end;
-      padding-right: 2rem;
+      flex-direction: column;
+      margin-left: auto;
+      button {
+        height: 5px;
+        width: 20px;
+      }
     }
     .img-container {
       display: flex;
-      flex-direction: column;
+      width: 200px;
+      height: 200px;
+      justify-content: center;
       text-align: center;
       margin: auto;
       flex-wrap: wrap;
       .upload-buttons {
+        background-color: rgba(0, 0, 0, 0.2);
+        height: 15rem;
         width: 15rem;
+        margin-top: 10px;
+        border-radius: 7.5rem;
         display: flex;
         flex-direction: column;
-        text-align: center;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        .edit-button {
+          width: 150px;
+          padding-left: 7px;
+          background-color: transparent;
+        }
+      }
+      img {
+        width: 150px;
+        height: 150px;
+        border-radius: 75px;
+        margin: 5%;
+        object-fit: cover;
       }
     }
-    img {
-      width: 15rem;
-      height: 15rem;
-      margin: 5%;
-      border-radius: 7.5rem;
-    }
     .card-body {
+      display: flex;
+      flex-direction: row;
       margin-top: 10%;
       height: 10%;
       .saved-information {
+        margin-top: 1.8px;
         gap: 10px;
         flex-direction: column;
         p {
@@ -111,7 +128,7 @@
           margin: 0;
           padding: 0;
           font-size: 1rem;
-          padding-left: 5px;
+          margin-left: 10px;
         }
       }
       .editing-information {
@@ -125,6 +142,7 @@
           color: white;
           margin: 0;
           padding: 0;
+          margin-left: 10px;
         }
         ::placeholder {
           color: white;
