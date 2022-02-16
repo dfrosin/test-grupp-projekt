@@ -66,11 +66,7 @@
       return {
         pbItem: '',
         pbHeading: '',
-        backlogItemInfo: {
-          id: '',
-          docId: '',
-          deleteId: ''
-        },
+        backlogItemInfo: {},
         deletedArray: [],
         arrayOfObjects: [],
         isDeleted: false,
