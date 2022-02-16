@@ -100,6 +100,7 @@
 </script>
 
 <template>
+  <h2>{{ this.$store.state.projectName }}</h2>
   <article class="flex-container">
     <sprint-list title="Todo">
       <section class="drop-zone">
