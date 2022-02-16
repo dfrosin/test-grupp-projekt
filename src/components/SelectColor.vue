@@ -3,7 +3,7 @@
     <label for="color">Select a color:</label>
     <input type="color" name="color" v-model="color" />
     <button @click="addColor" type="submit" class="btn btn-success mt-3">
-      Create account
+      Select color
     </button>
   </form>
 </template>
