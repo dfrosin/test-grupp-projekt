@@ -9,8 +9,8 @@
 </template>
 
 <script>
-  import { firestore } from '../firebase'
-  import { updateDoc, doc } from 'firebase/firestore'
+  // import { firestore } from '../firebase'
+  // import { updateDoc, doc } from 'firebase/firestore'
 
   export default {
     emits: ['getColor'],
@@ -21,12 +21,11 @@
     },
     methods: {
       addColor() {
-        const whereToAddData = doc(firestore, 'PBI/Adam') //object.id ist för Adam//
-        const updateData = {
-          color: this.color
-        }
+        // const whereToAddData = doc(firestore, 'PBI/Adam') //object.id ist för Adam//
+        // const updateData = {
+        //   color: this.color
         this.$emit('getColor', this.color)
-        updateDoc(whereToAddData, updateData)
+        // updateDoc(whereToAddData, updateData)
       }
     }
   }
