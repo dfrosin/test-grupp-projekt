@@ -72,13 +72,22 @@
     <h2 class="h2-added">Added Tasks</h2>
     <div class="remove-div">
       <ul>
-        <li v-for="task in tasks" :key="task">
+        <li
+          :style="{ borderColor: getColor }"
+          v-for="task in tasks"
+          :key="task"
+        >
           <span> {{ task.heading }} </span>
           <img src="/assets/trash-can.png" alt="" @click="removeTask(task)" />
         </li>
       </ul>
     </div>
-    <button @onclick="createAccount" type="submit" class="btn btn-success mt-3">
+    <button
+      v-if="tasks != 0"
+      @onclick="createAccount"
+      type="submit"
+      class="btn btn-success mt-3"
+    >
       Create Task
     </button>
   </section>
@@ -149,7 +158,7 @@
     justify-content: space-between;
     margin: auto;
     list-style: none;
-    border: 1px solid white;
+    border: 2px solid white;
     background-color: rgba(188, 130, 235, 0.315);
     color: white;
     padding: 10px;
