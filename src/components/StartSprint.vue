@@ -17,7 +17,12 @@
       <label for="end">End date</label>
       <input type="date" :value="this.endDate" />
       <label for="goal">Sprint Goal</label>
-      <input class="sprint-goal" v-model="sprintGoal" id="goal" />
+      <input
+        class="sprint-goal"
+        v-model="sprintGoal"
+        @keyup.enter="sendSprintGoal"
+        id="goal"
+      />
     </div>
   </div>
 </template>
@@ -64,6 +69,7 @@
       },
       sendSprintGoal() {
         this.$store.commit('setSprintGoal', this.sprintGoal)
+        console.log('hej')
       }
     },
     computed: {}
