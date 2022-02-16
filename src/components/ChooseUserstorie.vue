@@ -1,18 +1,21 @@
 <template>
-  <select
-    class="form-select form-select-sm"
-    aria-label=".form-select-sm example"
-    v-model="selectedObject"
-  >
-    <option selected>Choose userstorie</option>
-    <option
-      v-for="object in arrayOfObjects"
-      :key="object.id"
-      :value="object.id"
+  <div id="userstories">
+    <p>Select userstorie</p>
+    <select
+      class="form-select form-select-sm"
+      aria-label=".form-select-sm example"
+      v-model="selectedObject"
     >
-      {{ object.id }}
-    </option>
-  </select>
+      <option selected>Select userstorie</option>
+      <option
+        v-for="object in arrayOfObjects"
+        :key="object.id"
+        :value="object.id"
+      >
+        {{ object.id }}
+      </option>
+    </select>
+  </div>
 </template>
 
 <script>
@@ -50,10 +53,18 @@
 </script>
 
 <style lang="scss" scoped>
-  .form-select {
+  #userstories {
     width: 100px;
     display: flex;
     flex-direction: column;
+    align-items: center;
+
+    p {
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin-top: 4.2rem;
+    }
   }
 </style>
 

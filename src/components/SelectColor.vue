@@ -1,6 +1,6 @@
 <template>
   <form id="color" @submit.prevent="addColor">
-    <label for="color">Choose a color:</label>
+    <label for="color">Select a color:</label>
     <input type="color" name="color" v-model="color" />
     <button @click="addColor" type="submit" class="btn btn-success mt-3">
       Create account
@@ -30,25 +30,27 @@
     }
   }
 </script>
-
 <style lang="scss" scoped>
-  form {
+  #color {
     display: flex;
+    align-items: center;
     flex-direction: column;
-    width: 100px;
-  }
+    justify-content: flex-center;
 
-  p,
-  label {
-    font-size: 1.6rem;
-    font-weight: bold;
-    margin-top: 4.2rem;
-    text-align: center;
-  }
+    p,
+    label {
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin-top: 4.2rem;
+    }
 
-  input {
-    margin: 0.4rem;
-    height: 2rem;
-    width: 85%;
+    button {
+      margin-bottom: 1rem;
+    }
+    input {
+      margin: 0.4rem;
+      height: 2rem;
+      width: 20%;
+    }
   }
 </style>
