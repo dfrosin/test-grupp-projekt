@@ -13,6 +13,7 @@
   import { updateDoc, doc } from 'firebase/firestore'
 
   export default {
+    emits: ['getColor'],
     data() {
       return {
         color: this.color

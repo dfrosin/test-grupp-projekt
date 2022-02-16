@@ -11,7 +11,7 @@
       StartSprint,
       SelectColor
     },
-    emits: ['getColor'],
+
     methods: {
       getColor() {
         console.log('hej')
