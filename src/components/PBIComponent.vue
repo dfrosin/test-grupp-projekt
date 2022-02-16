@@ -92,6 +92,7 @@
     },
     methods: {
       createList() {
+        this.$store.commit('setProjectName', this.pbHeading)
         this.backlogItemInfo.id = this.pbItem
         this.backlogItemInfo.docId = uuidv4()
         let copiedObject = JSON.parse(JSON.stringify(this.backlogItemInfo))
@@ -102,6 +103,7 @@
       },
       createAccount() {
         // --------------- SKAPA NY ANVÄNDARE------------------------------ //
+
         this.arrayOfObjects.forEach((allDocs) => {
           setTimeout(() => {
             const whereToAddData = doc(
@@ -111,6 +113,7 @@
             setDoc(whereToAddData, allDocs)
           }, 2000)
         })
+        // this.$router.push('/createsprint')
       },
       //Snapshot of all documents as Objects & Keys.
 
@@ -140,7 +143,7 @@
         this.isH2Visible = false
         this.editProjectName = true
         this.isVisible = false
-        store.commit('setProjectName', this.pbHeading)
+        this.$store.commit('setProjectName', this.pbHeading)
         console.log(store.state.projectName)
       },
       visible() {

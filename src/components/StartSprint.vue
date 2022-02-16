@@ -1,6 +1,8 @@
 <template>
   <div class="template">
-    <h2>Project Name</h2>
+    <h2 v-if="$store.state.projectName !== null">
+      {{ $store.state.projectName }}
+    </h2>
     <h2>X cases will be included in this sprint</h2>
     <div class="calendar">
       <label for="start">Start Date</label>
@@ -27,6 +29,7 @@
       let TodaysCalendarDate = new Date(todaysDate)
       let calendarDate = TodaysCalendarDate.toISOString().substr(0, 10)
       this.date = calendarDate
+      console.log(this.$store.state.projectName)
     },
     data() {
       return {

@@ -73,12 +73,7 @@
         // mondayCollection är ett enklare sätt att skriva nestlad data.
 
         const whereToAddData = doc(firestore, 'tasks/monday')
-        //task/monday går att byta ut till vad vi vill ha
-        // whereToAddData är ett kortare sätt att skriva det på
-        // const docData = {
-        //   name: this.firstName,
-        //   email: this.email
-        // }
+
         const updateData = {
           email: this.email
         }
