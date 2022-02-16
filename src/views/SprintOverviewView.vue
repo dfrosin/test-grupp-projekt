@@ -100,7 +100,7 @@
 </script>
 
 <template>
-  <h2>{{ this.$store.state.projectName }}</h2>
+  <h2>Project: {{ this.$store.state.projectName }}</h2>
   <article class="flex-container">
     <sprint-list title="Todo">
       <section class="drop-zone">
@@ -177,6 +177,9 @@
 </template>
 
 <style lang="scss" scoped>
+  h2 {
+    margin-left: 4rem;
+  }
   h3 {
     color: white;
     margin: 3rem 0 1rem 0;
