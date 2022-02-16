@@ -1,10 +1,7 @@
 <template>
   <form id="color" @submit.prevent="addColor">
     <label for="color">Select a color:</label>
-    <input type="color" name="color" v-model="color" />
-    <button @click="addColor" type="submit" class="btn btn-success mt-3">
-      Select color
-    </button>
+    <input type="color" name="color" v-model="color" @onchange="addColor" />
   </form>
 </template>
 
