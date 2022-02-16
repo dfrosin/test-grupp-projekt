@@ -1,4 +1,4 @@
-import { createStore, reactive } from 'vuex'
+import { createStore } from 'vuex'
 import { db, firestore } from '../firebase'
 import { collection, getDocs, setDoc, doc } from 'firebase/firestore'
 import { v4 as uuidv4 } from 'uuid'
@@ -21,7 +21,7 @@ state.newUser
 
   }, */
 
-const state = reactive({
+const state = {
   pbItem: '',
   pbHeading: '',
   backlogItemInfo: {
@@ -36,13 +36,30 @@ const state = reactive({
   isVisible: true,
   showToolTip: false,
   newName: '',
-  editProjectName: false
-})
+  editProjectName: false,
+  todo: [
+    { name: 'kalle', age: 21 },
+    { name: 'urban', age: 25 }
+  ],
+  loggedInUser: null,
+  projectName: null
+}
+
+const getters = {
+  allTodos: (state) => state.todo
+}
 
 const mutations = {
   // syncrous way to update  state in vuex store
   setCreateList(state, payload) {
     state.backlogItemInfo = payload
+  },
+
+  setLoggedInUser(state, user) {
+    state.loggedInUser = user
+  },
+  setProjectName(state, name) {
+    state.projectName = name
   }
 }
 
@@ -58,8 +75,9 @@ const actions = {
     this.backlogItemInfo.id = this.pbItem
     this.backlogItemInfo.docId = uuidv4()
     let copiedObject = JSON.parse(JSON.stringify(this.backlogItemInfo))
-    this.arrayOfObjects.push(copiedObject)
+    const update = this.arrayOfObjects.push(copiedObject)
     this.pbItem = ''
+    commit('setCreateList', update)
   },
 
   // --------------- SKAPA NY ANVÄNDARE------------------------------ //
@@ -119,6 +137,6 @@ export default createStore({
   state,
   actions,
   mutations,
-  /* getters, */
+  getters,
   strict: true
 })
