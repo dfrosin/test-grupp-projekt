@@ -39,16 +39,8 @@
         <p>{{ userCollection.email }}</p>
       </div>
       <div v-if="editing === true" class="editing-information">
-        <input
-          type="text"
-          v-model="newName"
-          :placeholder="userCollection.fullName"
-        />
-        <input
-          type="email"
-          v-model="newEmail"
-          :placeholder="userCollection.email"
-        />
+        <input type="text" v-model="userCollection.fullName" />
+        <input type="email" v-model="userCollection.email" />
       </div>
     </div>
   </div>
@@ -156,10 +148,10 @@
         editing: false,
         uploading: false,
         newPhoto: null,
-        newName: '',
-        newEmail: '',
         url: null,
         file: null,
+        nameCopy: '',
+        emailCopy: '',
         userCollection: {}
       }
     },
@@ -175,21 +167,18 @@
     methods: {
       onEdit() {
         this.editing = true
+        this.nameCopy = this.userCollection.fullName.slice()
+        this.emailCopy = this.userCollection.email.slice()
       },
       onCancel() {
+        this.userCollection.fullName = this.nameCopy
+        this.userCollection.email = this.emailCopy
         this.editing = false
         this.uploading = false
         this.newPhoto = null
-        this.clearInputs()
       },
       onSave() {
         this.editing = false
-        if (this.newName !== '') {
-          this.userCollection.fullName = this.newName
-        }
-        if (this.newEmail !== '') {
-          this.userCollection.email = this.newEmail
-        }
         const whereToAddData = doc(
           firestore,
           `Andreas/${this.userCollection.userName}`
@@ -197,7 +186,6 @@
         setDoc(whereToAddData, this.userCollection)
         this.$store.commit('setLoggedInUser', this.userCollection)
         this.userCollection = { ...this.$store.state.loggedInUser }
-        this.clearInputs()
       },
       previewPhoto(photo) {
         this.file = photo.target.files[0]
@@ -225,10 +213,6 @@
             console.log(this.url)
           })
         })
-      },
-      clearInputs() {
-        this.newName = ''
-        this.newEmail = ''
       }
     }
   }
