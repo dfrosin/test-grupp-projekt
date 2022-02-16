@@ -106,6 +106,7 @@
   .inputs {
     display: flex;
     flex-direction: column;
+    color: black;
     input {
       width: 30%;
       margin: 1rem 35%;

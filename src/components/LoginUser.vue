@@ -59,9 +59,6 @@
 </script>
 
 <style lang="scss" scoped>
-  * {
-    color: #fff;
-  }
   #container {
     display: flex;
     flex-direction: column;
@@ -71,11 +68,13 @@
       font-weight: bold;
       margin-top: 4.2rem;
       text-align: center;
+      color: white;
     }
     .link {
       font-size: 1.6rem;
       font-weight: bold;
       text-align: center;
+      color: white;
     }
   }
 
@@ -85,6 +84,7 @@
   .inputs {
     display: flex;
     flex-direction: column;
+    color: black;
     input {
       width: 30%;
       margin: 1rem 35%;
