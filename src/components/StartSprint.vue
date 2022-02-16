@@ -78,9 +78,12 @@
 
 <style lang="scss" scoped>
   .template {
+    margin-top: 2rem;
     background-color: rgba(245, 245, 245, 0.418);
-    width: 80%;
-    height: 50vh;
+    display: block;
+    width: 85%;
+    height: 40vh;
+    margin: auto;
   }
   .sprint-goal {
     width: 40rem;

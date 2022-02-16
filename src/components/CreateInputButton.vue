@@ -55,15 +55,19 @@
 
   <section class="main-section">
     <h2 class="h2-add">Create Task</h2>
-    <div class="add-div">
-      <form @submit.prevent="addTask">
-        <label for="newTask" />
-        <input v-model="newTask" type="text" name="newTask" id="newTask" />
-        <button v-if="newTask" type="submit" class="btn btn-success mt-3">
-          Add task
-        </button>
-      </form>
-    </div>
+    <form @submit.prevent="addTask">
+      <label for="newTask" />
+      <input
+        v-model="newTask"
+        type="text"
+        name="newTask"
+        id="newTask"
+        placeholder="Add Task"
+      />
+      <button v-if="newTask" type="submit" class="btn btn-success mt-3">
+        Add task
+      </button>
+    </form>
 
     <h2 class="h2-added">Added Tasks</h2>
     <div class="remove-div">
@@ -73,37 +77,49 @@
           <img src="/assets/trash-can.png" alt="" @click="removeTask(task)" />
         </li>
       </ul>
-      <button
-        @onclick="createAccount"
-        type="submit"
-        class="btn btn-success mt-3"
-      >
-        Create Task
-      </button>
     </div>
+    <button @onclick="createAccount" type="submit" class="btn btn-success mt-3">
+      Create Task
+    </button>
   </section>
 </template>
 
 <style lang="scss" scoped>
+  #color {
+    margin: 3rem;
+    width: 40rem;
+    position: absolute;
+    top: 11.5rem;
+    right: 10rem;
+    input {
+      align-self: flex-start;
+      width: 4rem;
+      height: 3rem;
+    }
+    label {
+      font-size: 2.8rem;
+      font-weight: 500;
+    }
+  }
   .main-section {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(10, 1fr);
-    background-color: rgba(255, 235, 205, 0.39);
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    background-color: rgba(248, 246, 243, 0.39);
     width: 85%;
-    height: 80vh;
+    height: 30rem;
     margin: auto;
     margin-top: auto;
     margin-top: 10rem;
+    margin-bottom: 3rem;
   }
 
   .h2-add {
+    margin-left: 2rem;
     grid-row: 1;
     grid-column: 1;
-    align-self: center;
-    justify-self: center;
   }
-  .h2-added {
+  s .h2-added {
     grid-row: 1;
     grid-column: 2;
     align-self: center;
@@ -120,25 +136,25 @@
   }
 
   .remove-div {
-    grid-column: 2;
+    display: grid;
+    grid-template-columns: 1fr, 1fr;
+    min-width: 20rem;
+    grid-column: 2/4;
     grid-row: 2/10;
-    height: 40rem;
-    overflow-y: scroll;
+    max-height: 22rem;
   }
 
   li {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin: auto;
-    margin-top: auto;
     list-style: none;
     border: 1px solid white;
     background-color: rgba(188, 130, 235, 0.315);
     color: white;
     padding: 10px;
     margin-top: 10px;
-    width: 80%;
+    width: 30rem;
     min-height: 3rem;
     border-radius: 10px;
     font-size: 1.3rem;
@@ -160,18 +176,21 @@
     border-bottom: 2px solid rgba(204, 201, 226, 0.616);
     color: #fff;
     font-size: 2rem;
-    width: 30rem;
-    align-self: center;
+    width: 20rem;
     margin-left: 2rem;
   }
 
   .btn {
+    margin: 2rem;
+    grid-row: 10;
+    grid-column: 2;
     justify-self: center;
     align-self: center;
-    margin: auto;
   }
   form {
     display: flex;
     flex-direction: column;
+    grid-column: 1;
+    grid-row: 4;
   }
 </style>

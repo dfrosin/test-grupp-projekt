@@ -1,16 +1,16 @@
 <template>
   <div v-if="$store.state.arrayOfObjects !== null" id="userstories">
-    <p>Select userstorie</p>
+    <label for="PBI">Select PBI: </label>
     <select
       class="form-select form-select-sm"
       aria-label=".form-select-sm example"
       v-model="selectedObject"
     >
-      <option selected>Select userstorie</option>
       <option
         v-for="object in this.$store.state.arrayOfObjects"
         :key="object.id"
         :value="object.id"
+        id="PBI"
       >
         {{ object.id }}
       </option>
@@ -56,16 +56,26 @@
 
 <style lang="scss" scoped>
   #userstories {
-    width: 100px;
+    margin: 4rem 10rem;
+    width: 25rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    label {
+      font-size: 2.8rem;
+      font-weight: 500;
+    }
 
     p {
       text-align: center;
       font-size: 1.6rem;
       font-weight: bold;
       margin-top: 4.2rem;
+    }
+    select {
+      width: 20rem;
+      height: 3rem;
+      display: inline;
+      border-radius: 10px;
     }
   }
 </style>
