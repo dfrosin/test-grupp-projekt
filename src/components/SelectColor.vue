@@ -2,11 +2,10 @@
   <form id="color" @submit.prevent="addColor">
     <label for="color">Choose a color:</label>
     <input type="color" name="color" v-model="color" />
+    <button @click="addColor" type="submit" class="btn btn-success mt-3">
+      Create account
+    </button>
   </form>
-
-  <button @click="addColor" type="submit" class="btn btn-success mt-3">
-    Create account
-  </button>
 </template>
 
 <script>
@@ -25,6 +24,7 @@
         const updateData = {
           color: this.color
         }
+        this.$emit('getColor', this.color)
         updateDoc(whereToAddData, updateData)
       }
     }
@@ -32,11 +32,18 @@
 </script>
 
 <style lang="scss" scoped>
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+  }
+
   p,
   label {
     font-size: 1.6rem;
     font-weight: bold;
     margin-top: 4.2rem;
+    text-align: center;
   }
 
   input {
