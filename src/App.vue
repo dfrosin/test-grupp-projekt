@@ -1,7 +1,7 @@
 <script>
   import NavbarComponent from './components/NavbarComponent.vue'
   import CrumbleFooter from './components/CrumbleFooter.vue'
-  /* import LogInComponent from './components/LogInComponent.vue' */
+
   export default {
     components: { NavbarComponent, CrumbleFooter }
   }

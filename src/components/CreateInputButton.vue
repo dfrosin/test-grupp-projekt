@@ -4,7 +4,8 @@
       return {
         title: 'Add task',
         newTask: '',
-        tasks: []
+        tasks: [],
+        remove: 'remove'
       }
     },
     methods: {
@@ -35,7 +36,7 @@
 
   <ul>
     <li v-for="task in tasks" :key="task">
-      <span :class="{ done: task.done }"> {{ task.heading }} </span>
+      <span> {{ task.heading }} </span>
       <img src="/assets/trash-can.png" alt="" @click="removeTask(task)" />
     </li>
   </ul>
@@ -43,6 +44,22 @@
 
 <style lang="scss" scoped>
   li {
+    margin: auto;
     list-style-type: none;
+    display: inline flow-root list-item;
+    border-style: double;
+  }
+
+  img {
+    cursor: pointer;
+    width: 3rem;
+    height: auto;
+    margin-top: 5px;
+    margin-left: 5px;
+  }
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 </style>

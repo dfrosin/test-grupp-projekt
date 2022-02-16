@@ -95,7 +95,9 @@
         this.backlogItemInfo.id = this.pbItem
         this.backlogItemInfo.docId = uuidv4()
         let copiedObject = JSON.parse(JSON.stringify(this.backlogItemInfo))
+
         this.arrayOfObjects.push(copiedObject)
+        console.log(this.arrayOfObjects)
         this.pbItem = ''
       },
       createAccount() {
@@ -111,6 +113,7 @@
         })
       },
       //Snapshot of all documents as Objects & Keys.
+
       getDatabase() {
         const colRef = collection(db, 'PBI')
 
@@ -131,6 +134,7 @@
         })
         this.arrayOfObjects = filtered
       },
+
       editName() {
         this.showToolTip = false
         this.isH2Visible = false
