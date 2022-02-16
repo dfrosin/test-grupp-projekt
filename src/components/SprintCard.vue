@@ -1,10 +1,9 @@
 <script>
   export default {
     props: {
-      title: {
-        type: String,
-        default: '',
-        required: true
+      item: {
+        type: [String, Object, Number, Array],
+        default: ''
       }
     },
     data() {
@@ -14,7 +13,7 @@
 </script>
 <template>
   <div class="sprint-card">
-    {{ item.card }}
+    {{ item.todo }}
   </div>
 </template>
 
