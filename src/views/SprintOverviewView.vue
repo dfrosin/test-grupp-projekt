@@ -201,7 +201,7 @@
     width: 200px;
     color: black;
     border-radius: 10px;
-    min-height: 40vh fit-content;
+    min-height: 60vh fit-content;
     flex-wrap: wrap;
     margin-bottom: 5rem;
   }
@@ -211,7 +211,7 @@
     text-align: center;
     color: black;
     width: 200px;
-    height: 7rem;
+    height: 6rem;
     background-color: white;
     border-radius: 10px;
     border-style: solid;
@@ -225,7 +225,7 @@
     z-index: 10;
   }
   .drop-zone-height {
-    height: 50vh;
+    height: 60vh;
   }
 </style>
 <!-- Todo:
