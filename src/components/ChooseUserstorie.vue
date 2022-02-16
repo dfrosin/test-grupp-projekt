@@ -1,5 +1,5 @@
 <template>
-  <div id="userstories">
+  <div v-if="$store.state.arrayOfObjects !== null" id="userstories">
     <p>Select userstorie</p>
     <select
       class="form-select form-select-sm"
@@ -8,7 +8,7 @@
     >
       <option selected>Select userstorie</option>
       <option
-        v-for="object in arrayOfObjects"
+        v-for="object in this.$store.state.arrayOfObjects"
         :key="object.id"
         :value="object.id"
       >
@@ -27,16 +27,18 @@
     data() {
       return {
         arrayOfObjects: [],
-        selectedObject: null
+        selectedObject: ''
       }
     },
     created() {
       this.getDatabase()
+      console.log('Databas ' + this.$store.state.arrayOfObjects)
+      console.log('Sökväg / användare ' + this.$store.state.projectName)
     },
     methods: {
       //Snapshot of all documents as Objects & Keys.
       getDatabase() {
-        const colRef = collection(firestore, 'PBI')
+        const colRef = collection(firestore, `${this.$store.state.projectName}`)
         // const colRef = collection(firestore, store.state.projectName)
 
         getDocs(colRef).then((snapshot) => {

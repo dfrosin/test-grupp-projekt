@@ -2,14 +2,12 @@
   import CreateInputButton from '../components/CreateInputButton.vue'
   import ChooseUserstorie from '../components/ChooseUserstorie.vue'
   import StartSprint from '../components/StartSprint.vue'
-  import SelectColor from '../components/SelectColor.vue'
 
   export default {
     components: {
       CreateInputButton,
       ChooseUserstorie,
-      StartSprint,
-      SelectColor
+      StartSprint
     },
 
     methods: {
@@ -24,7 +22,7 @@
   <div id="container">
     <h2>CreateSprintView.vue</h2>
     <ChooseUserstorie />
-    <SelectColor @send-info="getColor" />
+
     <CreateInputButton />
     <StartSprint />
   </div>

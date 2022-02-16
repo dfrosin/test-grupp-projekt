@@ -1,10 +1,15 @@
 <script>
+  import { firestore } from '../firebase'
+  import { addDoc, doc } from 'firebase/firestore'
+
   export default {
     data() {
       return {
         newTask: '',
         tasks: [],
-        remove: 'remove'
+        array: [],
+        dataValue: {},
+        getColor: ''
       }
     },
     methods: {
@@ -12,17 +17,42 @@
         this.tasks.push({
           heading: this.newTask
         })
+        console.log()
+        this.createList()
         this.newTask = ''
       },
       removeTask(task) {
         const taskIndex = this.tasks.indexOf(task)
         this.tasks.splice(taskIndex, 1)
+      },
+      createList() {
+        this.dataValue.color = this.getColor
+        this.dataValue.name = this.newTask
+        this.dataValue.status = 'todo'
+        let copiedObject = JSON.parse(JSON.stringify(this.dataValue))
+        this.array.push(copiedObject)
+      },
+      createAccount() {
+        this.array.forEach((allDocs) => {
+          setTimeout(() => {
+            const whereToAddData = doc(
+              firestore,
+              `${this.store.state.projectName}/${this.newTask}`
+            )
+            addDoc(whereToAddData, allDocs)
+          }, 2000)
+        })
       }
     }
   }
 </script>
 
 <template>
+  <form id="color" @submit.prevent="addColor">
+    <label for="color">Select a color:</label>
+    <input v-model="getColor" type="color" name="color" />
+  </form>
+
   <section class="main-section">
     <h2 class="h2-add">Create Task</h2>
     <div class="add-div">
@@ -43,6 +73,13 @@
           <img src="/assets/trash-can.png" alt="" @click="removeTask(task)" />
         </li>
       </ul>
+      <button
+        @onclick="createAccount"
+        type="submit"
+        class="btn btn-success mt-3"
+      >
+        Create Task
+      </button>
     </div>
   </section>
 </template>
@@ -131,7 +168,6 @@
   .btn {
     justify-self: center;
     align-self: center;
-    color: aqua;
     margin: auto;
   }
   form {

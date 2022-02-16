@@ -96,14 +96,16 @@
         this.backlogItemInfo.id = this.pbItem
         this.backlogItemInfo.docId = uuidv4()
         let copiedObject = JSON.parse(JSON.stringify(this.backlogItemInfo))
-
+        this.$store.dispatch('setArrayOfObjects', copiedObject)
+        console.log('Det här läggs i store ' + this.$store.state.arrayOfItems)
         this.arrayOfObjects.push(copiedObject)
         console.log(this.arrayOfObjects)
         this.pbItem = ''
       },
       createAccount() {
         // --------------- SKAPA NY ANVÄNDARE------------------------------ //
-
+        console.log(this.arrayOfObjects)
+        this.$store.commit('setArrayOfObjects', this.arrayOfObjects)
         this.arrayOfObjects.forEach((allDocs) => {
           setTimeout(() => {
             const whereToAddData = doc(
