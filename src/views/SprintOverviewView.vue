@@ -179,6 +179,7 @@
 <style lang="scss" scoped>
   h2 {
     margin-left: 4rem;
+    color: white;
   }
   h3 {
     color: white;
