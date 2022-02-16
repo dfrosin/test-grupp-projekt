@@ -1,52 +1,66 @@
 <script>
+  import { collection, getDocs } from 'firebase/firestore'
+
   import { db } from '../firebase.js'
   import SprintList from '../components/SprintList.vue'
   import SprintCard from '../components/SprintCard.vue'
   import { VueDraggableNext } from 'vue-draggable-next'
   export default {
+    created() {
+      const colRef = collection(db, 'Adamstest')
+
+      getDocs(colRef).then((snapshot) => {
+        snapshot.docs.forEach((doc) => {
+          this.todo.push({ ...doc.data(), id: doc.id })
+        })
+        this.arrayOfObjects = this.todo
+        console.log(this.todo)
+      })
+    },
     data() {
       return {
         enabled: true,
-        todo: [],
+        // todo: [],
         inProgress: [],
         review: [],
         done: [],
-        dragging: false
+        dragging: false,
+        todo: []
       }
     },
-    mounted() {
-      this.cardboard.onSnapshot((snapshot) => {
-        snapshot.docChanges().forEach((change) => {
-          if (change.type === 'added') {
-            if (change.doc.data().status === 'TODO') {
-              this.todo.push({
-                id: change.doc.id,
-                ...change.doc.data()
-              })
-            } else if (change.doc.data().status === 'DONE') {
-              this.done.push({
-                id: change.doc.id,
-                ...change.doc.data()
-              })
-            } else if (change.doc.data().status === 'REVIEW') {
-              this.review.push({
-                id: change.doc.id,
-                ...change.doc.data()
-              })
-            } else {
-              this.inProgress.push({
-                id: change.doc.id,
-                ...change.doc.data()
-              })
-            }
-          }
-        })
-      })
-    },
+    // mounted() {
+    //   this.todo.onSnapshot((snapshot) => {
+    //     snapshot.docChanges().forEach((change) => {
+    //       if (change.type === 'added') {
+    //         if (change.doc.data().status === 'TODO') {
+    //           this.todo.push({
+    //             id: change.doc.id,
+    //             ...change.doc.data()
+    //           })
+    //         } else if (change.doc.data().status === 'DONE') {
+    //           this.done.push({
+    //             id: change.doc.id,
+    //             ...change.doc.data()
+    //           })
+    //         } else if (change.doc.data().status === 'REVIEW') {
+    //           this.review.push({
+    //             id: change.doc.id,
+    //             ...change.doc.data()
+    //           })
+    //         } else {
+    //           this.inProgress.push({
+    //             id: change.doc.id,
+    //             ...change.doc.data()
+    //           })
+    //         }
+    //       }
+    //     })
+    //   })
+    // },
     watch: {
       todo(value) {
         value.map((todo) => {
-          this.cardboard.doc(todo.id).update({
+          this.todo.doc(todo.id).update({
             status: 'TODO',
             todo: todo.todo
           })
@@ -54,7 +68,7 @@
       },
       inProgress(value) {
         value.map((todo) => {
-          this.cardboard.doc(todo.id).update({
+          this.todo.doc(todo.id).update({
             status: 'IN_PROGRESS',
             todo: todo.todo
           })
@@ -62,7 +76,7 @@
       },
       review(value) {
         value.map((todo) => {
-          this.cardboard.doc(todo.id).update({
+          this.todo.doc(todo.id).update({
             status: 'REVIEW',
             todo: todo.todo
           })
@@ -70,17 +84,11 @@
       },
       done(value) {
         value.map((todo) => {
-          this.cardboard.doc(todo.id).update({
+          this.todo.doc(todo.id).update({
             status: 'DONE',
             todo: todo.todo
           })
         })
-      }
-    },
-    computed: {
-      cardboard() {
-        console.log(db)
-        return db.collection('Adamstest')
       }
     },
     components: {

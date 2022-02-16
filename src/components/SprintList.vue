@@ -12,8 +12,7 @@
     props: {
       title: {
         type: String,
-        default: '',
-        required: true
+        default: ''
       }
     },
 

@@ -28,7 +28,11 @@
               $store.state.loggedInUser.userName
             }}</span>
 
-            <img id="profile-pic" :src="profilePicture" alt="Adam Agerling" />
+            <img
+              id="profile-pic"
+              :src="$store.state.loggedInUser.profilePicture"
+              alt="Adam Agerling"
+            />
           </RouterLink>
         </li>
       </ul>
@@ -110,8 +114,7 @@
         scrolledNav: null,
         mobile: null,
         mobileNav: null,
-        windowWidth: null,
-        profilePicture: '/assets/Frame 112.png'
+        windowWidth: null
       }
     },
     created() {

@@ -67,14 +67,24 @@
     },
     methods: {
       makeNewUser() {
-        // --------------- SKAPA NY ------------------------------ /
+        // --------------- SKAPA NY ------------------------------ //
 
-        const whereToAddData = doc(firestore, 'PBI/')
+        // const firestore är: getFirestore()
+        // mondayCollection är ett enklare sätt att skriva nestlad data.
+
+        const whereToAddData = doc(firestore, 'tasks/monday')
+        //task/monday går att byta ut till vad vi vill ha
+        // whereToAddData är ett kortare sätt att skriva det på
+        // const docData = {
+        //   name: this.firstName,
+        //   email: this.email
+        // }
         const updateData = {
-          color: this.color
+          email: this.email
         }
+        //const updateData måste vara objekt
+        //setDoc skapar ny data och skriver över existerande data om det finns.
         updateDoc(whereToAddData, updateData)
-
         //updateDoc uppdaterar den informationen du vill uppdatera, men behåller resterande
         // --------------- SKAPA NY ------------------------------ //
       },

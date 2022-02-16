@@ -1,11 +1,11 @@
 <template>
   <form id="color" @submit.prevent="addColor">
-    <label for="color">Select a color:</label>
-    <input type="color" name="id" v-model="color" />
+    <label for="color">Choose a color:</label>
+    <input type="color" name="color" v-model="color" />
   </form>
 
   <button @click="addColor" type="submit" class="btn btn-success mt-3">
-    Select a color
+    Create account
   </button>
 </template>
 
@@ -36,9 +36,12 @@
   label {
     font-size: 1.6rem;
     font-weight: bold;
+    margin-top: 4.2rem;
   }
 
   input {
-    margin-top: 4.2rem;
+    margin: 0.4rem;
+    height: 2rem;
+    width: 85%;
   }
 </style>

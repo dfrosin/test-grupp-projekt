@@ -1,67 +1,102 @@
 <template>
-  <label for="start">Start Date</label>
-  <input type="date" id="start" v-model="date" />
-  <label for="duration">Duration</label>
-  <select @change="whatDate" v-model="selectedObject" id="duration">
-    <option>1 week</option>
-    <option>2 weeks</option>
-    <option>3 weeks</option>
-    <option>4 weeks</option>
-  </select>
-  <label for="end">End date</label>
-  <input type="date" id="end" />
+  <div class="template">
+    <h2>Project Name</h2>
+    <h2>X cases will be included in this sprint</h2>
+    <div class="calendar">
+      <label for="start">Start Date</label>
+      <input type="date" id="start" v-model="date" />
+      <label for="duration">Duration</label>
+      <select @change="whatDate" v-model="selectedObject" id="duration">
+        <option>1 week</option>
+        <option>2 weeks</option>
+        <option>3 weeks</option>
+        <option>4 weeks</option>
+      </select>
+      <label for="end">End date</label>
+      <input type="date" :value="this.endDate" />
+      <label for="goal">Sprint Goal</label>
+      <input class="sprint-goal" id="goal" />
+    </div>
+  </div>
 </template>
 
 <script>
   export default {
+    created() {
+      let todaysDate = new Date().getTime()
+      let TodaysCalendarDate = new Date(todaysDate)
+      let calendarDate = TodaysCalendarDate.toISOString().substr(0, 10)
+      this.date = calendarDate
+    },
     data() {
       return {
         date: '',
         selectedObject: '',
-        weeks: false
+        clickedDateMillisec: '',
+        oneWeekMillisec: '',
+        totalMillisec: '',
+        endDate: ''
       }
     },
     methods: {
-      getDate() {
-        console.log(this.date)
-      },
-      visible() {
-        this.weeks = true
-      },
       whatDate() {
-        let numberOfWeeks = this.selectedObject.match(/\d+/g)
-        let addDays = numberOfWeeks[0] * 7
-        let newDate = new Date(this.date + ' ' + '12:00:00')
-        newDate.setDate(newDate.getDate() + addDays)
+        //datumet i millisekunder
+        this.clickedDateMillisec = new Date(this.date).getTime()
 
-        let day = newDate.getDate().toString().padStart(2, '0')
-        let month = newDate.getMonth().toString().padStart(2, '0')
-        let year = newDate.getFullYear()
+        //Hämtar nummret i strängen i Options.
+        let onlyNumber = this.selectedObject.match(/\d+/g)
 
-        console.log('Detta är dag: ' + day)
-        console.log('Detta är månad: ' + month)
-        console.log('Detta är år: ' + year)
+        // en vecka i millisekunder
+        this.oneWeekMillisec = 1000 * 60 * 60 * 24 * 7
+
+        //Förra datumet plus hur många veckor
+        this.oneWeekMillisec = this.oneWeekMillisec * onlyNumber[0]
+        this.totalMillisec = this.clickedDateMillisec + this.oneWeekMillisec
+
+        //Får ut objektet som datumformat
+        let newDateObject = new Date(this.totalMillisec)
+        let calendarDate = newDateObject.toISOString().substr(0, 10)
+        this.endDate = calendarDate
       }
     },
-    computed: {
-      calculateDate() {
-        let onlyNumber = this.selectedObject.match(/\d+/g)
-        return onlyNumber[0] * 7
-      },
-      // setDate() {
-      //   // let Day = newdate.getDate().toString().padStart(2, '0')
-      //   // let Month = newdate.getMonth().toString().padStart(2, '0')
-      //   // let Year = newdate.getFullYear()
-      //   // 6.048e+8 * 1
-      //   // 6.048e+8 * 2
-      //   // let plusWeeks = Year + '-' + Month + '-' + Day
-      // },
-      milliSeconds() {
-        let test = this.date + ' ' + '12:00:00'
-        return test
-      }
-    }
+    computed: {}
   }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+  .template {
+    background-color: rgba(245, 245, 245, 0.418);
+    width: 80%;
+    height: 50vh;
+  }
+  .sprint-goal {
+    height: 10rem;
+    width: 40rem;
+  }
+  .calendar {
+    font-size: 1.3rem;
+    width: 80%;
+    height: 80%;
+  }
+  label {
+    display: block;
+    text-decoration: underline;
+    padding: 0.3rem;
+  }
+  input {
+    display: block;
+    background-color: transparent;
+    border-radius: 5px;
+    border: 1px solid white;
+    cursor: pointer;
+    width: 12rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  select {
+    border-radius: 5px;
+    width: 7rem;
+    height: 2rem;
+    margin-bottom: 1rem;
+  }
+</style>
