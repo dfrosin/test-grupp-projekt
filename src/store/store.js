@@ -33,6 +33,7 @@ const state = {
   showToolTip: false,
   newName: '',
   editProjectName: false,
+  sprintGoal: null,
   todo: [
     { name: 'kalle', age: 21 },
     { name: 'urban', age: 25 }
@@ -56,6 +57,12 @@ const mutations = {
   },
   setProjectName(state, name) {
     state.projectName = name
+  },
+  setArrayOfObjects(state, array) {
+    state.arrayOfObjects = array
+  },
+  setSprintGoal(state, goal) {
+    state.sprintGoal = goal
   }
 }
 

@@ -9,16 +9,16 @@ const mutations = {
     },
     setSprintGoal(state, goal) {
       state.sprintGoal = goal
-    },
-    setArrayOfObjects(state, array) {
-      state.arrayOfItems.push({ array })
     }
+    // setArrayOfObjects(state, array) {
+    //   state.arrayOfObjects = array
+    // }
   },
   state = {
     loggedInUser: null,
     projectName: null,
-    sprintGoal: null,
-    arrayOfItems: []
+    sprintGoal: null
+    // arrayOfObjects: null
   }
 
 export default createStore({ mutations, state, strict: true })
