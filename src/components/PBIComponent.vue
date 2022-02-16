@@ -3,7 +3,7 @@
     <h1>Product Backlog</h1>
     <div class="edit">
       <div class="h2-container" v-if="isH2Visible">
-        <h2 v-if="isVisible">Project Name</h2>
+        <h2 class="exampleText" v-if="isVisible">Project Name</h2>
         <h2
           v-if="!isVisible"
           @mouseenter="toolTipOpen"
@@ -13,7 +13,12 @@
           {{ pbHeading }}
         </h2>
       </div>
-      <input v-if="editProjectName" v-model="newName" />
+      <input
+        class="editInput"
+        v-if="editProjectName"
+        v-model="pbHeading"
+        @keyup.enter="backToBasic"
+      />
       <div v-if="showToolTip" class="tool-tips">
         <span class="tool-tiptext">Edit Name</span>
       </div>
@@ -48,12 +53,17 @@
         </li>
       </ul>
     </div>
-    <ButtonComponent buttonvalue="Create Task" />
+    <button
+      v-if="arrayOfObjects.length >= 1"
+      class="btn btn-secondary"
+      @click="createAccount"
+    >
+      Create Tasks
+    </button>
   </div>
 </template>
 
 <script>
-  import ButtonComponent from './ButtonComponent.vue'
   import { db, firestore } from '../firebase'
   import { collection, getDocs, setDoc, doc } from 'firebase/firestore'
   import { v4 as uuidv4 } from 'uuid'
@@ -92,7 +102,10 @@
         // --------------- SKAPA NY ANVÄNDARE------------------------------ //
         this.arrayOfObjects.forEach((allDocs) => {
           setTimeout(() => {
-            const whereToAddData = doc(firestore, `PBI/${allDocs.id}`)
+            const whereToAddData = doc(
+              firestore,
+              `${this.pbHeading}/${allDocs.id}`
+            )
             setDoc(whereToAddData, allDocs)
           }, 2000)
         })
@@ -119,6 +132,7 @@
         this.arrayOfObjects = filtered
       },
       editName() {
+        this.showToolTip = false
         this.isH2Visible = false
         this.editProjectName = true
         this.isVisible = false
@@ -133,17 +147,17 @@
       },
       toolTipClose() {
         this.showToolTip = false
+      },
+      backToBasic() {
+        this.isH2Visible = true
+        this.editProjectName = false
       }
-    },
-    components: { ButtonComponent }
+    }
   }
 </script>
 
 <style lang="scss" scoped>
   .component {
-    .h2-container {
-      border: 1px solid black;
-    }
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(10, 1fr);
@@ -153,6 +167,9 @@
     margin: auto;
     margin-top: 10rem;
     .edit {
+      .exampleText {
+        color: rgba(255, 255, 255, 0.171);
+      }
       display: flex;
       width: 20rem;
       align-self: center;
@@ -163,7 +180,7 @@
         grid-column: 2;
         align-self: center;
         justify-self: center;
-        color: rgba(255, 255, 255, 0.507);
+        color: rgb(255, 255, 255);
         margin-right: 10px;
       }
       .tool-tips {
@@ -189,8 +206,9 @@
       align-items: center;
       margin: auto;
       list-style: none;
-      background-color: rgba(255, 255, 255, 0.76);
-      color: black;
+      border: 1px solid white;
+      background-color: rgba(188, 130, 235, 0.315);
+      color: white;
       padding: 10px;
       margin-top: 10px;
       width: 80%;
@@ -205,21 +223,30 @@
       }
     }
     .pbHeading {
-      grid-row: 2;
-      background-color: rgba(255, 255, 255, 0);
-      border-bottom: 2px solid rgb(250, 246, 246);
-      font-size: 1.3rem;
-      width: 20rem;
+      grid-row: 3;
+      background-color: transparent;
+      border-bottom: 2px solid rgba(204, 201, 226, 0.616);
+      color: #fff;
+      font-size: 2rem;
+      width: 30rem;
       align-self: center;
       margin-left: 2rem;
     }
-
     .first-input {
       grid-row: 4;
       background-color: transparent;
       border-bottom: 2px solid rgba(204, 201, 226, 0.616);
       color: #fff;
-      font-size: 1.5rem;
+      font-size: 2rem;
+      width: 30rem;
+      align-self: center;
+      margin-left: 2rem;
+    }
+    .editInput {
+      background-color: transparent;
+      border-bottom: 2px solid rgba(204, 201, 226, 0.616);
+      color: #fff;
+      font-size: calc(1.325rem + 0.9vw);
       width: 20rem;
       align-self: center;
       margin-left: 2rem;
@@ -229,8 +256,8 @@
       color: #ffff;
     }
     .btn {
-      grid-column: 1;
-      grid-row: 8;
+      grid-column: 2;
+      grid-row: 9;
       align-self: center;
       justify-self: center;
       width: 20rem;
