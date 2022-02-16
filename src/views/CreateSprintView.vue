@@ -10,6 +10,12 @@
       ChooseUserstorie,
       StartSprint,
       SelectColor
+    },
+    emits: ['getColor'],
+    methods: {
+      getColor() {
+        console.log('hej')
+      }
     }
   }
 </script>
@@ -18,7 +24,7 @@
   <div id="container">
     <h2>CreateSprintView.vue</h2>
     <ChooseUserstorie />
-    <SelectColor />
+    <SelectColor @send-info="getColor" />
     <CreateInputButton />
     <StartSprint />
   </div>

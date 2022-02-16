@@ -52,7 +52,8 @@
 <style lang="scss" scoped>
   .form-select {
     width: 100px;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
   }
 </style>
 
