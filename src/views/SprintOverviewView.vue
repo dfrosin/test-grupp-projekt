@@ -198,7 +198,7 @@
     width: 200px;
     color: black;
     border-radius: 10px;
-    min-height: 20vh;
+    min-height: 20vh fit-content;
     flex-wrap: wrap;
     margin-bottom: 5rem;
   }
@@ -207,12 +207,12 @@
     font-size: 1.5rem;
     text-align: center;
     color: black;
-    width: 30rem;
+    width: 200px;
     height: 7rem;
     background-color: white;
     border-radius: 10px;
     border-style: solid;
-    border-color: blue;
+    border-color: green;
     min-height: 10px;
     cursor: move;
   }

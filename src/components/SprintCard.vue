@@ -13,7 +13,7 @@
 </script>
 <template>
   <div class="sprint-card">
-    {{ item.todo }}
+    {{ item.value }}
   </div>
 </template>
 
