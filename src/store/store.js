@@ -39,7 +39,9 @@ const state = {
     { name: 'urban', age: 25 }
   ],
   loggedInUser: null,
-  projectName: null
+  projectName: null,
+  taskColor: null,
+  arrayOfTasks: null
 }
 
 const getters = {
@@ -63,6 +65,12 @@ const mutations = {
   },
   setSprintGoal(state, goal) {
     state.sprintGoal = goal
+  },
+  setColor(state, color) {
+    state.taskColor = color
+  },
+  setNumberOfTasks(state, tasks) {
+    state.arrayOfTasks = tasks.length
   }
 }
 

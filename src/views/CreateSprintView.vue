@@ -28,6 +28,7 @@
 
 <style lang="scss" scoped>
   #container {
+    color: white;
     padding: 4px;
     background-color: rgba(255, 235, 205, 0.39);
     width: 85%;

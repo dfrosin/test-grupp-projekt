@@ -1,5 +1,5 @@
 <template>
-  <div v-if="$store.state.arrayOfObjects !== null" id="userstories">
+  <div v-if="this.$store.state.arrayOfObjects !== null" id="userstories">
     <label for="PBI">Select PBI: </label>
     <select
       class="form-select form-select-sm"
@@ -7,7 +7,7 @@
       v-model="selectedObject"
     >
       <option
-        v-for="object in arrayOfObjects"
+        v-for="object in this.$store.state.arrayOfObjects"
         :key="object.id"
         :value="object.id"
         id="PBI"
@@ -31,7 +31,8 @@
       }
     },
     created() {
-      this.getDatabase()
+      // this.getDatabase()
+      console.log(this.$store.state.arrayOfObjects)
     },
 
     methods: {
