@@ -1,5 +1,5 @@
 <template>
-  <div class="template">
+  <div v-if="$store.state.arrayOfTasks" class="template">
     <h2 v-if="$store.state.projectName !== null">
       {{ $store.state.projectName }}
     </h2>
