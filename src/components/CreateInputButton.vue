@@ -17,7 +17,6 @@
         this.tasks.push({
           heading: this.newTask
         })
-        console.log()
         this.createList()
         this.newTask = ''
       },

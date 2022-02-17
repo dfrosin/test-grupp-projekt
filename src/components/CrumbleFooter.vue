@@ -1,13 +1,13 @@
 <template>
-  <div><p>© 2022 Crumble</p></div>
+  <footer><p>&copy; 2022 Crumble</p></footer>
 </template>
 
 <style lang="scss" scoped>
-  div {
+  footer {
     color: white;
     display: flex;
     justify-content: center;
-    margin-top: 10rem;
+    margin: auto;
   }
   p {
     font-size: 31px;
