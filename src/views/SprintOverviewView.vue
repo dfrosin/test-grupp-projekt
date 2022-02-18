@@ -200,7 +200,6 @@
   .drop-zone {
     background-color: rgb(233, 144, 144);
     width: 200px;
-    color: black;
     border-radius: 10px;
     min-height: 60vh fit-content;
     flex-wrap: wrap;
