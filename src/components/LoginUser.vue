@@ -2,11 +2,12 @@
   <div id="container">
     <form @submit.prevent="onSubmit">
       <div class="inputs">
-        <label>Username</label>
+        <label>Email</label>
         <input
-          placeholder="Username"
+          placeholder="Email"
           required
-          v-model="userName"
+          type="email"
+          v-model="email"
           class="form-control"
         />
       </div>
@@ -25,34 +26,32 @@
       Log In
     </button>
 
-    <p>Don´t you have an account?</p>
+    <p>Don`t you have an account?</p>
     <routerLink class="link" to="/createaccount">Create account</routerLink>
   </div>
 </template>
 
 <script>
-  import { firestore } from '../firebase'
-  import { getDocs, query, collection, where, limit } from 'firebase/firestore'
+  import { auth } from '../firebase'
+
   export default {
     data() {
       return {
-        userName: '',
+        email: '',
         password: ''
       }
     },
     methods: {
       async onSubmit() {
-        const customerOrdersQuery = query(
-          collection(firestore, 'users'),
-          where('userName', '==', this.userName),
-          limit(10)
+        const userCred = await auth.signInWithEmailAndPassword(
+          this.email,
+          this.password
         )
-        const querySnapshot = await getDocs(customerOrdersQuery)
-        querySnapshot.forEach((snap) => {
-          console.log(` ${JSON.stringify(snap.data())}`)
-          this.$store.commit('setLoggedInUser', snap.data())
+
+        if (userCred) {
+          await this.$store.dispatch('fetchAndSetLoggedInUser', userCred.user)
           this.$router.push('/profile')
-        })
+        }
       }
     }
   }

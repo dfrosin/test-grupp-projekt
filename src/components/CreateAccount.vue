@@ -49,6 +49,9 @@
             required
           />
         </div>
+        <div>
+          {{ errorMessage }}
+        </div>
       </div>
     </form>
     <button @click="createAccount" type="submit" class="btn btn-success mt-3">
@@ -59,6 +62,7 @@
 
 <script>
   import { firestore } from '../firebase'
+  import firebase from 'firebase/compat/app'
   import { doc, setDoc } from 'firebase/firestore'
 
   export default {
@@ -68,22 +72,36 @@
         fullName: '',
         email: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        errorMessage: ''
       }
     },
     methods: {
-      createAccount() {
+      // --------------- SKAPA NY ANVÄNDARE------------------------------ //
+      async createAccount() {
         if (this.password === this.confirmPassword) {
           console.log('Ny användare skapad')
-          // --------------- SKAPA NY ANVÄNDARE------------------------------ //
+          let userCred = null
+          try {
+            userCred = await firebase
+              .auth()
+              .createUserWithEmailAndPassword(this.email, this.password)
+          } catch (error) {
+            this.errorMessage = error.message
+            console.error(error)
+            return
+          }
+          console.log(userCred) //userCred kommer innehålla uid-värde och token
+
           const newUser = {
             userName: this.userName,
             email: this.email,
             fullName: this.fullName,
-            password: this.password,
+            // password: this.password,
             profilePicture: '/assets/Frame 112.png'
           }
-          const whereToAddData = doc(firestore, `users/${this.userName}`)
+          const whereToAddData = doc(firestore, `users/${userCred.user.uid}`) //lagrar userobjekt under min uid-nyckel
+          // `users/${this.userName}`)
           setDoc(whereToAddData, newUser)
           this.$store.commit('setLoggedInUser', newUser)
           this.$router.push('/profile')

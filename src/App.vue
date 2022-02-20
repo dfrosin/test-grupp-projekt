@@ -3,7 +3,10 @@
   import CrumbleFooter from './components/CrumbleFooter.vue'
 
   export default {
-    components: { NavbarComponent, CrumbleFooter }
+    components: { NavbarComponent, CrumbleFooter },
+    created() {
+      this.$store.dispatch('init_login') // Kör dispatch-funktionen
+    }
   }
 </script>
 

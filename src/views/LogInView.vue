@@ -5,9 +5,9 @@
 
 <script>
   import LoginUser from '../components/LoginUser.vue'
-
   export default { components: { LoginUser } }
 </script>
+
 <style lang="scss" scoped>
   h1 {
     text-align: center;
