@@ -1,12 +1,10 @@
 <script>
   import CreateInputButton from '../components/CreateInputButton.vue'
-  import ChooseUserstorie from '../components/ChooseUserstorie.vue'
   import StartSprint from '../components/StartSprint.vue'
 
   export default {
     components: {
       CreateInputButton,
-      ChooseUserstorie,
       StartSprint
     },
 
@@ -20,7 +18,6 @@
 
 <template>
   <div id="container">
-    <ChooseUserstorie />
     <CreateInputButton />
     <StartSprint />
   </div>

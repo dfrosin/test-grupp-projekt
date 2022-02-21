@@ -7,25 +7,20 @@
       return {
         newTask: '',
         tasks: [],
-        array: [],
         dataValue: {},
         getColor: '',
         editing: null,
         editTaskName: '',
-        taskName: ''
+        taskName: '',
+        selectedColor: ''
       }
     },
-
     methods: {
-      // addTask() {
-      // this.$store.commit('setColor', this.getColor)
-      // this.tasks.push({
-      //   heading: this.newTask
-      // })
-      //   console.log(this.tasks)
-      //   this.createList()
-      //   this.newTask = ''
-      // },
+      selectedPbi(e) {
+        console.log(e.target.value)
+        this.selectedColor = e.target.value
+        // console.log(e.target.color)
+      },
       removeTask(task) {
         const taskIndex = this.tasks.indexOf(task)
         this.tasks.splice(taskIndex, 1)
@@ -42,7 +37,7 @@
       createList() {
         // Skapar JSON-objekt och pushar in det i en Array varje gång man trycker på "add task"
         // enter i inputfältet
-        this.dataValue.color = this.getColor
+        this.dataValue.color = this.selectedColor
         this.dataValue.name = this.newTask
         this.dataValue.status = 'todo'
         let copiedObject = JSON.parse(JSON.stringify(this.dataValue))
@@ -50,8 +45,8 @@
         this.newTask = ''
       },
       createAccount() {
-        this.$store.commit('setNumberOfTasks', this.array)
-        this.array.forEach((allDocs) => {
+        this.$store.commit('setArrayOfTasks', this.tasks)
+        this.tasks.forEach((allDocs) => {
           setTimeout(() => {
             const whereToAddData = doc(
               firestore,
@@ -66,10 +61,27 @@
 </script>
 
 <template>
-  <form id="color" @submit.prevent="addColor">
-    <label for="color">Select a color:</label>
-    <input v-model="getColor" type="color" name="color" />
-  </form>
+  <div
+    class="select-pbi"
+    v-if="this.$store.state.arrayOfObjects !== null"
+    id="userstories"
+  >
+    <label for="PBI">Select PBI: </label>
+    <select
+      @change="selectedPbi"
+      class="form-select form-select-sm"
+      aria-label=".form-select-sm example"
+    >
+      <option
+        v-for="object in this.$store.state.arrayOfObjects"
+        :key="object.id"
+        :value="object.color"
+        id="PBI"
+      >
+        {{ object.id }}
+      </option>
+    </select>
+  </div>
 
   <section class="main-section">
     <h2 class="h2-add">Create Task</h2>
@@ -138,12 +150,12 @@
 </template>
 
 <style lang="scss" scoped>
+  .select-pbi {
+    width: 30%;
+  }
   #color {
     margin: 3rem;
     width: 40rem;
-    position: absolute;
-    top: 11.5rem;
-    right: 10rem;
     input {
       align-self: flex-start;
       width: 4rem;

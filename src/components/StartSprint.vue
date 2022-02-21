@@ -3,7 +3,9 @@
     <h2 v-if="$store.state.projectName !== null">
       {{ $store.state.projectName }}
     </h2>
-    <h2>{{ $store.state.arrayOfTasks }} cases will be added to this Sprint</h2>
+    <h2>
+      {{ $store.state.arrayOfTasks.length }} cases will be added to this Sprint
+    </h2>
     <div class="calendar">
       <label for="start">Start Date</label>
       <input type="date" id="start" v-model="date" />

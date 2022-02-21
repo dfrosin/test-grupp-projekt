@@ -39,10 +39,18 @@
       ref="firstInput"
       @keyup.enter="createList"
     />
+    <form id="color" @submit.prevent="addColor">
+      <label for="color">Select a color:</label>
+      <input v-model="getColor" type="color" name="color" />
+    </form>
 
     <div class="backlog-container">
       <ul>
-        <li v-for="item in arrayOfObjects" :key="item.idxd">
+        <li
+          v-for="item in arrayOfObjects"
+          :key="item.idxd"
+          :style="{ borderColor: item.color }"
+        >
           {{ item.id }}
           <img
             src="/assets/trash-can.png"
@@ -77,7 +85,8 @@
         backlogItemInfo: {
           id: '',
           docId: '',
-          deleteId: ''
+          deleteId: '',
+          color: ''
         },
         deletedArray: [],
         arrayOfObjects: [],
@@ -87,17 +96,20 @@
         showToolTip: false,
         newName: '',
         editProjectName: false,
-        isH2Visible: true
+        isH2Visible: true,
+        getColor: ''
       }
     },
     methods: {
       createList() {
         this.$store.commit('setProjectName', this.pbHeading)
+        this.backlogItemInfo.color = this.getColor
         this.backlogItemInfo.id = this.pbItem
         this.backlogItemInfo.docId = uuidv4()
         let copiedObject = JSON.parse(JSON.stringify(this.backlogItemInfo))
         this.arrayOfObjects.push(copiedObject)
         this.pbItem = ''
+        this.getColor = ''
       },
       createAccount() {
         // --------------- SKAPA NY ANVÄNDARE------------------------------ //
@@ -170,6 +182,11 @@
     height: 80vh;
     margin: auto;
     margin-top: 10rem;
+
+    #color {
+      grid-column: 1;
+      grid-row: 6;
+    }
     .edit {
       .exampleText {
         color: rgba(255, 255, 255, 0.171);
@@ -210,7 +227,7 @@
       align-items: center;
       margin: auto;
       list-style: none;
-      border: 1px solid white;
+      border: 3px solid white;
       background-color: rgba(188, 130, 235, 0.315);
       color: white;
       padding: 10px;
@@ -274,14 +291,6 @@
       grid-row: 2/10;
       height: 40rem;
       overflow-y: scroll;
-      .pb-item {
-        grid-row: 9;
-        padding: 0.3rem;
-        border-radius: 10px;
-        font-size: 1.3rem;
-        width: 30rem;
-        margin-left: 3.5rem;
-      }
     }
   }
 </style>

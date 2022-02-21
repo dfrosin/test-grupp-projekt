@@ -61,17 +61,18 @@ const mutations = {
   setProjectName(state, name) {
     state.projectName = name
   },
+  //Denna är till för PBI
   setArrayOfObjects(state, array) {
     state.arrayOfObjects = array
+  },
+  setArrayOfTasks(state, array) {
+    state.arrayOfTasks = array
   },
   setSprintGoal(state, goal) {
     state.sprintGoal = goal
   },
   setColor(state, color) {
     state.taskColor = color
-  },
-  setNumberOfTasks(state, tasks) {
-    state.arrayOfTasks = tasks.length
   }
 }
 
