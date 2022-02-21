@@ -16,7 +16,7 @@ export const config = {
   appId: '1:376800601571:web:5f00344766414444f6acd6'
 }
 
-export const firebaseApp = firebase.initializeApp(config)
+export const firebaseApp = firebase.initializeApp(config) //the version 8 method
 
 export const firestore = getFirestore()
 

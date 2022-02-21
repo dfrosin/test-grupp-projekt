@@ -111,12 +111,11 @@ const actions = {
     this.arrayOfObjects = filtered
   },
 
-  /* editName() {
+  editName() {
     this.editProjectName = true
     this.isVisible = false
-    store.commit('setProjectName', this.pbHeading)
-    console.log(store.state.projectName)
-  }, */
+    /*  store.commit('setProjectName', this.pbHeading) */
+  },
   visible() {
     this.isVisible = false
   },

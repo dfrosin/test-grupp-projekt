@@ -27,12 +27,13 @@
       placeholder="Project Name"
     />
     <input
+      v-if="pbItem"
       v-model="pbItem"
       class="first-input"
       type="text"
       placeholder="Som en ___ vill jag ___ för att ___"
       ref="firstInput"
-      @keyup.enter="createList"
+      @keyup.enter="createList(this.pbitem)"
     />
 
     <div class="backlog-container">
@@ -54,7 +55,7 @@
 
 <script>
   import ButtonComponent from '../components/ButtonComponent.vue'
-  import { mapGetters, mapActions } from 'vuex'
+  import { /*  mapGetters, */ mapActions } from 'vuex'
   /* import { db, firestore } from '../firebase'
   import { collection, getDocs, setDoc, doc } from 'firebase/firestore'
   import { v4 as uuidv4 } from 'uuid'
@@ -94,7 +95,7 @@
         this.showToolTip = false
       }
     },
-    computed: mapGetters(['allTodos']),
+    /*  computed: mapGetters(['allTodos']), */
     components: { ButtonComponent }
   }
 </script>

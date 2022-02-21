@@ -1,6 +1,8 @@
-import { initializeApp } from 'firebase/compat/app'
+import firebase from 'firebase/compat/app'
 import 'firebase/compat/firestore'
-import { getFirestore, collection, getDocs } from 'firebase/firestore'
+import { getFirestore, collection, getDocs, addDocs} from 'firebase/firestore'
+
+/* import { getStorage } from 'firebase/storage' */
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAl-uNmSQir4hQ2MCQ7fTzQW9TmNFtnJ4g',
@@ -14,16 +16,25 @@ const firebaseConfig = {
 }
 
 //init firebase app
-const firebaseApp = initializeApp(firebaseConfig)
+firebase.initializeApp(firebaseConfig)
 
 //init services
-const db = getFirestore(firebaseApp)
+const db = getFirestore()
 
 // collection ref
-const colRef = collection(db, 'projectBacklog')
+const colRef = collection(db, 'books')
 
-getDocs(colRef).then((snapshot) => {
-  console.log(snapshot.docs)
-})
+getDocs(colRef)
+  .then((snapshot) => {
+    let books = []
+    snapshot.docs.forEach((doc) => {
+      books.push({ ...doc.data(), id: doc.id })
+    })
+    console.log(books)
+  })
+  .catch((err) => {
+    console.log(err.message)
+  })
 
+  addBook = addDocs(colRef, )
 //
