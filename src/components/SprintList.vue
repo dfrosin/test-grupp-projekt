@@ -22,4 +22,8 @@
   }
 </script>
 
-<style></style>
+<style scoped lang="scss">
+  h3 {
+    color: white;
+  }
+</style>

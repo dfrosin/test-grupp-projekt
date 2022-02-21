@@ -23,3 +23,5 @@ export const firestore = getFirestore()
 export const db = firebaseApp.firestore()
 
 export const storage = getStorage(firebaseApp)
+
+export const auth = firebase.auth()

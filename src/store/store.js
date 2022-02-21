@@ -1,7 +1,8 @@
 import { createStore } from 'vuex'
 import { db, firestore } from '../firebase'
-import { collection, getDocs, setDoc, doc } from 'firebase/firestore'
+import { collection, getDocs, getDoc, setDoc, doc } from 'firebase/firestore'
 import { v4 as uuidv4 } from 'uuid'
+import { auth } from '../firebase'
 /*  import { fs, db } from '..firebase/'
 
 
@@ -33,12 +34,15 @@ const state = {
   showToolTip: false,
   newName: '',
   editProjectName: false,
+  sprintGoal: null,
   todo: [
     { name: 'kalle', age: 21 },
     { name: 'urban', age: 25 }
   ],
   loggedInUser: null,
-  projectName: null
+  projectName: null,
+  taskColor: null,
+  arrayOfTasks: null
 }
 
 const getters = {
@@ -56,6 +60,19 @@ const mutations = {
   },
   setProjectName(state, name) {
     state.projectName = name
+  },
+  //Denna är till för PBI
+  setArrayOfObjects(state, array) {
+    state.arrayOfObjects = array
+  },
+  setArrayOfTasks(state, array) {
+    state.arrayOfTasks = array
+  },
+  setSprintGoal(state, goal) {
+    state.sprintGoal = goal
+  },
+  setColor(state, color) {
+    state.taskColor = color
   }
 }
 
@@ -73,6 +90,25 @@ const actions = {
     const update = this.arrayOfObjects.push(copiedObject)
     this.pbItem = ''
     commit('setCreateList', update)
+  },
+
+  async init_login({ dispatch }) {
+    const user = auth.currentUser //firebase lagrar denna info i webbläsaren, i localstorage
+    if (user) {
+      dispatch('fetchAndSetLoggedInUser', user)
+    }
+  },
+
+  async fetchAndSetLoggedInUser({ commit }, user) {
+    //hämtar ut det som ligger i users
+    console.log('fetchAndSetLoggedInUser', user)
+    //hämtar ut det som ligger i users för det givna uid:t
+    const userDoc = doc(firestore, `users/${user.uid}`)
+    const userSnapshot = await getDoc(userDoc)
+    if (userSnapshot.exists()) {
+      const docData = userSnapshot.data()
+      commit('setLoggedInUser', docData)
+    }
   },
 
   // --------------- SKAPA NY ANVÄNDARE------------------------------ //

@@ -1,9 +1,11 @@
 <template>
-  <div class="template">
+  <div v-if="$store.state.arrayOfTasks" class="template">
     <h2 v-if="$store.state.projectName !== null">
       {{ $store.state.projectName }}
     </h2>
-    <h2>X cases will be included in this sprint</h2>
+    <h2>
+      {{ $store.state.arrayOfTasks.length }} cases will be added to this Sprint
+    </h2>
     <div class="calendar">
       <label for="start">Start Date</label>
       <input type="date" id="start" v-model="date" />
@@ -23,6 +25,14 @@
         @keyup.enter="sendSprintGoal"
         id="goal"
       />
+      <button
+        v-if="sprintGoal"
+        @click="sendSprintGoal"
+        type="submit"
+        class="btn btn-success mt-3"
+      >
+        Send-sprint
+      </button>
     </div>
   </div>
 </template>
@@ -44,7 +54,8 @@
         oneWeekMillisec: '',
         totalMillisec: '',
         endDate: '',
-        sprintGoal: ''
+        sprintGoal: '',
+        numberOfCases: null
       }
     },
     methods: {
@@ -69,7 +80,7 @@
       },
       sendSprintGoal() {
         this.$store.commit('setSprintGoal', this.sprintGoal)
-        console.log('hej')
+        console.log('sendSprintGoal körs från StartSprint.vue')
       }
     },
     computed: {}
@@ -78,9 +89,12 @@
 
 <style lang="scss" scoped>
   .template {
+    margin-top: 2rem;
     background-color: rgba(245, 245, 245, 0.418);
-    width: 80%;
-    height: 50vh;
+    display: block;
+    width: 85%;
+    height: 40vh;
+    margin: auto;
   }
   .sprint-goal {
     width: 40rem;

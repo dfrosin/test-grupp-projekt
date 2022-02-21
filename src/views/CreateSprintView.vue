@@ -1,12 +1,10 @@
 <script>
   import CreateInputButton from '../components/CreateInputButton.vue'
-  import ChooseUserstorie from '../components/ChooseUserstorie.vue'
   import StartSprint from '../components/StartSprint.vue'
 
   export default {
     components: {
       CreateInputButton,
-      ChooseUserstorie,
       StartSprint
     },
 
@@ -20,29 +18,19 @@
 
 <template>
   <div id="container">
-    <h2>CreateSprintView.vue</h2>
-    <ChooseUserstorie />
-
     <CreateInputButton />
     <StartSprint />
   </div>
 </template>
 
 <style lang="scss" scoped>
-  // #container {
-  //   background-color: rgba(255, 235, 205, 0.39);
-  //   display: flex;
-  //   align-items: center;
-  //   justify-content: center;
-  //   flex-direction: column;
-  //   margin-top: 4.2rem;
-  //   width: 80%;
-  //   margin: 0 10%;
-  //   display: flex;
-  //   flex-wrap: wrap;
-  //   margin-top: 10rem;
-  // }
-  // h1 {
-  //   margin-top: 4.2rem;
-  // }
+  #container {
+    color: white;
+    padding: 4px;
+    background-color: rgba(255, 235, 205, 0.39);
+    width: 85%;
+    height: fit-content;
+    margin: auto;
+    margin-top: 10rem;
+  }
 </style>

@@ -1,16 +1,16 @@
 <template>
-  <div v-if="$store.state.arrayOfObjects !== null" id="userstories">
-    <p>Select userstorie</p>
+  <div v-if="this.$store.state.arrayOfObjects !== null" id="userstories">
+    <label for="PBI">Select PBI: </label>
     <select
       class="form-select form-select-sm"
       aria-label=".form-select-sm example"
       v-model="selectedObject"
     >
-      <option selected>Select userstorie</option>
       <option
         v-for="object in this.$store.state.arrayOfObjects"
         :key="object.id"
         :value="object.id"
+        id="PBI"
       >
         {{ object.id }}
       </option>
@@ -27,18 +27,18 @@
     data() {
       return {
         arrayOfObjects: [],
-        selectedObject: ''
+        selectedObject: null
       }
     },
     created() {
-      this.getDatabase()
-      console.log('Databas ' + this.$store.state.arrayOfObjects)
-      console.log('Sökväg / användare ' + this.$store.state.projectName)
+      // this.getDatabase()
+      console.log(this.$store.state.arrayOfObjects)
     },
+
     methods: {
       //Snapshot of all documents as Objects & Keys.
       getDatabase() {
-        const colRef = collection(firestore, `${this.$store.state.projectName}`)
+        const colRef = collection(firestore, 'PBI')
         // const colRef = collection(firestore, store.state.projectName)
 
         getDocs(colRef).then((snapshot) => {
@@ -47,6 +47,7 @@
             PBI.push({ ...doc.data(), id: doc.id })
           })
           this.arrayOfObjects = PBI
+
           console.log(PBI)
         })
       }
@@ -56,16 +57,26 @@
 
 <style lang="scss" scoped>
   #userstories {
-    width: 100px;
+    margin: 4rem 10rem;
+    width: 25rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    label {
+      font-size: 2.8rem;
+      font-weight: 500;
+    }
 
     p {
       text-align: center;
       font-size: 1.6rem;
       font-weight: bold;
       margin-top: 4.2rem;
+    }
+    select {
+      width: 20rem;
+      height: 3rem;
+      display: inline;
+      border-radius: 10px;
     }
   }
 </style>

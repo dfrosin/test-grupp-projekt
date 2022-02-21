@@ -14,7 +14,7 @@
 
 <style lang="scss" scoped>
   div {
-    color: black;
+    color: rgb(255, 255, 255);
     display: flex;
     flex-direction: column;
     justify-content: center;

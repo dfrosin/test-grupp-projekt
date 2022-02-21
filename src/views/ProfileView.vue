@@ -8,38 +8,44 @@
 <template>
   <div class="profile-card">
     <h1>My Profile</h1>
-    <div class="img-container">
-      <img v-if="uploading === false" :src="url" alt="profile picture" />
-      <img
-        v-if="uploading === true"
-        :src="newPhoto"
-        alt="new profile picture"
-      />
-      <div class="upload-buttons" v-if="editing === true">
-        <input
-          class="edit-button"
-          type="file"
-          @change="previewPhoto"
-          accept="image/png, image/jpeg"
+    <div class="information-container">
+      <div class="img-container">
+        <img v-if="uploading === false" :src="url" alt="profile picture" />
+        <img
+          v-if="uploading === true"
+          :src="newPhoto"
+          alt="new profile picture"
         />
-        <button v-if="this.newPhoto !== null" @click="savePhoto" type="submit">
-          save
-        </button>
+        <div class="upload-buttons" v-if="editing === true">
+          <input
+            class="edit-button"
+            type="file"
+            @change="previewPhoto"
+            accept="image/png, image/jpeg"
+          />
+          <button
+            v-if="this.newPhoto !== null"
+            @click="savePhoto"
+            type="submit"
+          >
+            save
+          </button>
+        </div>
       </div>
-    </div>
-    <div class="card-body">
-      <div v-if="editing === false" class="saved-information">
-        <p>{{ userCollection.fullName }}</p>
-        <p>{{ userCollection.email }}</p>
-      </div>
-      <div v-if="editing === true" class="editing-information">
-        <input type="text" v-model="userCollection.fullName" />
-        <input type="email" v-model="userCollection.email" />
-      </div>
-      <div class="buttons">
-        <button v-if="editing === true" @click="onSave">save</button>
-        <button v-if="editing === false" @click="onEdit">edit</button>
-        <button v-if="editing === true" @click="onCancel">cancel</button>
+      <div class="card-body">
+        <div v-if="editing === false" class="saved-information">
+          <p>{{ userCollection.fullName }}</p>
+          <p>{{ userCollection.email }}</p>
+        </div>
+        <div v-if="editing === true" class="editing-information">
+          <input type="text" v-model="userCollection.fullName" />
+          <input type="email" v-model="userCollection.email" />
+        </div>
+        <div class="buttons">
+          <button v-if="editing === true" @click="onSave">save</button>
+          <button v-if="editing === false" @click="onEdit">edit</button>
+          <button v-if="editing === true" @click="onCancel">cancel</button>
+        </div>
       </div>
     </div>
   </div>
@@ -55,6 +61,13 @@
     display: flex;
     flex-wrap: wrap;
     border-radius: 10px;
+    padding-bottom: 20px;
+    .information-container {
+      width: 80%;
+      margin: 0 10%;
+      display: flex;
+      flex-wrap: wrap;
+    }
     h1 {
       text-align: center;
       width: 60%;
@@ -70,18 +83,22 @@
       margin-top: 1rem;
     }
     .buttons {
-      width: 20%;
       display: flex;
-      flex-direction: column;
-      margin-left: auto;
+      width: 100%;
+      text-align: center;
+      // margin-left: auto;
+      // margin-right: 5px;
       button {
-        height: 5px;
+        padding: 0;
+        margin: 0;
+        height: 20px;
         width: 20px;
+        margin-left: 10px;
       }
     }
     .img-container {
       display: flex;
-      width: 200px;
+      max-width: 200px;
       height: 200px;
       justify-content: center;
       text-align: center;
@@ -91,7 +108,7 @@
         background-color: rgba(0, 0, 0, 0.2);
         height: 15rem;
         width: 15rem;
-        margin-top: 10px;
+        margin-top: 7.5px;
         border-radius: 7.5rem;
         display: flex;
         flex-direction: column;
@@ -114,27 +131,34 @@
     }
     .card-body {
       display: flex;
-      flex-direction: row;
+      flex-wrap: wrap;
       margin-top: 10%;
-      height: 10%;
+
       .saved-information {
+        width: 20rem;
         margin-top: 1.8px;
         gap: 10px;
         flex-direction: column;
         p {
           height: 20px;
-          width: 50%;
+          width: 20rem;
+          font-size: 1rem;
+          background-color: transparent;
           border-bottom: 2px solid rgba(255, 255, 255, 0);
+          width: 80%;
+          color: white;
           margin: 0;
           padding: 0;
-          font-size: 1rem;
           margin-left: 10px;
         }
       }
       .editing-information {
+        width: 20rem;
+        gap: 10px;
+        flex-direction: column;
         input {
           height: 20px;
-          width: 50%;
+          width: 20rem;
           font-size: 1rem;
           background-color: transparent;
           border-bottom: 2px solid white;
@@ -178,13 +202,12 @@
       }
     },
     mounted() {
-      if (this.$store.state.loggedInUser === null) {
+      this.userCollection = { ...this.$store.state.loggedInUser }
+      if (this.userCollection === null) {
         this.$router.push('/login')
-      } else {
-        this.userCollection = { ...this.$store.state.loggedInUser }
-        console.log(this.$store.state.loggedInUser)
-        this.url = this.$store.state.loggedInUser.profilePicture
       }
+      console.log(this.$store.state.loggedInUser)
+      this.url = this.$store.state.loggedInUser.profilePicture
     },
     methods: {
       onEdit() {
@@ -220,7 +243,6 @@
         this.uploading = false
         this.newPhoto = null
         console.log(this.file)
-        this.userCollection.profilePicture = true
         const storageRef = ref(
           storage,
           `${this.$store.state.loggedInUser.userName}`
