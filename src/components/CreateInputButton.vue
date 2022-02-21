@@ -50,9 +50,14 @@
         this.newTask = ''
       },
       createAccount() {
+<<<<<<< HEAD
         console.log('Hej')
         this.$store.commit('setNumberOfTasks', this.tasks)
         this.tasks.forEach((allDocs) => {
+=======
+        this.$store.commit('setNumberOfTasks', this.array)
+        this.array.forEach((allDocs) => {
+>>>>>>> 9ad43042d517f5ff3b6ebb1af69a29f5e4931857
           setTimeout(() => {
             const whereToAddData = doc(
               firestore,

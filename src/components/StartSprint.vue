@@ -23,6 +23,14 @@
         @keyup.enter="sendSprintGoal"
         id="goal"
       />
+      <button
+        v-if="sprintGoal"
+        @click="sendSprintGoal"
+        type="submit"
+        class="btn btn-success mt-3"
+      >
+        Send-sprint
+      </button>
     </div>
   </div>
 </template>
@@ -70,7 +78,7 @@
       },
       sendSprintGoal() {
         this.$store.commit('setSprintGoal', this.sprintGoal)
-        console.log('hej')
+        console.log('sendSprintGoal körs från StartSprint.vue')
       }
     },
     computed: {}
