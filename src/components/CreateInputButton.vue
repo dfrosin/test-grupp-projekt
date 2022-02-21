@@ -9,28 +9,45 @@
         tasks: [],
         array: [],
         dataValue: {},
-        getColor: ''
+        getColor: '',
+        editing: null,
+        editTaskName: '',
+        taskName: ''
       }
     },
+
     methods: {
-      addTask() {
-        this.$store.commit('setColor', this.getColor)
-        this.tasks.push({
-          heading: this.newTask
-        })
-        this.createList()
-        this.newTask = ''
-      },
+      // addTask() {
+      // this.$store.commit('setColor', this.getColor)
+      // this.tasks.push({
+      //   heading: this.newTask
+      // })
+      //   console.log(this.tasks)
+      //   this.createList()
+      //   this.newTask = ''
+      // },
       removeTask(task) {
         const taskIndex = this.tasks.indexOf(task)
         this.tasks.splice(taskIndex, 1)
+        console.log('efter du tagit bort:' + this.tasks)
       },
+      editTask() {
+        this.editing = true
+      },
+      saveTask() {
+        this.editing = false
+        this.editTaskName = ''
+      },
+
       createList() {
+        // Skapar JSON-objekt och pushar in det i en Array varje gång man trycker på "add task"
+        // enter i inputfältet
         this.dataValue.color = this.getColor
         this.dataValue.name = this.newTask
         this.dataValue.status = 'todo'
         let copiedObject = JSON.parse(JSON.stringify(this.dataValue))
-        this.array.push(copiedObject)
+        this.tasks.push(copiedObject)
+        this.newTask = ''
       },
       createAccount() {
         this.$store.commit('setNumberOfTasks', this.array)
@@ -56,8 +73,7 @@
 
   <section class="main-section">
     <h2 class="h2-add">Create Task</h2>
-    <form @submit.prevent="addTask">
-      <label for="newTask" />
+    <form @submit.prevent="createList">
       <input
         v-model="newTask"
         type="text"
@@ -70,16 +86,44 @@
       </button>
     </form>
 
-    <h2 class="h2-added">Added Tasks</h2>
     <div class="remove-div">
+      <!-- <h2 class="h2-added">Added Tasks</h2> -->
       <ul>
         <li
           v-for="task in tasks"
           :key="task"
-          :style="{ borderColor: getColor }"
+          :style="{ borderColor: task.color }"
         >
-          <span> {{ task.heading }} </span>
-          <img src="/assets/trash-can.png" alt="" @click="removeTask(task)" />
+          <p class="task-name" v-if="!editing">
+            {{ task.name }}
+          </p>
+          <input
+            :id="task.name"
+            v-if="editing"
+            type="text"
+            v-model="task.name"
+          />
+          <div class="list-object">
+            <img
+              :id="task.name"
+              :edit="editing"
+              v-if="!editing"
+              src="/assets/edit.png"
+              alt="edit"
+              @click="editTask"
+            />
+            <img
+              v-if="editing"
+              src="/assets/save.png"
+              alt="save"
+              @click="saveTask"
+            />
+            <img
+              src="/assets/trash-can.png"
+              alt="delete"
+              @click="removeTask(task)"
+            />
+          </div>
         </li>
       </ul>
     </div>
@@ -112,15 +156,19 @@
   }
   .main-section {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(8, 1fr);
     background-color: rgba(248, 246, 243, 0.39);
     width: 85%;
-    height: 30rem;
     margin: auto;
     margin-top: auto;
     margin-top: 10rem;
     margin-bottom: 3rem;
+  }
+  .task-name {
+    width: 80%;
+    margin: 0;
+    height: fit-content;
   }
 
   .h2-add {
@@ -135,38 +183,36 @@
     justify-self: center;
   }
 
-  .add-div {
-    grid-column: 1;
-    grid-row: 2;
-    align-self: center;
-    justify-self: center;
-    color: rgb(255, 255, 255);
-    margin-right: 10px;
-  }
-
   .remove-div {
-    display: grid;
-    grid-template-columns: 1fr, 1fr;
-    min-width: 20rem;
-    grid-column: 2/4;
+    display: flex;
+    // display: grid;
+    // grid-template-columns: 1fr, 1fr;
+    grid-column: 2/5;
     grid-row: 2/10;
-    max-height: 22rem;
+    // max-height: 22rem;
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    // display: grid;
+    // grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   }
 
   li {
     display: flex;
-    justify-content: space-between;
-    margin: auto;
+    // justify-content: space-between;
+    // margin: auto;
     list-style: none;
     border: 3px solid white;
     background-color: rgba(188, 130, 235, 0.315);
     color: white;
-    padding: 10px;
+    // padding: 10px;
     margin-top: 10px;
     width: 30rem;
-    min-height: 3rem;
+    // min-height: 3rem;
     border-radius: 10px;
     font-size: 1.3rem;
+    height: fit-content;
   }
 
   img {
@@ -200,6 +246,6 @@
     display: flex;
     flex-direction: column;
     grid-column: 1;
-    grid-row: 4;
+    grid-row: 2/7;
   }
 </style>
