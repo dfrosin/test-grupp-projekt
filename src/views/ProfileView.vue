@@ -202,13 +202,12 @@
       }
     },
     mounted() {
-      if (this.$store.state.loggedInUser === null) {
+      this.userCollection = { ...this.$store.state.loggedInUser }
+      if (this.userCollection === null) {
         this.$router.push('/login')
-      } else {
-        this.userCollection = { ...this.$store.state.loggedInUser }
-        console.log(this.$store.state.loggedInUser)
-        this.url = this.$store.state.loggedInUser.profilePicture
       }
+      console.log(this.$store.state.loggedInUser)
+      this.url = this.$store.state.loggedInUser.profilePicture
     },
     methods: {
       onEdit() {
@@ -244,7 +243,6 @@
         this.uploading = false
         this.newPhoto = null
         console.log(this.file)
-        this.userCollection.profilePicture = true
         const storageRef = ref(
           storage,
           `${this.$store.state.loggedInUser.userName}`
