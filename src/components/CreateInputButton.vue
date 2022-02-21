@@ -33,7 +33,6 @@
         this.array.push(copiedObject)
       },
       createAccount() {
-        console.log('Hej')
         this.$store.commit('setNumberOfTasks', this.array)
         this.array.forEach((allDocs) => {
           setTimeout(() => {
