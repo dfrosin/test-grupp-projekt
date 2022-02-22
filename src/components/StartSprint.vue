@@ -26,7 +26,7 @@
         id="goal"
       />
       <button
-        v-if="sprintGoal"
+        :disabled="sprintGoal === ''"
         @click="sendSprintGoal"
         type="submit"
         class="btn btn-success mt-3"
