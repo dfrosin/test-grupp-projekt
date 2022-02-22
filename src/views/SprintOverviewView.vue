@@ -19,16 +19,15 @@
     data() {
       return {
         enabled: true,
-        todo: [],
         inProgress: [],
         review: [],
         done: [],
-        dragging: false
+        dragging: false,
+        todo: []
       }
     },
-    methods: {},
     mounted() {
-      this.db.onSnapshot((snapshot) => {
+      this.ab.onSnapshot((snapshot) => {
         snapshot.docChanges().forEach((change) => {
           if (change.type === 'added') {
             if (change.doc.data().status === 'TODO') {
@@ -51,49 +50,47 @@
                 id: change.doc.id,
                 ...change.doc.data()
               })
-              // console.log(change.doc.data().status)
             }
           }
         })
       })
     },
     watch: {
-      todo(data) {
-        data.map((value) => {
-          this.db.doc(value.id).update({
+      todo(value) {
+        value.map((todo) => {
+          this.firebaseApp.doc(todo.id).update({
             status: 'TODO',
-            value: value.value
+            todo: todo.todo
           })
-          console.log(data)
         })
       },
-      inProgress(data) {
-        data.map((value) => {
-          this.db.doc(value.id).update({
+      inProgress(value) {
+        value.map((todo) => {
+          this.firebaseApp.doc(todo.id).update({
             status: 'IN_PROGRESS',
-            value: value.value
+            todo: todo.todo
           })
         })
       },
-      review(data) {
-        data.map((value) => {
-          this.db.doc(value.id).update({
+      review(value) {
+        value.map((todo) => {
+          this.firebaseApp.doc(todo.id).update({
             status: 'REVIEW',
-            value: value.value
+            todo: todo.todo
           })
         })
       },
-      done(data) {
-        data.map((value) => {
-          this.db.doc(value.id).update({
+      done(value) {
+        value.map((todo) => {
+          this.firebaseApp.doc(todo.id).update({
             status: 'DONE',
-            value: value.value
+            todo: todo.todo
           })
         })
       }
     },
     computed: {
-      db() {
+      ab() {
         return firebaseApp.firestore().collection('Adamstest')
       }
     },
@@ -112,7 +109,7 @@
       <section class="drop-zone">
         <draggable
           :list="todo"
-          group="kanban"
+          group="walla"
           ghost-class="on-drag"
           class="drop-zone-height"
         >
@@ -130,7 +127,7 @@
       <section class="drop-zone">
         <draggable
           :list="inProgress"
-          group="kanban"
+          group="walla"
           ghost-class="on-drag"
           class="drop-zone-height"
         >
@@ -148,7 +145,7 @@
       <section class="drop-zone">
         <draggable
           :list="review"
-          group="kanban"
+          group="walla"
           ghost-class="on-drag"
           class="drop-zone-height"
         >
@@ -166,7 +163,7 @@
       <section class="drop-zone">
         <draggable
           :list="done"
-          group="kanban"
+          group="walla"
           ghost-class="on-drag"
           class="drop-zone-height"
         >
@@ -223,7 +220,7 @@
     border-style: solid;
     border-color: green;
     min-height: 10px;
-    cursor: move;
+    cursor: grab;
   }
   .on-drag {
     background-color: rgb(81, 89, 194);
