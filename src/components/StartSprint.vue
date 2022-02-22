@@ -78,8 +78,10 @@
         let calendarDate = newDateObject.toISOString().substr(0, 10)
         this.endDate = calendarDate
       },
+
       sendSprintGoal() {
         this.$store.commit('setSprintGoal', this.sprintGoal)
+        this.$router.push('/sprint/')
         console.log('sendSprintGoal körs från StartSprint.vue')
       }
     },
