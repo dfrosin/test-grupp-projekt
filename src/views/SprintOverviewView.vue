@@ -1,6 +1,6 @@
 <script>
   import { firebaseApp } from '../firebase.js'
-  import { collection, getDocs } from 'firebase/firestore'
+  // import { collection, getDocs } from 'firebase/firestore'
   import SprintList from '../components/SprintList.vue'
   import SprintCard from '../components/SprintCard.vue'
   import { VueDraggableNext } from 'vue-draggable-next'
@@ -30,10 +30,10 @@
       }
     },
     // methods: {
-    //   getallData() {
-    //     const colRef = collection(db, collection)
-    //     getDocs(colRef)
-    //   },
+    // getallData() {
+    //   const colRef = collection(db, collection)
+    //   getDocs(colRef)
+    // },
     mounted() {
       this.ab.onSnapshot((snapshot) => {
         snapshot.docChanges().forEach((change) => {
@@ -99,7 +99,7 @@
     },
     computed: {
       ab() {
-        return firebaseApp.firestore().collection('Adamstest')
+        return firebaseApp.firestore().collection('Pernillas projekt')
       }
     },
     components: {
@@ -185,7 +185,6 @@
       </section>
     </sprint-list>
   </article>
-  <button @click="getallData">alkadfoisdjosdjsdofjsdofi</button>
 </template>
 
 <style lang="scss" scoped>
