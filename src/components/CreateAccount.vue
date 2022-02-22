@@ -103,8 +103,8 @@
             required
           />
         </div>
-        <div>
-          {{ errorMessage }}
+        <div id="error">
+          <p>{{ errorMessage }}</p>
         </div>
       </div>
     </form>
@@ -119,6 +119,14 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    p {
+      color: white;
+    }
+
+    #error {
+      text-align: center;
+    }
   }
 
   .inputs {
@@ -207,6 +215,9 @@
       background-color: #ff7730;
       color: #fff;
       box-shadow: 0 1rem 2rem rgba(#000, 0.25);
+    }
+    div {
+      text-align: center;
     }
   }
 </style>
