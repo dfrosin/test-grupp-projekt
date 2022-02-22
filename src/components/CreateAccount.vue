@@ -36,7 +36,8 @@
             email: this.email,
             fullName: this.fullName,
             // password: this.password,
-            profilePicture: '/assets/Frame 112.png'
+            profilePicture: '/assets/Frame 112.png',
+            userId: userCred.user.uid
           }
           const whereToAddData = doc(firestore, `users/${userCred.user.uid}`) //lagrar userobjekt under min uid-nyckel
 
@@ -113,61 +114,6 @@
     </button>
   </div>
 </template>
-
-<script>
-  import { firestore } from '../firebase'
-  import firebase from 'firebase/compat/app'
-  import { doc, setDoc } from 'firebase/firestore'
-
-  export default {
-    data() {
-      return {
-        userName: '',
-        fullName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        errorMessage: ''
-      }
-    },
-    methods: {
-      // --------------- SKAPA NY ANVÄNDARE------------------------------ //
-      async createAccount() {
-        if (this.password === this.confirmPassword) {
-          console.log('Ny användare skapad')
-          let userCred = null
-          try {
-            userCred = await firebase
-              .auth()
-              .createUserWithEmailAndPassword(this.email, this.password)
-          } catch (error) {
-            this.errorMessage = error.message
-            console.error(error)
-            return
-          }
-          console.log(userCred) //userCred kommer innehålla uid-värde och token
-
-          const newUser = {
-            userName: this.userName,
-            email: this.email,
-            fullName: this.fullName,
-            // password: this.password,
-            profilePicture: '/assets/Frame 112.png',
-            userId: userCred.user.uid
-          }
-          const whereToAddData = doc(firestore, `users/${userCred.user.uid}`) //lagrar userobjekt under min uid-nyckel
-          // `users/${this.userName}`)
-          setDoc(whereToAddData, newUser)
-          this.$store.commit('setLoggedInUser', newUser)
-          this.$router.push('/profile')
-        } else {
-          alert("Passwords doesn't match")
-          ;(this.password = ''), (this.confirmPassword = '')
-        }
-      }
-    }
-  }
-</script>
 
 <style lang="scss" scoped>
   #container {
