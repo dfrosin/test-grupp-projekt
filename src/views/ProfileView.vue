@@ -203,12 +203,13 @@
       }
     },
     mounted() {
-      this.userCollection = { ...this.$store.state.loggedInUser }
-      if (this.userCollection === null) {
+      if (this.$store.state.loggedInUser === null) {
         this.$router.push('/login')
+      } else {
+        this.userCollection = { ...this.$store.state.loggedInUser }
+        console.log(this.$store.state.loggedInUser)
+        this.url = this.$store.state.loggedInUser.profilePicture
       }
-      console.log(this.$store.state.loggedInUser)
-      this.url = this.$store.state.loggedInUser.profilePicture
     },
     methods: {
       onEdit() {
