@@ -1,13 +1,13 @@
-<template>
-  <h1>Create a new account</h1>
-  <CreateAccount />
-</template>
-
 <script>
   import CreateAccount from '../components/CreateAccount.vue'
 
   export default { components: { CreateAccount } }
 </script>
+
+<template>
+  <h1>Create a new account</h1>
+  <CreateAccount />
+</template>
 
 <style lang="scss" scoped>
   * {

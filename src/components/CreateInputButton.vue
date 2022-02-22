@@ -1,6 +1,7 @@
 <script>
   import { firestore } from '../firebase'
   import { setDoc, doc } from 'firebase/firestore'
+  import { v4 as uuidv4 } from 'uuid'
 
   export default {
     data() {
@@ -26,8 +27,8 @@
         this.tasks.splice(taskIndex, 1)
         console.log('efter du tagit bort:' + this.tasks)
       },
-      editTask() {
-        this.editing = true
+      editTask(taskId) {
+        this.editing = taskId
       },
       saveTask() {
         this.editing = false
@@ -40,8 +41,10 @@
         this.dataValue.color = this.selectedColor
         this.dataValue.name = this.newTask
         this.dataValue.status = 'todo'
+        this.dataValue.uuid = uuidv4()
         let copiedObject = JSON.parse(JSON.stringify(this.dataValue))
         this.tasks.push(copiedObject)
+        console.log(this.tasks)
         this.newTask = ''
       },
       createAccount() {
@@ -87,6 +90,7 @@
     <h2 class="h2-add">Create Task</h2>
     <form @submit.prevent="createList">
       <input
+        class="new-task-input"
         v-model="newTask"
         type="text"
         name="newTask"
@@ -106,26 +110,26 @@
           :key="task"
           :style="{ borderColor: task.color }"
         >
-          <p class="task-name" v-if="!editing">
+          <p class="task-name" v-if="editing !== task.uuid">
             {{ task.name }}
           </p>
-          <input
-            :id="task.name"
-            v-if="editing"
-            type="text"
+          <textarea
+            :id="task.uuid"
+            v-if="editing === task.uuid"
+            type="textarea"
             v-model="task.name"
           />
           <div class="list-object">
             <img
-              :id="task.name"
+              :id="task.uuid"
               :edit="editing"
-              v-if="!editing"
+              v-if="editing !== task.uuid"
               src="/assets/edit.png"
               alt="edit"
-              @click="editTask"
+              @click="editTask(task.uuid)"
             />
             <img
-              v-if="editing"
+              v-if="editing === task.uuid"
               src="/assets/save.png"
               alt="save"
               @click="saveTask"
@@ -178,8 +182,9 @@
     margin-bottom: 3rem;
   }
   .task-name {
-    width: 80%;
-    margin: 0;
+    width: 78%;
+    margin: 2%;
+    // margin-left: 5%;
     height: fit-content;
   }
 
@@ -223,22 +228,29 @@
     margin-top: 10px;
     width: 30rem;
     // min-height: 3rem;
-    border-radius: 10px;
+    border-radius: 30px;
     font-size: 1.3rem;
     height: fit-content;
+    textarea {
+      height: fit-content;
+      width: 78%;
+      margin: 2%;
+      background-color: rgba(255, 255, 255, 0);
+      border-bottom: 2px solid white;
+      color: white;
+    }
   }
 
   img {
     cursor: pointer;
-    margin-top: 5px;
+    margin-top: 8px;
     margin-left: 5px;
     width: 15px;
     height: 15px;
     cursor: pointer;
-    margin: 2px;
   }
 
-  input {
+  .new-task-input {
     grid-row: 4;
     background-color: transparent;
     border-bottom: 2px solid rgba(204, 201, 226, 0.616);

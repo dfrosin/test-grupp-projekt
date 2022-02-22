@@ -4,7 +4,7 @@
       {{ $store.state.projectName }}
     </h2>
     <h2>
-      {{ $store.state.arrayOfTasks.length }} cases will be added to this Sprint
+      {{ $store.state.arrayOfTasks.length }} tasks will be added to this Sprint
     </h2>
     <div class="calendar">
       <label for="start">Start Date</label>
@@ -26,7 +26,7 @@
         id="goal"
       />
       <button
-        v-if="sprintGoal"
+        :disabled="sprintGoal === ''"
         @click="sendSprintGoal"
         type="submit"
         class="btn btn-success mt-3"
