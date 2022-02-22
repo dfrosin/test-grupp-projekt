@@ -200,12 +200,13 @@
     // display: grid;
     // grid-template-columns: 1fr, 1fr;
     grid-column: 2/5;
-    grid-row: 2/10;
+    grid-row: 2/8;
     // max-height: 22rem;
   }
   ul {
     display: flex;
     flex-wrap: wrap;
+    align-items: flex-start;
     // display: grid;
     // grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   }

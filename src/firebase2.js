@@ -1,6 +1,6 @@
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/firestore'
-import { getFirestore, collection, getDocs, addDocs} from 'firebase/firestore'
+import { getFirestore, collection, getDocs, addDocs } from 'firebase/firestore'
 
 /* import { getStorage } from 'firebase/storage' */
 
@@ -36,5 +36,5 @@ getDocs(colRef)
     console.log(err.message)
   })
 
-  addBook = addDocs(colRef, )
+/* addBook = addDocs(colRef, ) */
 //
