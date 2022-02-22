@@ -98,7 +98,8 @@
             email: this.email,
             fullName: this.fullName,
             // password: this.password,
-            profilePicture: '/assets/Frame 112.png'
+            profilePicture: '/assets/Frame 112.png',
+            userId: userCred.user.uid
           }
           const whereToAddData = doc(firestore, `users/${userCred.user.uid}`) //lagrar userobjekt under min uid-nyckel
           // `users/${this.userName}`)
