@@ -25,7 +25,7 @@
     },
     methods: {
       addBook() {
-        addCoc()
+        /* addCoc() */
       }
     }
   }
