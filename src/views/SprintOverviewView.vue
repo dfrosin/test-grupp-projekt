@@ -1,24 +1,18 @@
 <script>
   import { firebaseApp } from '../firebase.js'
-  // import { collection, getDocs } from 'firebase/firestore'
+  // import {
+  //   where,
+  //   limit,
+  //   collection,
+  //   query,
+  //   getDocs,
+
+  // } from 'firebase/firestore'
   import SprintList from '../components/SprintList.vue'
   import SprintCard from '../components/SprintCard.vue'
   import { VueDraggableNext } from 'vue-draggable-next'
 
   export default {
-    // created() {
-    //   queryForDocuments() {
-    //     const customerOrdersQuery = query(
-    //       collection(firestore, 'Adamstest'),
-    //       where('status', '===', 'TODO'),
-    //       limit(200)
-    //     )
-    //     const querySnapshot =  getDocs(customerOrdersQuery)
-    //     querySnapshot.forEach((snap) => {
-    //       console.log(` ${JSON.stringify(snap.data())}`)
-    //     })
-    //   }
-    // },
     data() {
       return {
         enabled: true,
@@ -29,11 +23,7 @@
         todo: []
       }
     },
-    // methods: {
-    // getallData() {
-    //   const colRef = collection(db, collection)
-    //   getDocs(colRef)
-    // },
+
     mounted() {
       this.ab.onSnapshot((snapshot) => {
         snapshot.docChanges().forEach((change) => {
@@ -66,7 +56,7 @@
     watch: {
       todo(data) {
         data.map((value) => {
-          this.ab.doc(value.id).update({
+          this.queryForDocuments.doc(value.id).update({
             status: 'TODO',
             value: value.value
           })
@@ -74,7 +64,7 @@
       },
       inProgress(data) {
         data.map((value) => {
-          this.ab.doc(value.id).update({
+          this.queryForDocuments.doc(value.id).update({
             status: 'IN_PROGRESS',
             value: value.value
           })
@@ -82,7 +72,7 @@
       },
       review(data) {
         data.map((value) => {
-          this.ab.doc(value.id).update({
+          this.queryForDocuments.doc(value.id).update({
             status: 'REVIEW',
             value: value.value
           })
@@ -90,7 +80,7 @@
       },
       done(data) {
         data.map((value) => {
-          this.ab.doc(value.id).update({
+          this.queryForDocuments.doc(value.id).update({
             status: 'DONE',
             value: value.value
           })
@@ -99,8 +89,20 @@
     },
     computed: {
       ab() {
-        return firebaseApp.firestore().collection('Pernillas projekt')
+        return firebaseApp.firestore().collection('Adamstest')
       }
+      //    queryForDocuments() {
+      //      const customerOrdersQuery = query(
+      //       collection(firestore, 'Adamstest'),
+      //       where('task', '==', 'task'),
+      //       limit(40)
+      //     )
+      //     const querySnapshot =  getDocs(customerOrdersQuery)
+      //     querySnapshot.forEach((snap) => {
+      //       console.log(` ${JSON.stringify(snap.data())}`)
+      //     })
+      // return this.queryForDocuments
+      //   }
     },
     components: {
       SprintList,

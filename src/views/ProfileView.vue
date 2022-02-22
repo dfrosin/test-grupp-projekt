@@ -34,12 +34,13 @@
       </div>
       <div class="card-body">
         <div v-if="editing === false" class="saved-information">
+          <p>{{ userCollection.userName }}</p>
           <p>{{ userCollection.fullName }}</p>
           <p>{{ userCollection.email }}</p>
         </div>
         <div v-if="editing === true" class="editing-information">
+          <input type="text" v-model="userCollection.userName" />
           <input type="text" v-model="userCollection.fullName" />
-          <input type="email" v-model="userCollection.email" />
         </div>
         <div class="buttons">
           <button v-if="editing === true" @click="onSave">save</button>
@@ -196,28 +197,29 @@
         newPhoto: null,
         url: null,
         file: null,
-        nameCopy: '',
-        emailCopy: '',
+        fullnameCopy: '',
+        userNameCopy: '',
         userCollection: {}
       }
     },
     mounted() {
-      this.userCollection = { ...this.$store.state.loggedInUser }
-      if (this.userCollection === null) {
+      if (this.$store.state.loggedInUser === null) {
         this.$router.push('/login')
+      } else {
+        this.userCollection = { ...this.$store.state.loggedInUser }
+        console.log(this.$store.state.loggedInUser)
+        this.url = this.$store.state.loggedInUser.profilePicture
       }
-      console.log(this.$store.state.loggedInUser)
-      this.url = this.$store.state.loggedInUser.profilePicture
     },
     methods: {
       onEdit() {
         this.editing = true
-        this.nameCopy = this.userCollection.fullName.slice()
-        this.emailCopy = this.userCollection.email.slice()
+        this.fullnameCopy = this.userCollection.fullName.slice()
+        this.userNameCopy = this.userCollection.userName.slice()
       },
       onCancel() {
-        this.userCollection.fullName = this.nameCopy
-        this.userCollection.email = this.emailCopy
+        this.userCollection.fullName = this.fullnameCopy
+        this.userCollection.userName = this.userNameCopy
         this.editing = false
         this.uploading = false
         this.newPhoto = null
@@ -226,7 +228,7 @@
         this.editing = false
         const whereToAddData = doc(
           firestore,
-          `users/${this.userCollection.userName}`
+          `users/${this.userCollection.userId}`
         )
         setDoc(whereToAddData, this.userCollection)
         this.$store.commit('setLoggedInUser', this.userCollection)
