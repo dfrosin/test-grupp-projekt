@@ -23,6 +23,7 @@
         <span class="tool-tiptext">Edit Name</span>
       </div>
     </div>
+    <p v-if="getColor === ''">Please select a color first!</p>
 
     <input
       v-if="isVisible"
@@ -38,12 +39,17 @@
       placeholder="Som en ___ vill jag ___ för att ___"
       ref="firstInput"
       @keyup.enter="createList"
+      :style="{ borderColor: getColor }"
     />
-    <form id="color" @submit.prevent="addColor">
-      <label for="color">Select a color:</label>
-      <input v-model="getColor" type="color" name="color" />
-    </form>
-
+    <div class="color-container">
+      <div
+        class="color"
+        v-for="color in colorArray"
+        :key="color.id"
+        :style="{ backgroundColor: color }"
+        @click="selectColor"
+      />
+    </div>
     <div class="backlog-container">
       <ul>
         <li
@@ -57,6 +63,7 @@
             alt=""
             @click="deleteItem"
             :id="item.id"
+            :style="{ borderColor: item.color }"
           />
         </li>
       </ul>
@@ -88,6 +95,20 @@
           deleteId: '',
           color: ''
         },
+        colorArray: [
+          'rgb(255, 255, 255)',
+          'rgb(177, 177, 177)',
+          'rgb(161, 40, 181)',
+          'rgb(255, 91, 219)',
+          'rgb(152, 143, 255)',
+          'rgb(255, 107, 107)',
+          'rgb(255, 204, 129)',
+          'rgb(255, 242, 124)',
+          'rgb(172, 255, 190)',
+          'rgb(48, 214, 174)',
+          'rgb(6, 170, 221)',
+          'rgb(0, 0, 0)'
+        ],
         deletedArray: [],
         arrayOfObjects: [],
         isDeleted: false,
@@ -97,19 +118,23 @@
         newName: '',
         editProjectName: false,
         isH2Visible: true,
-        getColor: ''
+        getColor: '',
+        errorMessage: false
       }
     },
     methods: {
       createList() {
-        this.$store.commit('setProjectName', this.pbHeading)
-        this.backlogItemInfo.color = this.getColor
-        this.backlogItemInfo.id = this.pbItem
-        this.backlogItemInfo.docId = uuidv4()
-        let copiedObject = JSON.parse(JSON.stringify(this.backlogItemInfo))
-        this.arrayOfObjects.push(copiedObject)
-        this.pbItem = ''
-        this.getColor = ''
+        if (this.getColor !== '') {
+          this.$store.commit('setProjectName', this.pbHeading)
+          this.backlogItemInfo.color = this.getColor
+          this.backlogItemInfo.id = this.pbItem
+          this.backlogItemInfo.docId = uuidv4()
+          let copiedObject = JSON.parse(JSON.stringify(this.backlogItemInfo))
+          this.arrayOfObjects.push(copiedObject)
+          this.pbItem = ''
+          this.getColor = ''
+          this.errorMessage = false
+        }
       },
       createAccount() {
         // --------------- SKAPA NY ANVÄNDARE------------------------------ //
@@ -139,6 +164,7 @@
         })
       },
       deleteItem(e) {
+        this.colorArray.push(e.target.style.borderColor)
         this.deleted = true
         let deleteItemId = e.target.id
         var filtered = this.arrayOfObjects.filter(function (el) {
@@ -167,6 +193,13 @@
       backToBasic() {
         this.isH2Visible = true
         this.editProjectName = false
+      },
+      selectColor(e) {
+        let color = e.target.style.backgroundColor
+        this.getColor = color
+        console.log(color)
+        let index = this.colorArray.indexOf(color)
+        this.colorArray.splice(index, 1)
       }
     }
   }
@@ -182,10 +215,31 @@
     height: 80vh;
     margin: auto;
     margin-top: 10rem;
-
-    #color {
+    .color-container {
+      display: flex;
+      flex-wrap: wrap;
+      background-color: rgba(255, 255, 255, 0.5);
+      border-radius: 12px;
+      padding: 2px;
+      width: 106px;
+      height: 82px;
+      gap: 2px;
       grid-column: 1;
-      grid-row: 6;
+      grid-row: 6/7;
+      margin: 2rem;
+    }
+    p {
+      grid-row: 5;
+      grid-column: 1;
+      margin: 1rem;
+    }
+    .color {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+    }
+    .color:hover {
+      border: 1px solid rgb(131, 128, 128);
     }
     .edit {
       .exampleText {
