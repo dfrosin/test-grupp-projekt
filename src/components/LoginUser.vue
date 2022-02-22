@@ -1,3 +1,29 @@
+<script>
+  import { auth } from '../firebase'
+
+  export default {
+    data() {
+      return {
+        email: '',
+        password: ''
+      }
+    },
+    methods: {
+      async onSubmit() {
+        const userCred = await auth.signInWithEmailAndPassword(
+          this.email,
+          this.password
+        )
+
+        if (userCred) {
+          await this.$store.dispatch('fetchAndSetLoggedInUser', userCred.user)
+          this.$router.push('/profile')
+        }
+      }
+    }
+  }
+</script>
+
 <template>
   <div id="container">
     <form @submit.prevent="onSubmit">
@@ -30,32 +56,6 @@
     <routerLink class="link" to="/createaccount">Create account</routerLink>
   </div>
 </template>
-
-<script>
-  import { auth } from '../firebase'
-
-  export default {
-    data() {
-      return {
-        email: '',
-        password: ''
-      }
-    },
-    methods: {
-      async onSubmit() {
-        const userCred = await auth.signInWithEmailAndPassword(
-          this.email,
-          this.password
-        )
-
-        if (userCred) {
-          await this.$store.dispatch('fetchAndSetLoggedInUser', userCred.user)
-          this.$router.push('/profile')
-        }
-      }
-    }
-  }
-</script>
 
 <style lang="scss" scoped>
   #container {

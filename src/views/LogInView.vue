@@ -1,12 +1,12 @@
-<template>
-  <h1>Sign In</h1>
-  <LoginUser />
-</template>
-
 <script>
   import LoginUser from '../components/LoginUser.vue'
   export default { components: { LoginUser } }
 </script>
+
+<template>
+  <h1>Sign In</h1>
+  <LoginUser />
+</template>
 
 <style lang="scss" scoped>
   h1 {
