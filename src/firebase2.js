@@ -1,7 +1,7 @@
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/firestore'
-import { getFirestore, collection, getDocs, addDocs } from 'firebase/firestore'
-
+import { getFirestore, collection, getDocs } from 'firebase/firestore'
+// deleted addDocs from import from firebase/firestore so eslint works
 /* import { getStorage } from 'firebase/storage' */
 
 const firebaseConfig = {
