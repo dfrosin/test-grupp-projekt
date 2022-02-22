@@ -1,20 +1,23 @@
 <script>
   import { firebaseApp } from '../firebase.js'
+  import { collection, getDocs } from 'firebase/firestore'
   import SprintList from '../components/SprintList.vue'
   import SprintCard from '../components/SprintCard.vue'
   import { VueDraggableNext } from 'vue-draggable-next'
 
   export default {
     // created() {
-    //   const colRef = collection(db, 'Adamstest')
-
-    //   getDocs(colRef).then((snapshot) => {
-    //     snapshot.docs.forEach((doc) => {
-    //       this.todo.push({ ...doc.data(), id: doc.id })
+    //   queryForDocuments() {
+    //     const customerOrdersQuery = query(
+    //       collection(firestore, 'Adamstest'),
+    //       where('status', '===', 'TODO'),
+    //       limit(200)
+    //     )
+    //     const querySnapshot =  getDocs(customerOrdersQuery)
+    //     querySnapshot.forEach((snap) => {
+    //       console.log(` ${JSON.stringify(snap.data())}`)
     //     })
-    //     this.arrayOfObjects = this.todo
-    //     console.log(this.todo)
-    //   })
+    //   }
     // },
     data() {
       return {
@@ -26,6 +29,11 @@
         todo: []
       }
     },
+    // methods: {
+    //   getallData() {
+    //     const colRef = collection(db, collection)
+    //     getDocs(colRef)
+    //   },
     mounted() {
       this.ab.onSnapshot((snapshot) => {
         snapshot.docChanges().forEach((change) => {
@@ -56,35 +64,35 @@
       })
     },
     watch: {
-      todo(value) {
-        value.map((todo) => {
-          this.firebaseApp.doc(todo.id).update({
+      todo(data) {
+        data.map((value) => {
+          this.ab.doc(value.id).update({
             status: 'TODO',
-            todo: todo.todo
+            value: value.value
           })
         })
       },
-      inProgress(value) {
-        value.map((todo) => {
-          this.firebaseApp.doc(todo.id).update({
+      inProgress(data) {
+        data.map((value) => {
+          this.ab.doc(value.id).update({
             status: 'IN_PROGRESS',
-            todo: todo.todo
+            value: value.value
           })
         })
       },
-      review(value) {
-        value.map((todo) => {
-          this.firebaseApp.doc(todo.id).update({
+      review(data) {
+        data.map((value) => {
+          this.ab.doc(value.id).update({
             status: 'REVIEW',
-            todo: todo.todo
+            value: value.value
           })
         })
       },
-      done(value) {
-        value.map((todo) => {
-          this.firebaseApp.doc(todo.id).update({
+      done(data) {
+        data.map((value) => {
+          this.ab.doc(value.id).update({
             status: 'DONE',
-            todo: todo.todo
+            value: value.value
           })
         })
       }
@@ -177,6 +185,7 @@
       </section>
     </sprint-list>
   </article>
+  <button @click="getallData">alkadfoisdjosdjsdofjsdofi</button>
 </template>
 
 <style lang="scss" scoped>
