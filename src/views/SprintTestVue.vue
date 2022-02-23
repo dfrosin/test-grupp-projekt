@@ -1,14 +1,7 @@
 <script>
-  import { db } from '../firebase.js'
-  import { collection, getDocs } from 'firebase/firestore'
-  // import {
-  //   where,
-  //   limit,
-  //   collection,
-  //   query,
-  //   getDocs,
-
-  // } from 'firebase/firestore'
+  import { firestore } from '../firebase.js'
+  // import { collection, getDocs } from 'firebase/firestore'
+  import { where, limit, collection, query, getDocs } from 'firebase/firestore'
   import SprintList from '../components/SprintList.vue'
   import SprintCard from '../components/SprintCard.vue'
   import { VueDraggableNext } from 'vue-draggable-next'
@@ -24,38 +17,83 @@
         todo: [],
         arrayOfTasks: [],
         tasks: [],
-        targetObject: null
+        targetObject: null,
+        projectName: null,
+        allProjects: null
       }
     },
 
     mounted() {
-      this.getDatabase()
+      if (this.$store.state.arrayOfTasks === null) {
+        this.getDatabase()
+      } else {
+        this.arrayOfTasks = this.$store.state.arrayOfTasks
+      }
     },
     methods: {
       getDatabase() {
-        const colRef = collection(db, 'Adamstest')
+        const customerOrdersQuery = query(
+          collection(firestore, this.$store.state.projectName),
+          where('tasks', '==', 'tasks'),
+          limit(50)
+        ).then(
+          getDocs(customerOrdersQuery).then((snapshot) => {
+            let tasks = []
+            snapshot.docs.forEach((doc) => {
+              tasks.push({ ...doc.data(), id: doc.id })
+            })
+            this.arrayOfTasks = tasks
 
-        getDocs(colRef).then((snapshot) => {
-          let tasks = []
-          snapshot.docs.forEach((doc) => {
-            tasks.push({ ...doc.data(), id: doc.id })
+            this.todo = this.arrayOfTasks.filter((el) => {
+              return el.status === 'TODO'
+            })
+            this.inProgress = this.arrayOfTasks.filter((el) => {
+              return el.status === 'IN_PROGRESS'
+            })
+            this.review = this.arrayOfTasks.filter((el) => {
+              return el.status === 'REVIEW'
+            })
+            this.done = this.arrayOfTasks.filter((el) => {
+              return el.status === 'DONE'
+            })
           })
-          this.arrayOfTasks = tasks
-
-          this.todo = this.arrayOfTasks.filter((el) => {
-            return el.status === 'TODO'
-          })
-          this.inProgress = this.arrayOfTasks.filter((el) => {
-            return el.status === 'IN_PROGRESS'
-          })
-          this.review = this.arrayOfTasks.filter((el) => {
-            return el.status === 'REVIEW'
-          })
-          this.done = this.arrayOfTasks.filter((el) => {
-            return el.status === 'DONE'
-          })
-        })
+        )
       },
+      // getDatabase() {
+      //   const colRef = collection(db, 'Adamstest')
+
+      //   getDocs(colRef).then((snapshot) => {
+      //     let tasks = []
+      //     snapshot.docs.forEach((doc) => {
+      //       tasks.push({ ...doc.data(), id: doc.id })
+      //     })
+      //     this.arrayOfTasks = tasks
+
+      //     this.todo = this.arrayOfTasks.filter((el) => {
+      //       return el.status === 'TODO'
+      //     })
+      //     this.inProgress = this.arrayOfTasks.filter((el) => {
+      //       return el.status === 'IN_PROGRESS'
+      //     })
+      //     this.review = this.arrayOfTasks.filter((el) => {
+      //       return el.status === 'REVIEW'
+      //     })
+      //     this.done = this.arrayOfTasks.filter((el) => {
+      //       return el.status === 'DONE'
+      //     })
+      //   })
+      // },
+      // async queryForDocuments() {
+      //   const customerOrdersQuery = query(
+      //     collection(firestore, 'Adam'),
+      //     where('customer', '==', 'Fredrik'),
+      //     limit(11)
+      //   )
+      //   const querySnapshot = await getDocs(customerOrdersQuery)
+      //   querySnapshot.forEach((snap) => {
+      //     console.log(JSON.stringify(snap.data()))
+      //   })
+      // },
       detectMove(evt) {
         let status = evt.to.parentNode.className
         let id = evt.dragged.id
@@ -80,6 +118,9 @@
 <template>
   <h2>Project: {{ this.$store.state.projectName }}</h2>
   <article class="flex-container">
+    <select name="" id="">
+      <option value="" />
+    </select>
     <sprint-list title="todo">
       <section class="TODO">
         <draggable

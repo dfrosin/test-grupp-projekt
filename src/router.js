@@ -13,6 +13,7 @@ import CreateSprintView from './views/CreateSprintView.vue'
 import SprintOverviewView from './views/SprintOverviewView.vue'
 import FirebaseButtons from './views/FirebaseButtons.vue'
 import SprintOverviewTwoView from './views/SprintOverviewTwoView.vue'
+import SprintTestView from './views/SprintTestVue.vue'
 
 export default createRouter({
   history: createWebHashHistory(),
@@ -69,6 +70,10 @@ export default createRouter({
     {
       component: SprintOverviewTwoView,
       path: '/catsanddogs'
+    },
+    {
+      component: SprintTestView,
+      path: '/sprinttest'
     }
   ]
 })

@@ -161,6 +161,12 @@
           }, 2000)
         })
         this.$router.push('/createsprint')
+        this.submitProjectName()
+      },
+      submitProjectName() {
+        const allDocs = { project: 'project' }
+        const whereToAddData = doc(firestore, `projects/${this.pbHeading}`)
+        setDoc(whereToAddData, allDocs)
       },
       //Snapshot of all documents as Objects & Keys.
 

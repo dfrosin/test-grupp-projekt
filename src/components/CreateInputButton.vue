@@ -53,7 +53,7 @@
           setTimeout(() => {
             const whereToAddData = doc(
               firestore,
-              `${this.$store.state.projectName}/${this.dataValue.name}`
+              `${this.$store.state.projectName}/${allDocs.name}`
             )
             setDoc(whereToAddData, allDocs)
           }, 2000)
