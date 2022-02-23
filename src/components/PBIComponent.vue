@@ -1,80 +1,92 @@
 <template>
   <div class="component">
-    <h1>Product Backlog</h1>
-    <div class="edit">
-      <div class="h2-container" v-if="isH2Visible">
-        <h2 class="exampleText" v-if="isVisible">Project Name</h2>
-        <h2
-          v-if="!isVisible"
-          @mouseenter="toolTipOpen"
-          @mouseleave="toolTipClose"
-          @click="editName"
-        >
-          {{ pbHeading }}
-        </h2>
-      </div>
+    <div class="column">
+      <h1>Product Backlog</h1>
       <input
-        class="editInput"
-        v-if="editProjectName"
+        v-if="isVisible"
         v-model="pbHeading"
-        @keyup.enter="backToBasic"
+        class="pbHeading"
+        @keyup.enter="visible"
+        placeholder="Project Name"
       />
-      <div v-if="showToolTip" class="tool-tips">
-        <span class="tool-tiptext">Edit Name</span>
+      <input
+        v-model="pbItem"
+        class="first-input"
+        type="text"
+        placeholder="Som en ___ vill jag ___ för att ___"
+        ref="firstInput"
+        @keyup.enter="createList"
+        :style="{ borderColor: getColor }"
+      />
+      <div v-if="getColor !== ''" class="color-message">
+        <p>Selected color</p>
+        <div class="color" :style="{ backgroundColor: getColor }" />
+      </div>
+      <div v-if="getColor === ''" class="color-message">
+        <p>Please select a color first!</p>
+      </div>
+
+      <div class="container-container">
+        <div class="color-container">
+          <div
+            class="color"
+            v-for="color in colorArray"
+            :key="color.id"
+            :style="{ backgroundColor: color }"
+            @click="selectColor"
+          />
+        </div>
       </div>
     </div>
-    <p v-if="getColor === ''">Please select a color first!</p>
-
-    <input
-      v-if="isVisible"
-      v-model="pbHeading"
-      class="pbHeading"
-      @keyup.enter="visible"
-      placeholder="Project Name"
-    />
-    <input
-      v-model="pbItem"
-      class="first-input"
-      type="text"
-      placeholder="Som en ___ vill jag ___ för att ___"
-      ref="firstInput"
-      @keyup.enter="createList"
-      :style="{ borderColor: getColor }"
-    />
-    <div class="color-container">
-      <div
-        class="color"
-        v-for="color in colorArray"
-        :key="color.id"
-        :style="{ backgroundColor: color }"
-        @click="selectColor"
-      />
-    </div>
-    <div class="backlog-container">
-      <ul>
-        <li
-          v-for="item in arrayOfObjects"
-          :key="item.idxd"
-          :style="{ borderColor: item.color }"
-        >
-          {{ item.id }}
-          <img
-            src="/assets/trash-can.png"
-            alt=""
-            @click="deleteItem"
-            :id="item.id"
+    <div class="column">
+      <div class="edit">
+        <div class="h2-container" v-if="isH2Visible">
+          <h2 class="exampleText" v-if="isVisible">Project Name</h2>
+          <h2
+            v-if="!isVisible"
+            @mouseenter="toolTipOpen"
+            @mouseleave="toolTipClose"
+            @click="editName"
+          >
+            {{ pbHeading }}
+          </h2>
+        </div>
+        <input
+          class="editInput"
+          v-if="editProjectName"
+          v-model="pbHeading"
+          @keyup.enter="backToBasic"
+        />
+        <div v-if="showToolTip" class="tool-tips">
+          <span class="tool-tiptext">Edit Name</span>
+        </div>
+      </div>
+      <div class="backlog-container">
+        <ul>
+          <li
+            v-for="item in arrayOfObjects"
+            :key="item.idxd"
             :style="{ borderColor: item.color }"
-          />
-        </li>
-      </ul>
+          >
+            {{ item.id }}
+            <img
+              src="/assets/trash-can.png"
+              alt=""
+              @click="deleteItem"
+              :id="item.id"
+              :style="{ borderColor: item.color }"
+            />
+          </li>
+        </ul>
+      </div>
+      <button
+        v-if="arrayOfObjects.length >= 1"
+        class="btn btn-secondary"
+        @click="createAccount"
+      >
+        Create Tasks
+      </button>
     </div>
-    <button
-      v-if="arrayOfObjects.length >= 1"
-      class="btn btn-secondary"
-      @click="createAccount"
-    >
-      Create Tasks
-    </button>
   </div>
 </template>
 
@@ -195,6 +207,10 @@
         this.editProjectName = false
       },
       selectColor(e) {
+        if (this.getColor !== '') {
+          this.colorArray.push(this.getColor)
+          this.getColor = ''
+        }
         let color = e.target.style.backgroundColor
         this.getColor = color
         console.log(color)
@@ -206,57 +222,73 @@
 </script>
 
 <style lang="scss" scoped>
+  html,
+  body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+  }
   .component {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(10, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
     background-color: rgba(255, 235, 205, 0.39);
     width: 85%;
-    height: 80vh;
+    border-radius: 10px;
     margin: auto;
     margin-top: 10rem;
-    .color-container {
+    padding-bottom: 40px;
+    .column {
       display: flex;
-      flex-wrap: wrap;
-      background-color: rgba(255, 255, 255, 0.5);
-      border-radius: 12px;
-      padding: 2px;
-      width: 106px;
-      height: 82px;
-      gap: 2px;
-      grid-column: 1;
-      grid-row: 6/7;
-      margin: 2rem;
+      flex-direction: column;
+      align-items: center;
+      width: 360px;
     }
-    p {
-      grid-row: 5;
-      grid-column: 1;
-      margin: 1rem;
+    .color-message {
+      display: flex;
+      .color {
+        margin-top: 4px;
+        border: 2px solid rgba(0, 0, 0, 0.3);
+      }
     }
     .color {
       width: 24px;
       height: 24px;
       border-radius: 50%;
     }
-    .color:hover {
+    .color:not(.color-message .color):hover {
       border: 1px solid rgb(131, 128, 128);
+    }
+    .container-container {
+      background-color: rgba(255, 255, 255, 0.5);
+      width: 108px;
+      height: 82px;
+      border-radius: 14px;
+      padding: 3px;
+      margin: 2rem;
+      .color-container {
+        display: flex;
+        flex-wrap: wrap;
+        width: 106px;
+        gap: 2px;
+      }
+    }
+    p {
+      margin: 1rem;
+      color: white;
     }
     .edit {
       .exampleText {
         color: rgba(255, 255, 255, 0.171);
       }
       display: flex;
-      width: 20rem;
       align-self: center;
       justify-self: center;
       cursor: pointer;
       h2 {
-        grid-row: 1;
-        grid-column: 2;
-        align-self: center;
-        justify-self: center;
         color: rgb(255, 255, 255);
-        margin-right: 10px;
+        padding: 4rem;
+        width: 100%;
       }
       .tool-tips {
         width: 8rem;
@@ -267,7 +299,8 @@
         align-content: center;
         padding: 5px 0;
         border-radius: 6px;
-        margin-right: 1rem;
+        position: fixed;
+        margin-top: 35px;
 
         .tool-tiptext {
           font-size: 1.2rem;
@@ -297,23 +330,24 @@
         margin: 2px;
       }
     }
+    ::placeholder {
+      color: rgba(244, 244, 244, 0.606);
+    }
     .pbHeading {
-      grid-row: 3;
       background-color: transparent;
       border-bottom: 2px solid rgba(204, 201, 226, 0.616);
       color: #fff;
       font-size: 2rem;
-      width: 30rem;
+      width: 80%;
       align-self: center;
       margin-left: 2rem;
     }
     .first-input {
-      grid-row: 4;
       background-color: transparent;
       border-bottom: 2px solid rgba(204, 201, 226, 0.616);
       color: #fff;
       font-size: 2rem;
-      width: 30rem;
+      width: 80%;
       align-self: center;
       margin-left: 2rem;
     }
@@ -331,8 +365,6 @@
       color: #ffff;
     }
     .btn {
-      grid-column: 2;
-      grid-row: 9;
       align-self: center;
       justify-self: center;
       width: 20rem;
@@ -341,10 +373,15 @@
       font-size: 1.4rem;
     }
     .backlog-container {
-      grid-column: 2;
-      grid-row: 2/10;
       height: 40rem;
       overflow-y: scroll;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      margin-bottom: 20px;
+      width: 100%;
+    }
+    .backlog-container::-webkit-scrollbar {
+      display: none;
     }
   }
 </style>

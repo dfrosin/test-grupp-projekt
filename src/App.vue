@@ -17,8 +17,8 @@
     <main class="main-container-view">
       <RouterView />
     </main>
+    <CrumbleFooter />
   </div>
-  <CrumbleFooter />
 </template>
 <style lang="scss">
   .main-app-container {
