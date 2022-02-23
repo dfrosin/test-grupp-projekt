@@ -75,6 +75,7 @@
       class="form-select form-select-sm"
       aria-label=".form-select-sm example"
     >
+      <option value="Select PBI" />
       <option
         v-for="object in this.$store.state.arrayOfObjects"
         :key="object.id"
