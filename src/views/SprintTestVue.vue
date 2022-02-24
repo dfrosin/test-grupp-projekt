@@ -36,7 +36,7 @@
         targetObject: null,
         projectName: null,
         arrayOfProjectNames: null,
-        task: ''
+        newTask: ''
       }
     },
 
@@ -123,8 +123,8 @@
         updateDoc(whereToAddData, updateData)
       },
       getTask(tasks) {
-        this.task = tasks
-        console.log('här ska du se' + this.tasks)
+        this.newTask = tasks
+        console.log('blabla', this.newTask)
       }
     }
   }
