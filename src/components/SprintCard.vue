@@ -27,6 +27,8 @@
 </script>
 <template>
   <div class="sprint-card" :id="item.uuid" :style="{ borderColor: item.color }">
+    <RemoveTask />
+
     <p>
       {{ item.name }}
     </p>
@@ -38,7 +40,6 @@
     </p>
     <AddUser @send-user="getUser" />
   </div>
-  <RemoveTask />
 </template>
 
 <style lang="scss" scoped>
