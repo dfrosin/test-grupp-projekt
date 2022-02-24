@@ -1,10 +1,20 @@
 <script>
+  const date = new Date().toLocaleString()
   export default {
-    data() {
-      return {}
-    },
+    name: 'TimeStamp',
+    data: () => ({
+      timeChange: 'Changed at ' + date
+    }),
     methods: {
-      getTime() {}
+      printTimestamp() {}
     }
   }
 </script>
+
+<template>
+  <div @drag="printTimestamp">
+    <span>
+      {{ timeChange }}
+    </span>
+  </div>
+</template>
