@@ -1,4 +1,5 @@
 <script>
+  import AddUser from './AddUser.vue'
   export default {
     props: {
       item: {
@@ -8,12 +9,14 @@
     },
     data() {
       return {}
-    }
+    },
+    components: { AddUser }
   }
 </script>
 <template>
   <div class="sprint-card" :id="item.uuid" :style="{ borderColor: item.color }">
     {{ item.name }}
+    <AddUser />
   </div>
 </template>
 

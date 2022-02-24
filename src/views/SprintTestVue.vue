@@ -27,17 +27,13 @@
         tasks: [],
         targetObject: null,
         projectName: null,
-        arrayOfProjectNames: null
+        arrayOfProjectNames: null,
+        select: false
       }
     },
 
     mounted() {
       this.getAllProjectNames()
-      // if (this.$store.state.arrayOfTasks === null) {
-      //   this.getDatabase()
-      // } else {
-      //   this.arrayOfTasks = this.$store.state.arrayOfTasks
-      // }
     },
     methods: {
       getDatabase() {
@@ -82,41 +78,7 @@
           this.arrayOfProjectNames = projectNames
         })
       },
-      // getDatabase() {
-      //   const colRef = collection(db, 'Adamstest')
 
-      //   getDocs(colRef).then((snapshot) => {
-      //     let tasks = []
-      //     snapshot.docs.forEach((doc) => {
-      //       tasks.push({ ...doc.data(), id: doc.id })
-      //     })
-      //     this.arrayOfTasks = tasks
-
-      //     this.todo = this.arrayOfTasks.filter((el) => {
-      //       return el.status === 'TODO'
-      //     })
-      //     this.inProgress = this.arrayOfTasks.filter((el) => {
-      //       return el.status === 'IN_PROGRESS'
-      //     })
-      //     this.review = this.arrayOfTasks.filter((el) => {
-      //       return el.status === 'REVIEW'
-      //     })
-      //     this.done = this.arrayOfTasks.filter((el) => {
-      //       return el.status === 'DONE'
-      //     })
-      //   })
-      // },
-      // async queryForDocuments() {
-      //   const customerOrdersQuery = query(
-      //     collection(firestore, 'Adam'),
-      //     where('customer', '==', 'Fredrik'),
-      //     limit(11)
-      //   )
-      //   const querySnapshot = await getDocs(customerOrdersQuery)
-      //   querySnapshot.forEach((snap) => {
-      //     console.log(JSON.stringify(snap.data()))
-      //   })
-      // },
       detectMove(evt) {
         //hämtar namnet på columnen via CSS klassnamn
         let status = evt.to.parentNode.className
@@ -133,6 +95,7 @@
       },
       selectProjectName(evt) {
         this.projectName = evt.target.value
+        this.select = true
         this.getDatabase()
       },
       updateStatus() {
@@ -164,7 +127,7 @@
         {{ projects.id }}
       </option>
     </select>
-    <h2>Project: {{ this.projectName }}</h2>
+    <h2 v-if="select">Project: {{ this.projectName }}</h2>
   </div>
 
   <article class="flex-container">
@@ -247,6 +210,12 @@
 </template>
 
 <style lang="scss" scoped>
+  select {
+    font-size: 1.2rem;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-left: 4rem;
+  }
   h2 {
     margin-left: 4rem;
     color: white;
@@ -289,7 +258,7 @@
     border-radius: 10px;
     border-style: solid;
     border-color: rgba(51, 52, 58, 0.514);
-    min-height: 10px;
+    height: 100px;
     cursor: grab;
   }
   .on-drag {
