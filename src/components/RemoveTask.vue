@@ -2,24 +2,42 @@
   import { firestore } from '../firebase.js'
   import { deleteDoc, doc } from 'firebase/firestore'
   export default {
-    props: {},
+    props: {
+      deleteid: {
+        type: String,
+        default: ''
+      },
+      board: {
+        type: [String, Number],
+        default: ''
+      },
+      taskname: {
+        type: [String, Number],
+        default: ''
+      }
+    },
     data() {
       return {}
     },
 
     methods: {
-      async deleteTask() {
-        if (confirm('Are you sure?')) {
+      async deleteTask(board, id, taskname) {
+        if (confirm(`Är du säker på att du vill radera task: ${taskname}`)) {
+          console.log(this.taskname)
           console.log('Din funktion anropas Adam')
-          // const whereToAddData = doc(firestore, 'hej', 'aaa')
-          await deleteDoc(doc(firestore, 'hej', 'aaa'))
+          console.log(' Delete task:', board, id)
+          await deleteDoc(doc(firestore, board, id))
         }
       }
     }
   }
 </script>
 <template>
-  <img src="/assets/trash-can.png" alt="" @click="deleteTask" />
+  <img
+    src="/assets/trash-can.png"
+    alt="Adams matlåda"
+    @click="deleteTask(board, deleteid, taskname)"
+  />
 </template>
 
 <style lang="scss" scoped>

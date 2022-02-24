@@ -34,7 +34,7 @@
         arrayOfTasks: [],
         tasks: [],
         targetObject: null,
-        projectName: null,
+        projectName: '',
         arrayOfProjectNames: null,
         newTask: '',
         select: false,
@@ -162,6 +162,7 @@
             :key="card.id"
             :item="card"
             :date="date"
+            :board="projectName"
             class="drag-element"
           />
         </draggable>
@@ -182,6 +183,7 @@
             :key="card.id"
             :item="card"
             :date="date"
+            :board="projectName"
             class="drag-element"
           />
         </draggable>
@@ -202,6 +204,7 @@
             :key="card.id"
             :item="card"
             :date="date"
+            :board="projectName"
             class="drag-element"
           />
         </draggable>
@@ -222,6 +225,7 @@
             :key="card.id"
             :item="card"
             :date="date"
+            :board="projectName"
             class="drag-element"
           />
         </draggable>

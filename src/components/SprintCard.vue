@@ -10,6 +10,10 @@
       date: {
         type: [String, Number],
         default: ''
+      },
+      board: {
+        type: [String, Number],
+        default: ''
       }
     },
     data() {
@@ -27,7 +31,7 @@
 </script>
 <template>
   <div class="sprint-card" :id="item.uuid" :style="{ borderColor: item.color }">
-    <RemoveTask />
+    <RemoveTask :board="board" :deleteid="item.id" :taskname="item.name" />
     <p>
       {{ item.name }}
     </p>
