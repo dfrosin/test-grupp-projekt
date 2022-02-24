@@ -1,7 +1,15 @@
 <script>
   import { firestore } from '../firebase.js'
   // import { collection, getDocs } from 'firebase/firestore'
-  import { where, limit, collection, query, getDocs } from 'firebase/firestore'
+  import {
+    where,
+    limit,
+    collection,
+    query,
+    getDocs,
+    doc,
+    updateDoc
+  } from 'firebase/firestore'
   import SprintList from '../components/SprintList.vue'
   import SprintCard from '../components/SprintCard.vue'
   import { VueDraggableNext } from 'vue-draggable-next'
@@ -19,45 +27,60 @@
         tasks: [],
         targetObject: null,
         projectName: null,
-        allProjects: null
+        arrayOfProjectNames: null
       }
     },
 
     mounted() {
-      if (this.$store.state.arrayOfTasks === null) {
-        this.getDatabase()
-      } else {
-        this.arrayOfTasks = this.$store.state.arrayOfTasks
-      }
+      this.getAllProjectNames()
+      // if (this.$store.state.arrayOfTasks === null) {
+      //   this.getDatabase()
+      // } else {
+      //   this.arrayOfTasks = this.$store.state.arrayOfTasks
+      // }
     },
     methods: {
       getDatabase() {
         const customerOrdersQuery = query(
-          collection(firestore, this.$store.state.projectName),
+          collection(firestore, `${this.projectName}`),
           where('tasks', '==', 'tasks'),
           limit(50)
-        ).then(
-          getDocs(customerOrdersQuery).then((snapshot) => {
-            let tasks = []
-            snapshot.docs.forEach((doc) => {
-              tasks.push({ ...doc.data(), id: doc.id })
-            })
-            this.arrayOfTasks = tasks
-
-            this.todo = this.arrayOfTasks.filter((el) => {
-              return el.status === 'TODO'
-            })
-            this.inProgress = this.arrayOfTasks.filter((el) => {
-              return el.status === 'IN_PROGRESS'
-            })
-            this.review = this.arrayOfTasks.filter((el) => {
-              return el.status === 'REVIEW'
-            })
-            this.done = this.arrayOfTasks.filter((el) => {
-              return el.status === 'DONE'
-            })
-          })
         )
+
+        getDocs(customerOrdersQuery).then((snapshot) => {
+          let tasks = []
+          snapshot.docs.forEach((doc) => {
+            tasks.push({ ...doc.data(), id: doc.id })
+          })
+          this.arrayOfTasks = tasks
+
+          this.todo = this.arrayOfTasks.filter((el) => {
+            return el.status === 'TODO'
+          })
+          this.inProgress = this.arrayOfTasks.filter((el) => {
+            return el.status === 'IN_PROGRESS'
+          })
+          this.review = this.arrayOfTasks.filter((el) => {
+            return el.status === 'REVIEW'
+          })
+          this.done = this.arrayOfTasks.filter((el) => {
+            return el.status === 'DONE'
+          })
+        })
+      },
+      getAllProjectNames() {
+        const allProjectNames = query(
+          collection(firestore, 'projects'),
+          where('project', '==', 'project'),
+          limit(50)
+        )
+        getDocs(allProjectNames).then((snapshot) => {
+          let projectNames = []
+          snapshot.docs.forEach((doc) => {
+            projectNames.push({ ...doc.data(), id: doc.id })
+          })
+          this.arrayOfProjectNames = projectNames
+        })
       },
       // getDatabase() {
       //   const colRef = collection(db, 'Adamstest')
@@ -95,16 +118,34 @@
       //   })
       // },
       detectMove(evt) {
+        //hämtar namnet på columnen via CSS klassnamn
         let status = evt.to.parentNode.className
+        //hämtar uuid:t på tasken
         let id = evt.dragged.id
-
+        //filtrerar ut och hittar det specifika elementet
         let find = this.arrayOfTasks.filter((el) => {
-          return el.id === id
+          return el.uuid === id
         })
         this.targetObject = find
+        //uppdaterar status nyckeln till den specifika columnens namn
         this.targetObject[0].status = status
-        console.log(evt)
-        this.targetObject = null
+        this.updateStatus()
+      },
+      selectProjectName(evt) {
+        this.projectName = evt.target.value
+        this.getDatabase()
+      },
+      updateStatus() {
+        //skickas varje gång man flyttar ett kort, skickar med objektet som
+        //ligger i detectMove
+        const whereToAddData = doc(
+          firestore,
+          `${this.projectName}/${this.targetObject[0].name}`
+        )
+
+        const updateData = this.targetObject[0]
+
+        updateDoc(whereToAddData, updateData)
       }
     },
     components: {
@@ -116,11 +157,17 @@
 </script>
 
 <template>
-  <h2>Project: {{ this.$store.state.projectName }}</h2>
-  <article class="flex-container">
-    <select name="" id="">
-      <option value="" />
+  <div v-if="this.arrayOfProjectNames !== null">
+    <select @change="selectProjectName">
+      <option>Select a project</option>
+      <option v-for="projects in this.arrayOfProjectNames" :key="projects.id">
+        {{ projects.id }}
+      </option>
     </select>
+    <h2>Project: {{ this.projectName }}</h2>
+  </div>
+
+  <article class="flex-container">
     <sprint-list title="todo">
       <section class="TODO">
         <draggable

@@ -12,8 +12,8 @@
   }
 </script>
 <template>
-  <div class="sprint-card">
-    {{ item.value }}
+  <div class="sprint-card" :id="item.uuid">
+    {{ item.name }}
   </div>
 </template>
 
