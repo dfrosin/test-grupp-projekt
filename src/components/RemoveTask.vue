@@ -19,12 +19,9 @@
     data() {
       return {}
     },
-
     methods: {
       async deleteTask(board, id, taskname) {
         if (confirm(`Är du säker på att du vill radera task: ${taskname}`)) {
-          console.log(this.taskname)
-          console.log('Din funktion anropas Adam')
           console.log(' Delete task:', board, id)
           await deleteDoc(doc(firestore, board, id))
         }
