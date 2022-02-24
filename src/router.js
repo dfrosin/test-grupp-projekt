@@ -14,6 +14,7 @@ import SprintOverviewView from './views/SprintOverviewView.vue'
 import FirebaseButtons from './views/FirebaseButtons.vue'
 import SprintOverviewTwoView from './views/SprintOverviewTwoView.vue'
 import SprintTestView from './views/SprintTestVue.vue'
+import SprintTestTestTestView from './views/SprintTestTestTestView.vue'
 
 export default createRouter({
   history: createWebHashHistory(),
@@ -74,6 +75,10 @@ export default createRouter({
     {
       component: SprintTestView,
       path: '/sprinttest'
+    },
+    {
+      component: SprintTestTestTestView,
+      path: '/sprinttesttesttest'
     }
   ]
 })

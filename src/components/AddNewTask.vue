@@ -2,7 +2,7 @@
   import { v4 as uuidv4 } from 'uuid'
 
   export default {
-    emits: ['sendTask', 'this.tasks'],
+    emits: ['send-task', 'this.tasks'],
     data() {
       return {
         newTask: '',
@@ -22,7 +22,7 @@
         console.log(this.tasks)
       },
       addNewTask() {
-        this.$emit('sendTask', this.tasks)
+        this.$emit('send-task', this.tasks)
       }
     }
   }

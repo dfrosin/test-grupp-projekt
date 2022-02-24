@@ -1,4 +1,3 @@
-/* eslint-disable vue/v-on-event-hyphenation */
 <script>
   import { firestore } from '../firebase.js'
   // import { collection, getDocs } from 'firebase/firestore'
@@ -14,31 +13,23 @@
   import SprintList from '../components/SprintList.vue'
   import SprintCard from '../components/SprintCard.vue'
   import { VueDraggableNext } from 'vue-draggable-next'
-  import TimeStamp from '../components/TimeStamp.vue'
-  import AddNewTask from '../components/AddNewTask.vue'
 
   export default {
-    components: {
-      SprintList,
-      SprintCard,
-      TimeStamp,
-      draggable: VueDraggableNext,
-      AddNewTask
-    },
     data() {
       return {
         enabled: true,
-        inProgress: [],
-        review: [],
-        done: [],
+        IN_PROGRESS: [],
+        REVIEW: [],
+        DONE: [],
+        TODO: [],
         dragging: false,
-        todo: [],
         arrayOfTasks: [],
         tasks: [],
         targetObject: null,
         projectName: null,
         arrayOfProjectNames: null,
-        task: ''
+        arrayOfStatus: ['TODO', 'IN_PROGRESS', 'REVIEW', 'DONE'],
+        objectOfStatus: { TODO: {}, IN_PROGRESS: {}, REVIEW: {}, DONE: {} }
       }
     },
 
@@ -60,21 +51,20 @@
           })
           this.arrayOfTasks = tasks
 
-          this.todo = this.arrayOfTasks.filter((el) => {
+          this.TODO = this.arrayOfTasks.filter((el) => {
             return el.status === 'TODO'
           })
-          this.inProgress = this.arrayOfTasks.filter((el) => {
+          this.IN_PROGRESS = this.arrayOfTasks.filter((el) => {
             return el.status === 'IN_PROGRESS'
           })
-          this.review = this.arrayOfTasks.filter((el) => {
+          this.REVIEW = this.arrayOfTasks.filter((el) => {
             return el.status === 'REVIEW'
           })
-          this.done = this.arrayOfTasks.filter((el) => {
+          this.DONE = this.arrayOfTasks.filter((el) => {
             return el.status === 'DONE'
           })
         })
       },
-
       getAllProjectNames() {
         const allProjectNames = query(
           collection(firestore, 'projects'),
@@ -89,9 +79,7 @@
           this.arrayOfProjectNames = projectNames
         })
       },
-
       detectMove(evt) {
-        this.printTimestamp()
         //hämtar namnet på columnen via CSS klassnamn
         let status = evt.to.parentNode.className
         //hämtar uuid:t på tasken
@@ -103,13 +91,10 @@
         this.targetObject = find
         //uppdaterar status nyckeln till den specifika columnens namn
         this.targetObject[0].status = status
-        this.targetObject[0].time = this.date
-
         this.updateStatus()
       },
       selectProjectName(evt) {
         this.projectName = evt.target.value
-        this.select = true
         this.getDatabase()
       },
       updateStatus() {
@@ -123,18 +108,17 @@
         const updateData = this.targetObject[0]
 
         updateDoc(whereToAddData, updateData)
-      },
-      getTask(tasks) {
-        this.task = tasks
-        console.log('här ska du se' + this.tasks)
       }
+    },
+    components: {
+      SprintList,
+      SprintCard,
+      draggable: VueDraggableNext
     }
   }
 </script>
 
 <template>
-  <AddNewTask @send-task="getTask" />
-  <time-stamp />
   <div v-if="this.arrayOfProjectNames !== null">
     <select @change="selectProjectName">
       <option>Select a project</option>
@@ -142,84 +126,27 @@
         {{ projects.id }}
       </option>
     </select>
-    <h2 v-if="select">Project: {{ this.projectName }}</h2>
+    <h2>Project: {{ this.projectName }}</h2>
   </div>
 
   <article class="flex-container">
-    <sprint-list title="todo">
-      <section class="TODO">
+    <sprint-list
+      v-for="status in arrayOfStatus"
+      :key="status.id"
+      :title="status"
+    >
+      <section :class="status">
         <draggable
-          :list="todo"
+          :list="status"
           :move="(event) => detectMove(event, 123)"
           group="walla"
           ghost-class="on-drag"
           class="drop-zone-height"
         >
           <sprint-card
-            v-for="card in todo"
+            v-for="card in status"
             :key="card.id"
             :item="card"
-            :date="date"
-            class="drag-element"
-          />
-        </draggable>
-      </section>
-    </sprint-list>
-
-    <sprint-list title="In Progress">
-      <section class="IN_PROGRESS">
-        <draggable
-          :list="inProgress"
-          :move="(event) => detectMove(event, 123)"
-          group="walla"
-          ghost-class="on-drag"
-          class="drop-zone-height"
-        >
-          <sprint-card
-            v-for="card in inProgress"
-            :key="card.id"
-            :item="card"
-            :date="date"
-            class="drag-element"
-          />
-        </draggable>
-      </section>
-    </sprint-list>
-
-    <sprint-list title="Review">
-      <section class="REVIEW">
-        <draggable
-          :list="review"
-          :move="(event) => detectMove(event, 123)"
-          group="walla"
-          ghost-class="on-drag"
-          class="drop-zone-height"
-        >
-          <sprint-card
-            v-for="card in review"
-            :key="card.id"
-            :item="card"
-            :date="date"
-            class="drag-element"
-          />
-        </draggable>
-      </section>
-    </sprint-list>
-
-    <sprint-list title="Done">
-      <section class="DONE">
-        <draggable
-          :list="done"
-          :move="(event) => detectMove(event, 123)"
-          group="walla"
-          ghost-class="on-drag"
-          class="drop-zone-height"
-        >
-          <sprint-card
-            v-for="card in done"
-            :key="card.id"
-            :item="card"
-            :date="date"
             class="drag-element"
           />
         </draggable>
@@ -229,12 +156,6 @@
 </template>
 
 <style lang="scss" scoped>
-  select {
-    font-size: 1.2rem;
-    padding: 1rem;
-    border-radius: 10px;
-    margin-left: 4rem;
-  }
   h2 {
     margin-left: 4rem;
     color: white;
@@ -277,7 +198,7 @@
     border-radius: 10px;
     border-style: solid;
     border-color: rgba(51, 52, 58, 0.514);
-    height: 100px;
+    min-height: 10px;
     cursor: grab;
   }
   .on-drag {
