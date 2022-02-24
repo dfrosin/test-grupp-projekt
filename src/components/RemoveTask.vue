@@ -1,24 +1,20 @@
 <script>
-  import { db } from '../firebase.js'
-  import { deleteDoc } from 'firebase/firestore'
+  import { firestore } from '../firebase.js'
+  import { deleteDoc, doc } from 'firebase/firestore'
   export default {
-    props: {
-      removeTask: {
-        type: Image,
-        default: null
-      }
-    },
+    props: {},
     data() {
       return {}
     },
 
     methods: {
-      async deleteTask(doc) {
+      async deleteTask() {
         if (confirm('Are you sure?')) {
-          await deleteDoc(
-            doc(db, 'Nu skall allt fungera...', 'Mycket enklare med en knapp!')
+          const whereToAddData = doc(
+            firestore,
+            'Nu skall allt fungera.../Men se till att det fungerar då!'
           )
-          console.log('Document successfully Deleted???????? MAYBE?')
+          await deleteDoc(whereToAddData)
         }
       }
     }

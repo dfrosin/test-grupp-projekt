@@ -1,6 +1,6 @@
 <script>
   import AddUser from './AddUser.vue'
-  import RemoveTask from './removeTask.vue'
+  import RemoveTask from './RemoveTask.vue'
   export default {
     props: {
       item: {
@@ -28,7 +28,6 @@
 <template>
   <div class="sprint-card" :id="item.uuid" :style="{ borderColor: item.color }">
     <RemoveTask />
-
     <p>
       {{ item.name }}
     </p>

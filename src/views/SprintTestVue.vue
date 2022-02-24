@@ -36,7 +36,9 @@
         targetObject: null,
         projectName: null,
         arrayOfProjectNames: null,
-        newTask: ''
+        newTask: '',
+        select: false,
+        date: ''
       }
     },
 
@@ -122,6 +124,9 @@
 
         updateDoc(whereToAddData, updateData)
       },
+      printTimestamp() {
+        this.date = new Date().toLocaleString()
+      },
       getTask(tasks) {
         this.newTask = tasks
         console.log('blabla', this.newTask)
@@ -132,7 +137,6 @@
 
 <template>
   <AddNewTask @send-task="getTask" />
-  <time-stamp />
   <div v-if="this.arrayOfProjectNames !== null">
     <select @change="selectProjectName">
       <option>Select a project</option>
