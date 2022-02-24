@@ -117,6 +117,8 @@
       //     console.log(JSON.stringify(snap.data()))
       //   })
       // },
+
+      //Fredrik ska lägga till timestamp funktion i detectMove
       detectMove(evt) {
         //hämtar namnet på columnen via CSS klassnamn
         let status = evt.to.parentNode.className
