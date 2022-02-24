@@ -14,14 +14,12 @@
   import SprintList from '../components/SprintList.vue'
   import SprintCard from '../components/SprintCard.vue'
   import { VueDraggableNext } from 'vue-draggable-next'
-  import TimeStamp from '../components/TimeStamp.vue'
   import AddNewTask from '../components/AddNewTask.vue'
 
   export default {
     components: {
       SprintList,
       SprintCard,
-      TimeStamp,
       draggable: VueDraggableNext,
       AddNewTask
     },
