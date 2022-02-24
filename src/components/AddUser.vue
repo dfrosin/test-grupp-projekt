@@ -27,6 +27,7 @@
         selectedUser: null
       }
     },
+    emits: ['send-user', 'this.selectedUser'],
     methods: {
       getUsers() {
         const customerOrdersQuery = query(
@@ -47,6 +48,7 @@
       selectUser() {
         //skicka prop till mamma
         console.log(this.selectedUser)
+        this.$emit('send-user', this.selectedUser)
         this.add = false
       }
     }

@@ -13,13 +13,11 @@
   import SprintList from '../components/SprintList.vue'
   import SprintCard from '../components/SprintCard.vue'
   import { VueDraggableNext } from 'vue-draggable-next'
-  import TimeStamp from '../components/TimeStamp.vue'
 
   export default {
     components: {
       SprintList,
       SprintCard,
-      TimeStamp,
       draggable: VueDraggableNext
     },
     data() {
@@ -35,7 +33,8 @@
         targetObject: null,
         projectName: null,
         arrayOfProjectNames: null,
-        select: false
+        select: false,
+        date: ''
       }
     },
 
@@ -71,6 +70,7 @@
           })
         })
       },
+
       getAllProjectNames() {
         const allProjectNames = query(
           collection(firestore, 'projects'),
@@ -87,6 +87,7 @@
       },
 
       detectMove(evt) {
+        this.printTimestamp()
         //hämtar namnet på columnen via CSS klassnamn
         let status = evt.to.parentNode.className
         //hämtar uuid:t på tasken
@@ -98,8 +99,9 @@
         this.targetObject = find
         //uppdaterar status nyckeln till den specifika columnens namn
         this.targetObject[0].status = status
+        this.targetObject[0].time = this.date
+
         this.updateStatus()
-        new Date().toLocaleString()
       },
       selectProjectName(evt) {
         this.projectName = evt.target.value
@@ -117,13 +119,15 @@
         const updateData = this.targetObject[0]
 
         updateDoc(whereToAddData, updateData)
+      },
+      printTimestamp() {
+        this.date = new Date().toLocaleString()
       }
     }
   }
 </script>
 
 <template>
-  <time-stamp />
   <div v-if="this.arrayOfProjectNames !== null">
     <select @change="selectProjectName">
       <option>Select a project</option>
@@ -148,6 +152,7 @@
             v-for="card in todo"
             :key="card.id"
             :item="card"
+            :date="date"
             class="drag-element"
           />
         </draggable>
@@ -167,6 +172,7 @@
             v-for="card in inProgress"
             :key="card.id"
             :item="card"
+            :date="date"
             class="drag-element"
           />
         </draggable>
@@ -186,6 +192,7 @@
             v-for="card in review"
             :key="card.id"
             :item="card"
+            :date="date"
             class="drag-element"
           />
         </draggable>
@@ -205,6 +212,7 @@
             v-for="card in done"
             :key="card.id"
             :item="card"
+            :date="date"
             class="drag-element"
           />
         </draggable>
