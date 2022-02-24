@@ -11,6 +11,7 @@
   import SprintList from '../components/SprintList.vue'
   import SprintCard from '../components/SprintCard.vue'
   import { VueDraggableNext } from 'vue-draggable-next'
+  import AddNewTask from '../components/AddNewTask.vue'
 
   export default {
     data() {
@@ -107,12 +108,15 @@
     components: {
       SprintList,
       SprintCard,
-      draggable: VueDraggableNext
+      draggable: VueDraggableNext,
+      AddNewTask
     }
   }
 </script>
 
 <template>
+  <AddNewTask />
+
   <h2>Project: {{ this.$store.state.projectName }}</h2>
   <article class="flex-container">
     <sprint-list title="Todo">

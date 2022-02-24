@@ -1,3 +1,4 @@
+/* eslint-disable vue/v-on-event-hyphenation */
 <script>
   import { firestore } from '../firebase.js'
   // import { collection, getDocs } from 'firebase/firestore'
@@ -13,12 +14,14 @@
   import SprintList from '../components/SprintList.vue'
   import SprintCard from '../components/SprintCard.vue'
   import { VueDraggableNext } from 'vue-draggable-next'
+  import AddNewTask from '../components/AddNewTask.vue'
 
   export default {
     components: {
       SprintList,
       SprintCard,
-      draggable: VueDraggableNext
+      draggable: VueDraggableNext,
+      AddNewTask
     },
     data() {
       return {
@@ -33,8 +36,7 @@
         targetObject: null,
         projectName: null,
         arrayOfProjectNames: null,
-        select: false,
-        date: ''
+        task: ''
       }
     },
 
@@ -120,14 +122,17 @@
 
         updateDoc(whereToAddData, updateData)
       },
-      printTimestamp() {
-        this.date = new Date().toLocaleString()
+      getTask(tasks) {
+        this.task = tasks
+        console.log('här ska du se' + this.tasks)
       }
     }
   }
 </script>
 
 <template>
+  <AddNewTask @send-task="getTask" />
+  <time-stamp />
   <div v-if="this.arrayOfProjectNames !== null">
     <select @change="selectProjectName">
       <option>Select a project</option>
