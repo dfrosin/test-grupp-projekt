@@ -107,6 +107,8 @@
         }
       },
       //listenToADocument är som en watch, den känner av ändringar som blivit gjorda i firebase och skickar tillbaka informationen till konsollen
+
+      // whereToAddData är som url,
       listenToADocument() {
         const whereToAddData = doc(firestore, 'tasks/monday')
         onSnapshot(whereToAddData, (docSnapshot) => {
@@ -130,6 +132,11 @@
       }
     }
   }
+
+  // onSnapshot funktion hämta data men funkar likadant när man vill ta bort data version8
+
+  // firebase.firestore().collection('adamstest').doc('DCB9L6a5HUctOQgzk0MJ').onSnapshot(res => {
+  //   res.data().task
 </script>
 
 <style lang="scss" scoped>

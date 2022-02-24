@@ -10,6 +10,7 @@
     methods: {
       async deleteTask() {
         if (confirm('Are you sure?')) {
+          console.log('Din funktion anropas Adam')
           const whereToAddData = doc(
             firestore,
             'Nu skall allt fungera.../Men se till att det fungerar då!'
