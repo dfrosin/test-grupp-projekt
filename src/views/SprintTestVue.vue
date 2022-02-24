@@ -13,8 +13,15 @@
   import SprintList from '../components/SprintList.vue'
   import SprintCard from '../components/SprintCard.vue'
   import { VueDraggableNext } from 'vue-draggable-next'
+  import TimeStamp from '../components/TimeStamp.vue'
 
   export default {
+    components: {
+      SprintList,
+      SprintCard,
+      TimeStamp,
+      draggable: VueDraggableNext
+    },
     data() {
       return {
         enabled: true,
@@ -92,6 +99,7 @@
         //uppdaterar status nyckeln till den specifika columnens namn
         this.targetObject[0].status = status
         this.updateStatus()
+        new Date().toLocaleString()
       },
       selectProjectName(evt) {
         this.projectName = evt.target.value
@@ -110,16 +118,12 @@
 
         updateDoc(whereToAddData, updateData)
       }
-    },
-    components: {
-      SprintList,
-      SprintCard,
-      draggable: VueDraggableNext
     }
   }
 </script>
 
 <template>
+  <time-stamp />
   <div v-if="this.arrayOfProjectNames !== null">
     <select @change="selectProjectName">
       <option>Select a project</option>
