@@ -1,5 +1,6 @@
 <script>
   import AddUser from './AddUser.vue'
+  import RemoveTask from './removeTask.vue'
   export default {
     props: {
       item: {
@@ -21,7 +22,7 @@
         this.user = selectedUser
       }
     },
-    components: { AddUser }
+    components: { AddUser, RemoveTask }
   }
 </script>
 <template>
@@ -37,6 +38,7 @@
     </p>
     <AddUser @send-user="getUser" />
   </div>
+  <RemoveTask />
 </template>
 
 <style lang="scss" scoped>
