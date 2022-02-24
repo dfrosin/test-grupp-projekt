@@ -12,9 +12,13 @@
   }
 </script>
 <template>
-  <div class="sprint-card" :id="item.uuid">
+  <div class="sprint-card" :id="item.uuid" :style="{ borderColor: item.color }">
     {{ item.name }}
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+  .sprint-card {
+    border: 2px solid white;
+  }
+</style>
