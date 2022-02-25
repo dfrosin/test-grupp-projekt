@@ -54,14 +54,14 @@
           this.arrayOfTasks = tasks
 
           for (let n = 0; n < this.arrayOfStatus.length; n++) {
-            console.log(this.arrayOfStatus.length)
-            let shittingFuck = this.arrayOfStatus[n]
-            let fuckingShit = this.arrayOfTasks.filter((el) => {
-              return el.status === shittingFuck
+            // statusnamn utifrån array
+            let statusTitle = this.arrayOfStatus[n]
+            let tasks = this.arrayOfTasks.filter((el) => {
+              return el.status === statusTitle
             })
             let dynamicObject = {
-              title: shittingFuck,
-              cards: fuckingShit
+              title: statusTitle,
+              cards: tasks
             }
             this.anotherArray.push(dynamicObject)
             console.log(this.objectOfTasks)
@@ -148,12 +148,12 @@
   <article class="flex-container">
     <sprint-list
       v-for="object in anotherArray"
-      :key="object.title"
+      :key="object.cards"
       :title="object.title"
     >
       <section :class="object.title">
         <draggable
-          :list="object"
+          :list="object.cards"
           :move="(event) => detectMove(event, 123)"
           group="walla"
           ghost-class="on-drag"
