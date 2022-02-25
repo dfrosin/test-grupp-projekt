@@ -24,6 +24,7 @@ root {
   border: none;
   text-decoration: none;
   transition: all 0.2s linear;
+  letter-spacing: 0.8px;
 }
 
 html {

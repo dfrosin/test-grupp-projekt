@@ -1,19 +1,27 @@
 <script>
-  import { firebaseApp } from '../firebase.js'
-  // import {
-  //   where,
-  //   limit,
-  //   collection,
-  //   query,
-  //   getDocs,
-
-  // } from 'firebase/firestore'
+  import { firestore } from '../firebase.js'
+  // import { collection, getDocs } from 'firebase/firestore'
+  import {
+    where,
+    limit,
+    collection,
+    query,
+    getDocs,
+    doc,
+    updateDoc
+  } from 'firebase/firestore'
   import SprintList from '../components/SprintList.vue'
   import SprintCard from '../components/SprintCard.vue'
   import { VueDraggableNext } from 'vue-draggable-next'
   import AddNewTask from '../components/AddNewTask.vue'
 
   export default {
+    components: {
+      SprintList,
+      SprintCard,
+      draggable: VueDraggableNext,
+      AddNewTask
+    },
     data() {
       return {
         enabled: true,
@@ -21,108 +29,135 @@
         review: [],
         done: [],
         dragging: false,
-        todo: []
+        todo: [],
+        arrayOfTasks: [],
+        tasks: [],
+        targetObject: null,
+        projectName: '',
+        arrayOfProjectNames: null,
+        newTask: '',
+        select: false,
+        date: '',
+        taskId: null
       }
     },
 
     mounted() {
-      this.ab.onSnapshot((snapshot) => {
-        snapshot.docChanges().forEach((change) => {
-          if (change.type === 'added') {
-            if (change.doc.data().status === 'TODO') {
-              this.todo.push({
-                id: change.doc.id,
-                ...change.doc.data()
-              })
-            } else if (change.doc.data().status === 'DONE') {
-              this.done.push({
-                id: change.doc.id,
-                ...change.doc.data()
-              })
-            } else if (change.doc.data().status === 'REVIEW') {
-              this.review.push({
-                id: change.doc.id,
-                ...change.doc.data()
-              })
-            } else {
-              this.inProgress.push({
-                id: change.doc.id,
-                ...change.doc.data()
-              })
-            }
-          }
-        })
-      })
+      this.getAllProjectNames()
     },
-    watch: {
-      todo(data) {
-        data.map((value) => {
-          this.queryForDocuments.doc(value.id).update({
-            status: 'TODO',
-            value: value.value
+    methods: {
+      getDatabase() {
+        const customerOrdersQuery = query(
+          collection(firestore, `${this.projectName}`),
+          where('tasks', '==', 'tasks'),
+          limit(50)
+        )
+
+        getDocs(customerOrdersQuery).then((snapshot) => {
+          let tasks = []
+          snapshot.docs.forEach((doc) => {
+            tasks.push({ ...doc.data(), id: doc.id })
+          })
+          this.arrayOfTasks = tasks
+
+          this.todo = this.arrayOfTasks.filter((el) => {
+            return el.status === 'TODO'
+          })
+          this.inProgress = this.arrayOfTasks.filter((el) => {
+            return el.status === 'IN_PROGRESS'
+          })
+          this.review = this.arrayOfTasks.filter((el) => {
+            return el.status === 'REVIEW'
+          })
+          this.done = this.arrayOfTasks.filter((el) => {
+            return el.status === 'DONE'
           })
         })
       },
-      inProgress(data) {
-        data.map((value) => {
-          this.queryForDocuments.doc(value.id).update({
-            status: 'IN_PROGRESS',
-            value: value.value
+
+      getAllProjectNames() {
+        const allProjectNames = query(
+          collection(firestore, 'projects'),
+          where('project', '==', 'project'),
+          limit(50)
+        )
+        getDocs(allProjectNames).then((snapshot) => {
+          let projectNames = []
+          snapshot.docs.forEach((doc) => {
+            projectNames.push({ ...doc.data(), id: doc.id })
           })
+          this.arrayOfProjectNames = projectNames
         })
       },
-      review(data) {
-        data.map((value) => {
-          this.queryForDocuments.doc(value.id).update({
-            status: 'REVIEW',
-            value: value.value
-          })
+
+      detectMove(evt) {
+        this.printTimestamp()
+        //hämtar namnet på columnen via CSS klassnamn
+        let status = evt.to.parentNode.className
+        //hämtar uuid:t på tasken
+        this.taskId = evt.dragged.id
+        //filtrerar ut och hittar det specifika elementet
+        let find = this.arrayOfTasks.filter((el) => {
+          return el.uuid === this.taskId
+        })
+        this.targetObject = find
+        //uppdaterar status nyckeln till den specifika columnens namn
+        this.targetObject[0].status = status
+        this.targetObject[0].time = this.date
+
+        this.updateStatus()
+      },
+      selectProjectName(evt) {
+        this.projectName = evt.target.value
+        this.select = true
+        this.getDatabase()
+      },
+      updateStatus() {
+        //skickas varje gång man flyttar ett kort, skickar med objektet som
+        //ligger i detectMove
+        const whereToAddData = doc(
+          firestore,
+          `${this.projectName}/${this.targetObject[0].name}`
+        )
+
+        const updateData = this.targetObject[0]
+
+        updateDoc(whereToAddData, updateData)
+      },
+      printTimestamp() {
+        this.date = new Date().toLocaleString('en-GB', {
+          day: 'numeric', // numeric, 2-digit
+          month: 'short', // numeric, 2-digit, long, short, narrow
+          hour: 'numeric', // numeric, 2-digit
+          minute: 'numeric' // numeric, 2-digit
         })
       },
-      done(data) {
-        data.map((value) => {
-          this.queryForDocuments.doc(value.id).update({
-            status: 'DONE',
-            value: value.value
-          })
-        })
+      getTask(tasks) {
+        this.newTask = tasks
+        console.log('blabla', this.newTask)
       }
-    },
-    computed: {
-      ab() {
-        return firebaseApp.firestore().collection('Adamstest')
-      }
-      //    queryForDocuments() {
-      //      const customerOrdersQuery = query(
-      //       collection(firestore, 'Adamstest'),
-      //       where('task', '==', 'task'),
-      //       limit(40)
-      //     )
-      //     const querySnapshot =  getDocs(customerOrdersQuery)
-      //     querySnapshot.forEach((snap) => {
-      //       console.log(` ${JSON.stringify(snap.data())}`)
-      //     })
-      // return this.queryForDocuments
-      //   }
-    },
-    components: {
-      SprintList,
-      SprintCard,
-      draggable: VueDraggableNext,
-      AddNewTask
     }
   }
 </script>
 
 <template>
-  <AddNewTask />
+  <AddNewTask @send-task="getTask" />
+  <div v-if="this.arrayOfProjectNames !== null">
+    <select @change="selectProjectName">
+      <option>Select a project</option>
+      <option v-for="projects in this.arrayOfProjectNames" :key="projects.id">
+        {{ projects.id }}
+      </option>
+    </select>
+    <h2 v-if="select">Project: {{ this.projectName }}</h2>
+  </div>
 
-  <h2>Project: {{ this.$store.state.projectName }}</h2>
   <article class="flex-container">
-    <sprint-list title="Todo">
-      <section class="drop-zone">
+    <sprint-list title="todo">
+      <section class="TODO">
         <draggable
           :list="todo"
+          :move="(event) => detectMove(event, 123)"
           group="walla"
           ghost-class="on-drag"
           class="drop-zone-height"
@@ -131,6 +166,9 @@
             v-for="card in todo"
             :key="card.id"
             :item="card"
+            :name="card.name"
+            :date="date"
+            :board="projectName"
             class="drag-element"
           />
         </draggable>
@@ -138,9 +176,10 @@
     </sprint-list>
 
     <sprint-list title="In Progress">
-      <section class="drop-zone">
+      <section class="IN_PROGRESS">
         <draggable
           :list="inProgress"
+          :move="(event) => detectMove(event, 123)"
           group="walla"
           ghost-class="on-drag"
           class="drop-zone-height"
@@ -149,6 +188,9 @@
             v-for="card in inProgress"
             :key="card.id"
             :item="card"
+            :name="card.name"
+            :date="date"
+            :board="projectName"
             class="drag-element"
           />
         </draggable>
@@ -156,9 +198,10 @@
     </sprint-list>
 
     <sprint-list title="Review">
-      <section class="drop-zone">
+      <section class="REVIEW">
         <draggable
           :list="review"
+          :move="(event) => detectMove(event, 123)"
           group="walla"
           ghost-class="on-drag"
           class="drop-zone-height"
@@ -167,6 +210,9 @@
             v-for="card in review"
             :key="card.id"
             :item="card"
+            :name="card.name"
+            :date="date"
+            :board="projectName"
             class="drag-element"
           />
         </draggable>
@@ -174,9 +220,10 @@
     </sprint-list>
 
     <sprint-list title="Done">
-      <section class="drop-zone">
+      <section class="DONE">
         <draggable
           :list="done"
+          :move="(event) => detectMove(event, 123)"
           group="walla"
           ghost-class="on-drag"
           class="drop-zone-height"
@@ -185,6 +232,9 @@
             v-for="card in done"
             :key="card.id"
             :item="card"
+            :name="card.name"
+            :date="date"
+            :board="projectName"
             class="drag-element"
           />
         </draggable>
@@ -214,7 +264,10 @@
     margin-bottom: 1rem;
   }
 
-  .drop-zone {
+  .DONE,
+  .TODO,
+  .REVIEW,
+  .IN_PROGRESS {
     background-color: rgb(233, 144, 144);
     width: 200px;
     border-radius: 10px;
@@ -228,13 +281,13 @@
     text-align: center;
     color: black;
     width: 200px;
-    height: 6rem;
     background-color: white;
     border-radius: 10px;
     border-style: solid;
     border-color: green;
     min-height: 10px;
     cursor: grab;
+    position: relative;
   }
   .on-drag {
     background-color: rgb(81, 89, 194);

@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
   import { firestore } from '../firebase.js'
   import { deleteDoc, doc } from 'firebase/firestore'
   export default {
@@ -47,4 +47,4 @@
     margin-right: 3px;
     margin-bottom: 3px;
   }
-</style>
+</style> -->

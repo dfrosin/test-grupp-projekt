@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <section class="select-user">
     <div class="add-user">
       <p>Add user</p>
@@ -80,4 +80,4 @@
       padding: 0.3rem;
     }
   }
-</style>
+</style> -->
