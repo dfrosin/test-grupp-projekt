@@ -80,19 +80,19 @@
     <p class="task-name">
       {{ item.name }}
     </p>
-    <p v-if="user">
-      {{ user }}
-    </p>
     <section class="select-user">
       <p class="time-stamp">
         {{ item.time }}
       </p>
+      <p v-if="user">
+        {{ user }}
+      </p>
       <div class="add-user">
-        <p>Add user</p>
         <img class="get-user" src="/assets/add.png" @click="addUser" />
       </div>
       <div class="users-list" v-if="this.userArray.length >= 1">
         <ul class="card-list-style" v-if="add">
+          <li><h3>Select task owner:</h3></li>
           <li @click="getUser" v-for="kebab in this.userArray" :key="kebab.id">
             {{ kebab.userName }}
           </li>
@@ -140,6 +140,11 @@
     display: flex;
     justify-content: flex-end;
     // margin-right: 1.8rem;
+    cursor: pointer;
+    li:hover {
+      color: aqua;
+      text-decoration: underline;
+    }
 
     select {
       border-radius: 10px;

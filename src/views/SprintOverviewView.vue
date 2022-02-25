@@ -153,7 +153,7 @@
   </div>
 
   <article class="flex-container">
-    <sprint-list title="todo">
+    <sprint-list class="column" title="todo">
       <section class="TODO">
         <draggable
           :list="todo"
@@ -175,7 +175,7 @@
       </section>
     </sprint-list>
 
-    <sprint-list title="In Progress">
+    <sprint-list class="column" title="In Progress">
       <section class="IN_PROGRESS">
         <draggable
           :list="inProgress"
@@ -197,7 +197,7 @@
       </section>
     </sprint-list>
 
-    <sprint-list title="Review">
+    <sprint-list class="column" title="Review">
       <section class="REVIEW">
         <draggable
           :list="review"
@@ -219,7 +219,7 @@
       </section>
     </sprint-list>
 
-    <sprint-list title="Done">
+    <sprint-list class="column" title="Done">
       <section class="DONE">
         <draggable
           :list="done"
@@ -254,7 +254,9 @@
   }
   .flex-container {
     background-color: rgba(235, 235, 235, 0.3);
-    margin: 30px;
+    margin: 30px auto;
+    max-width: 80%;
+    padding-top: 20px;
     display: flex;
     grid-template-columns: auto;
     justify-content: space-evenly;
@@ -263,31 +265,37 @@
     flex-wrap: wrap;
     margin-bottom: 1rem;
   }
-
+  .column {
+    min-width: 200px;
+    width: 20%;
+    max-width: 300px;
+  }
   .DONE,
   .TODO,
   .REVIEW,
   .IN_PROGRESS {
-    background-color: rgb(233, 144, 144);
-    width: 200px;
+    background-color: rgba(249, 249, 249, 0.564);
     border-radius: 10px;
-    min-height: 60vh fit-content;
     flex-wrap: wrap;
     margin-bottom: 5rem;
+    padding: 6px;
   }
 
   .drag-element {
     font-size: 1.5rem;
     text-align: center;
     color: black;
-    width: 200px;
+    width: 90%;
     background-color: white;
     border-radius: 10px;
-    border-style: solid;
-    border-color: green;
+    border: 3px solid;
     min-height: 10px;
     cursor: grab;
     position: relative;
+    margin: 5% 5%;
+  }
+  .drag-element:hover {
+    box-shadow: 0 0 5px;
   }
   .on-drag {
     background-color: rgb(81, 89, 194);
@@ -296,6 +304,8 @@
   }
   .drop-zone-height {
     height: 60vh;
+    padding-bottom: 10%;
+    overflow: scroll;
   }
 </style>
 <!-- Todo:

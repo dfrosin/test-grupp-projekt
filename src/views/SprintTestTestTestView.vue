@@ -29,7 +29,8 @@
         projectName: null,
         arrayOfProjectNames: null,
         arrayOfStatus: ['TODO', 'IN_PROGRESS', 'REVIEW', 'DONE'],
-        objectOfStatus: { TODO: {}, IN_PROGRESS: {}, REVIEW: {}, DONE: {} }
+        objectOfTasks: {},
+        anotherArray: []
       }
     },
 
@@ -45,24 +46,39 @@
         )
 
         getDocs(customerOrdersQuery).then((snapshot) => {
+          this.anotherArray = []
           let tasks = []
           snapshot.docs.forEach((doc) => {
             tasks.push({ ...doc.data(), id: doc.id })
           })
           this.arrayOfTasks = tasks
 
-          this.TODO = this.arrayOfTasks.filter((el) => {
-            return el.status === 'TODO'
-          })
-          this.IN_PROGRESS = this.arrayOfTasks.filter((el) => {
-            return el.status === 'IN_PROGRESS'
-          })
-          this.REVIEW = this.arrayOfTasks.filter((el) => {
-            return el.status === 'REVIEW'
-          })
-          this.DONE = this.arrayOfTasks.filter((el) => {
-            return el.status === 'DONE'
-          })
+          for (let n = 0; n < this.arrayOfStatus.length; n++) {
+            console.log(this.arrayOfStatus.length)
+            let shittingFuck = this.arrayOfStatus[n]
+            let fuckingShit = this.arrayOfTasks.filter((el) => {
+              return el.status === shittingFuck
+            })
+            let dynamicObject = {
+              title: shittingFuck,
+              cards: fuckingShit
+            }
+            this.anotherArray.push(dynamicObject)
+            console.log(this.objectOfTasks)
+          }
+
+          // this.TODO = this.arrayOfTasks.filter((el) => {
+          //   return el.status === 'TODO'
+          // })
+          // this.IN_PROGRESS = this.arrayOfTasks.filter((el) => {
+          //   return el.status === 'IN_PROGRESS'
+          // })
+          // this.REVIEW = this.arrayOfTasks.filter((el) => {
+          //   return el.status === 'REVIEW'
+          // })
+          // this.DONE = this.arrayOfTasks.filter((el) => {
+          //   return el.status === 'DONE'
+          // })
         })
       },
       getAllProjectNames() {
@@ -131,20 +147,20 @@
 
   <article class="flex-container">
     <sprint-list
-      v-for="status in arrayOfStatus"
-      :key="status.id"
-      :title="status"
+      v-for="object in anotherArray"
+      :key="object.title"
+      :title="object.title"
     >
-      <section :class="status">
+      <section :class="object.title">
         <draggable
-          :list="status"
+          :list="object"
           :move="(event) => detectMove(event, 123)"
           group="walla"
           ghost-class="on-drag"
           class="drop-zone-height"
         >
           <sprint-card
-            v-for="card in status"
+            v-for="card in object.cards"
             :key="card.id"
             :item="card"
             class="drag-element"
