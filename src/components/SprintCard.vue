@@ -7,7 +7,8 @@
     collection,
     query,
     limit,
-    getDocs
+    getDocs,
+    updateDoc
   } from 'firebase/firestore'
   export default {
     props: {
@@ -37,7 +38,11 @@
         user: '',
         userArray: [],
         add: false,
-        selectedUser: null
+        selectedUser: null,
+        ownerArray: [],
+        userObject: {
+          owner: ''
+        }
       }
     },
     methods: {
@@ -45,7 +50,16 @@
         this.add = !this.add
       },
       getUser(selectedUser) {
-        this.user = selectedUser.target.firstChild.data
+        this.userObject.owner = selectedUser.target.firstChild.data
+        let copiedObject = JSON.parse(JSON.stringify(this.userObject))
+        this.add = false
+        const whereToAddData = doc(
+          firestore,
+          `${this.$store.state.projectName}/${this.item.name}`
+        )
+
+        updateDoc(whereToAddData, copiedObject)
+        //Funktionen get
       },
       getUsers() {
         const customerOrdersQuery = query(
@@ -84,11 +98,27 @@
       <p class="time-stamp">
         {{ item.time }}
       </p>
-      <p v-if="user">
-        {{ user }}
-      </p>
+      <div class="card-owners">
+        <p>
+          {{ item.owner }}
+        </p>
+        <p v-for="owner in this.ownerArray" :key="owner.idx">
+          {{ item.owner }}
+        </p>
+      </div>
       <div class="add-user">
-        <img class="get-user" src="/assets/add.png" @click="addUser" />
+        <img
+          v-if="!add"
+          class="get-user"
+          src="/assets/add.png"
+          @click="addUser"
+        />
+        <img
+          v-if="add"
+          class="closeImg"
+          src="/assets/close.png"
+          @click="addUser"
+        />
       </div>
       <div class="users-list" v-if="this.userArray.length >= 1">
         <ul class="card-list-style" v-if="add">
@@ -135,6 +165,20 @@
     p {
       margin: 0;
     }
+  }
+
+  .card-owners {
+    display: flex;
+    justify-content: flex-end;
+    p {
+      margin: 3px;
+    }
+  }
+  .closeImg {
+    margin-right: 1rem;
+    width: 8px;
+    height: 10px;
+    cursor: pointer;
   }
   .users-list {
     display: flex;

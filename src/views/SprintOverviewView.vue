@@ -109,6 +109,7 @@
       },
       selectProjectName(evt) {
         this.projectName = evt.target.value
+        this.$store.commit('setProjectName', this.projectName)
         this.select = true
         this.getDatabase()
       },
@@ -244,6 +245,12 @@
 </template>
 
 <style lang="scss" scoped>
+  select {
+    font-size: 1.2rem;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-left: 4rem;
+  }
   h2 {
     margin-left: 4rem;
     color: white;
