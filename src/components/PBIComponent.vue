@@ -146,6 +146,7 @@
           this.pbItem = ''
           this.getColor = ''
           this.errorMessage = false
+          console.log(this.backlogItemInfo)
         }
       },
       createAccount() {

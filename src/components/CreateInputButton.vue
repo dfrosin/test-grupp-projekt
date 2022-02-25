@@ -18,7 +18,7 @@
     },
     methods: {
       selectedPbi(e) {
-        console.log(e.target.value)
+        // console.log(e.target.value)
         this.selectedColor = e.target.value
         // console.log(e.target.color)
       },
