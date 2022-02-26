@@ -215,7 +215,12 @@
         edit
       </p>
       <p
-        v-if="object.cards.length < 1 && editStatus"
+        v-if="
+          object.cards.length < 1 &&
+          editStatus &&
+          statusInput.length > 0 &&
+          statusInput.length < 14
+        "
         @click="saveColumn"
         class="save-column"
         :id="object.title"
@@ -223,7 +228,30 @@
         save
       </p>
       <p
+        class="save-column"
+        id="save-disabled"
+        v-if="
+          object.cards.length < 1 &&
+          (statusInput.length < 1 || statusInput.length > 14)
+        "
+      >
+        save
+      </p>
+      <p
+        v-if="object.cards.length < 1 && editStatus && statusInput.length < 1"
+        class="input-warning"
+      >
+        You can't have an empty title
+      </p>
+      <p
+        v-if="object.cards.length < 1 && editStatus && statusInput.length > 14"
+        class="input-warning"
+      >
+        Title is too long
+      </p>
+      <p
         v-if="object.cards.length < 1 && editStatus"
+        placeholder="Column Title"
         @click="deleteColumn"
         class="delete-column"
         :id="object.title"
@@ -310,37 +338,56 @@
       position: absolute;
       color: white;
       text-transform: uppercase;
-      top: 4px;
-      right: 0px;
+      top: -14px;
+      right: 45%;
     }
     .save-column {
       cursor: pointer;
       position: absolute;
       color: white;
       text-transform: uppercase;
-      top: -2px;
-      right: -2px;
+      top: -14px;
+      right: 55%;
+    }
+    #save-disabled {
+      color: rgb(104, 104, 104);
+      cursor: not-allowed;
+    }
+    #save-disabled:hover {
+      text-decoration: none;
     }
     .delete-column {
       cursor: pointer;
       position: absolute;
-      color: white;
+      color: rgb(255, 255, 255);
       text-transform: uppercase;
-      top: 12px;
-      right: -2px;
+      top: -14px;
+      right: 28%;
     }
     .status-input {
       position: absolute;
       font-size: 1.5rem;
       top: 0px;
-      left: 20%;
-      width: 60%;
+      left: 5%;
+      width: 90%;
       text-align: center;
     }
+    .input-warning {
+      position: absolute;
+      background-color: rgba(255, 0, 0, 0.3);
+      color: rgb(251, 251, 251);
+      padding: 5px;
+      border-radius: 10px;
+      top: -50px;
+      width: 100%;
+    }
     .edit-column:hover,
-    .save-column:hover,
-    .delete-column:hover {
+    .save-column:hover {
       color: aqua;
+      text-decoration: underline;
+    }
+    .delete-column:hover {
+      color: rgb(255, 164, 164);
       text-decoration: underline;
     }
   }
