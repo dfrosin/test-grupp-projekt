@@ -221,5 +221,11 @@
 
   .task-name {
     margin-top: 2.5rem;
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .task-name::-webkit-scrollbar {
+    display: none;
   }
 </style>
