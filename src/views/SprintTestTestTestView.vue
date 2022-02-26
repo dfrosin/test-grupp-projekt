@@ -232,7 +232,8 @@
         id="save-disabled"
         v-if="
           object.cards.length < 1 &&
-          (statusInput.length < 1 || statusInput.length > 14)
+          (statusInput.length < 1 || statusInput.length > 14) &&
+          editStatus
         "
       >
         save
