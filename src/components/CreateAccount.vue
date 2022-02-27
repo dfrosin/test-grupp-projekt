@@ -61,7 +61,7 @@
         <label>Username</label>
         <input
           placeholder="Name"
-          v-model="userName"
+          v-model.trim="userName"
           class="form-control"
           required
         />
@@ -69,7 +69,7 @@
           <label>Full name</label>
           <input
             placeholder="Full name"
-            v-model="fullName"
+            v-model.trim="fullName"
             class="form-control"
             required
           />
@@ -78,7 +78,7 @@
           <label>Email</label>
           <input
             placeholder="Email"
-            v-model="email"
+            v-model.trim="email"
             class="form-control"
             type="email"
             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 4}$"

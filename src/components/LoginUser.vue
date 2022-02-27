@@ -33,7 +33,7 @@
           placeholder="Email"
           required
           type="email"
-          v-model="email"
+          v-model.trim="email"
           class="form-control"
         />
       </div>
