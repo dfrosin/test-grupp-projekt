@@ -18,7 +18,7 @@
         </li>
         <li v-if="$store.state.loggedInUser === null">
           <routerLink class="link" to="/createaccount"
-            >Dont you have an account?</routerLink
+            >If you don't have an account</routerLink
           >
         </li>
         <li v-if="$store.state.loggedInUser != null"><LogoutUser /></li>
@@ -78,7 +78,7 @@
             @click="toggleMobileNav"
           >
             <routerLink class="link" to="/createaccount"
-              >Dont you have an account?</routerLink
+              >If you don't have an account</routerLink
             >
           </li>
 
