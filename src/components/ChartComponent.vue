@@ -1,6 +1,6 @@
 <template>
   <div>
-    <DoughnutChart
+    <PieChart
       :chart-data="crumbleData"
       :options="options"
       css-classes="chart-container"
@@ -11,15 +11,16 @@
   import 'firebase/compat/firestore'
   import { computed, defineComponent, ref, reactive, onMounted } from 'vue'
   import { db } from '../firebase.js'
-  import { DoughnutChart } from 'vue-chart-3'
+  import { PieChart } from 'vue-chart-3'
   import { Chart, registerables } from 'chart.js'
   import { collection, getDocs } from 'firebase/firestore'
 
   Chart.register(...registerables)
 
   export default defineComponent({
-    components: { DoughnutChart },
+    components: { PieChart },
     setup() {
+      const message = ref('ADAM ÄR SNYGG')
       const searchQuery = ref('')
       let resArr = reactive([])
       let resArrTwo = reactive([])
@@ -59,10 +60,10 @@
         }
       })
       const crumbleData = {
-        labels: ['Vilken data ska vi skriva ut?'],
+        labels: [`Jag tycker ${message.value}`],
         datasets: [
           {
-            data: [resArr],
+            data: [resArrTwo],
             backgroundColor: ['springgreen', 'yellow', 'orange', 'hotpink']
           }
         ]
@@ -74,7 +75,8 @@
         options,
         searchedDocuments,
         searchQuery,
-        resArrTwo
+        resArrTwo,
+        message
       }
     }
   })
