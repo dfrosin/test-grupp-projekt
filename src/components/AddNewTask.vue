@@ -47,7 +47,7 @@
     />
 
     <!-- skapa en emit-funktion som skickar informationen till sprinttestvue -->
-    <button @click="addNewTask" type="submit" class="btn btn-success mt-3">
+    <button @click="addNewTask" type="submit" class="btn btn-secondary mt-3">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"

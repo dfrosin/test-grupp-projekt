@@ -110,7 +110,7 @@
         </div>
       </div>
     </form>
-    <button @click="createAccount" type="submit" class="btn btn-success mt-3">
+    <button @click="createAccount" type="submit" class="btn btn-secondary mt-3">
       Create account
     </button>
   </div>
