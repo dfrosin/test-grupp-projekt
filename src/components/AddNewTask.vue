@@ -36,7 +36,7 @@
 </script>
 
 <template>
-  <form @submit.prevent="createTask">
+  <form class="add-new-task" @submit.prevent="createTask">
     <input
       class="new-task-input"
       v-model="newTask"
@@ -67,4 +67,15 @@
   </form>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+  .add-new-task {
+    position: absolute;
+    right: 12.5rem;
+    bottom: 40rem;
+  }
+
+  input {
+    margin: 1rem;
+    padding-bottom: 1rem;
+  }
+</style>
