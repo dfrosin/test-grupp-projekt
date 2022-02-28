@@ -27,7 +27,7 @@ i textfältet och filtrerar på boardet 6-
   /*import firestore from '../firebase'
   import { collection } from 'firebase/firestore'*/
   import firebase from 'firebase/compat/app'
-  import { onMounted, reactive, ref } from 'vue'
+  import { onMounted, reactive, ref, computed } from 'vue'
 
   export default {
     setup() {
