@@ -7,8 +7,7 @@
     collection,
     query,
     limit,
-    getDocs,
-    updateDoc
+    getDocs
   } from 'firebase/firestore'
   export default {
     props: {
@@ -51,15 +50,7 @@
       },
       getUser(selectedUser) {
         this.userObject.owner = selectedUser.target.firstChild.data
-        let copiedObject = JSON.parse(JSON.stringify(this.userObject))
-        this.add = false
-        const whereToAddData = doc(
-          firestore,
-          `${this.$store.state.projectName}/${this.item.name}`
-        )
-
-        updateDoc(whereToAddData, copiedObject)
-        //Funktionen get
+        this.$store.commit('setTaskOwner', this.userObject)
       },
       getUsers() {
         const customerOrdersQuery = query(
@@ -102,8 +93,8 @@
         <p>
           {{ item.owner }}
         </p>
-        <p v-for="owner in this.ownerArray" :key="owner.idx">
-          {{ item.owner }}
+        <p>
+          {{ user }}
         </p>
       </div>
       <div class="add-user">

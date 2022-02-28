@@ -38,7 +38,8 @@
         newTask: '',
         select: false,
         date: '',
-        taskId: null
+        taskId: null,
+        updateDocument: []
       }
     },
 
@@ -116,14 +117,18 @@
       updateStatus() {
         //skickas varje gång man flyttar ett kort, skickar med objektet som
         //ligger i detectMove
-        const whereToAddData = doc(
-          firestore,
-          `${this.projectName}/${this.targetObject[0].name}`
-        )
-
+        const update = { ...this.$store.state.projectOwner }
         const updateData = this.targetObject[0]
-
-        updateDoc(whereToAddData, updateData)
+        this.updateDocument.push(update, updateData)
+        this.updateDocument.forEach((allDocs) => {
+          setTimeout(() => {
+            const whereToAddData = doc(
+              firestore,
+              `${this.$store.state.projectName}/${allDocs.name}`
+            )
+            updateDoc(whereToAddData, allDocs)
+          }, 2000)
+        })
       },
       printTimestamp() {
         this.date = new Date().toLocaleString('en-GB', {
