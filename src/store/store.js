@@ -42,7 +42,8 @@ const state = {
   loggedInUser: null,
   projectName: null,
   taskColor: null,
-  arrayOfTasks: null
+  arrayOfTasks: null,
+  projectUser: null
 }
 
 const getters = {
@@ -73,6 +74,9 @@ const mutations = {
   },
   setColor(state, color) {
     state.taskColor = color
+  },
+  setArrayOfUsers(state, user) {
+    state.projectUser = user
   }
 }
 
