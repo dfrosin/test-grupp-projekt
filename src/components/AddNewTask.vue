@@ -3,6 +3,12 @@
 
   export default {
     emits: ['send-task', 'this.tasks'],
+    props: {
+      firstStatus: {
+        type: String,
+        default: ''
+      }
+    },
     data() {
       return {
         newTask: '',
@@ -14,15 +20,16 @@
     methods: {
       createTask() {
         this.dataValue.name = this.newTask
-        this.dataValue.status = 'TODO'
+        this.dataValue.status = this.firstStatus
         this.dataValue.tasks = 'tasks'
         this.dataValue.uuid = uuidv4()
+        this.dataValue.color = 'rgb(0, 0, 0)'
         let copiedObject = JSON.parse(JSON.stringify(this.dataValue))
         this.tasks.push(copiedObject)
         console.log(this.tasks)
       },
       addNewTask() {
-        this.$emit('send-task', this.tasks)
+        this.$emit('send-task', this.dataValue)
       }
     }
   }

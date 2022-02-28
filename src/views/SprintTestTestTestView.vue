@@ -93,7 +93,6 @@
           this.arrayOfProjectNames = projectNames
         })
       },
-
       detectMove(evt) {
         this.printTimestamp()
         //hämtar namnet på columnen via CSS id
@@ -141,9 +140,20 @@
           minute: 'numeric' // numeric, 2-digit
         })
       },
-      getTask(tasks) {
+      async getTask(tasks) {
         this.newTask = tasks
-        console.log('blabla', this.newTask)
+        console.log(this.newTask)
+        this.arrayOfTasks.push(this.newTask)
+        setTimeout(() => {
+          this.arrayOfTasks.forEach((allDocs) => {
+            const whereToAddData = doc(
+              firestore,
+              `${this.projectName}/${allDocs.name}`
+            )
+            setDoc(whereToAddData, allDocs)
+          }, 2000)
+        })
+        this.getDatabase()
       },
       editColumn(e) {
         this.editStatus = !this.editStatus
@@ -178,7 +188,11 @@
 </script>
 
 <template>
-  <AddNewTask @send-task="getTask" />
+  <AddNewTask
+    v-if="projectInfo !== null"
+    @send-task="getTask"
+    :first-status="projectInfo.status[0]"
+  />
   <div v-if="this.arrayOfProjectNames !== null">
     <select @change="selectProjectName">
       <option>Select a project</option>
