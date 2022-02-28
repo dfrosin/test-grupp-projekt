@@ -3,14 +3,14 @@
     <h1>Dashboard</h1>
 
     <div>
-      <div>
-        <button @click="sortBy('title')">
+      <select>
+        <option @click="sortBy('title')">
           <span>By project name</span>
-        </button>
-        <button @click="sortBy('person')">
+        </option>
+        <option @click="sortBy('person')">
           <span>By Person</span>
-        </button>
-      </div>
+        </option>
+      </select>
 
       <div v-for="project in projects" :key="project.title">
         <div :class="`${project.status}`">
@@ -44,7 +44,7 @@
         projects: [
           {
             title: 'hmmm',
-            person: 'ahmed',
+            person: 'shmed',
             due: '1st Jan 2344',
             status: 'ongoing',
             content: 'DGFGASOJRDIOADOKGJRIOGJIOERGIFSEOIKOPFKWEF'

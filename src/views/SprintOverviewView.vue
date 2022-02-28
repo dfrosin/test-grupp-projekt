@@ -154,7 +154,7 @@
   </div>
 
   <article class="flex-container">
-    <sprint-list class="column" title="todo">
+    <sprint-list class="column" title="Todo">
       <section class="TODO">
         <draggable
           :list="todo"
