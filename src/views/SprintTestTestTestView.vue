@@ -16,13 +16,15 @@
   import SprintCard from '../components/SprintCard.vue'
   import { VueDraggableNext } from 'vue-draggable-next'
   import AddNewTask from '../components/AddNewTask.vue'
+  import KanbanUsers from '../components/KanbanUsers.vue'
 
   export default {
     components: {
       SprintList,
       SprintCard,
       draggable: VueDraggableNext,
-      AddNewTask
+      AddNewTask,
+      KanbanUsers
     },
     data() {
       return {
@@ -218,6 +220,8 @@
 </script>
 
 <template>
+  <KanbanUsers />
+  <AddNewTask @send-task="getTask" />
   <div v-if="this.arrayOfProjectNames !== null">
     <select @change="selectProjectName">
       <option>Select a project</option>

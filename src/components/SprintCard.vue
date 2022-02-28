@@ -7,8 +7,7 @@
     collection,
     query,
     limit,
-    getDocs,
-    updateDoc
+    getDocs
   } from 'firebase/firestore'
   export default {
     props: {
@@ -30,18 +29,14 @@
         default: ''
       }
     },
-    created() {
-      this.getUsers()
-    },
     data() {
       return {
         user: '',
         userArray: [],
         add: false,
-        selectedUser: null,
         ownerArray: [],
         userObject: {
-          owner: ''
+          owner: []
         }
       }
     },
@@ -49,21 +44,11 @@
       addUser() {
         this.add = !this.add
       },
-      getUser(selectedUser) {
-        this.userObject.owner = selectedUser.target.firstChild.data
-        let copiedObject = JSON.parse(JSON.stringify(this.userObject))
-        this.add = false
-        const whereToAddData = doc(
-          firestore,
-          `${this.$store.state.projectName}/${this.item.name}`
-        )
 
-        updateDoc(whereToAddData, copiedObject)
-        //Funktionen get
-      },
       getUsers() {
+        console.log('hej')
         const customerOrdersQuery = query(
-          collection(firestore, 'users'),
+          collection(firestore, `${this.$store.state.projectName}`),
           where('user', '==', 'user'),
           limit(50)
         )
@@ -79,6 +64,11 @@
           console.log(' Deleted task:', board, name)
           await deleteDoc(doc(firestore, board, name))
         }
+      },
+      usersInProject(e) {
+        let copiedObject = JSON.parse(JSON.stringify(this.e.target.value))
+        this.userObject.owner.push(copiedObject)
+        console.log(e.target.value)
       }
     }
   }
@@ -120,11 +110,11 @@
           @click="addUser"
         />
       </div>
-      <div class="users-list" v-if="this.userArray.length >= 1">
+      <div class="users-list" v-if="this.$store.state.projectUser != null">
         <ul class="card-list-style" v-if="add">
           <li><h3>Select task owner:</h3></li>
-          <li @click="getUser" v-for="kebab in this.userArray" :key="kebab.id">
-            {{ kebab.userName }}
+          <li v-for="kebab in this.userArray[0]" :key="kebab.id">
+            {{ kebab.personInProject }}
           </li>
         </ul>
       </div>

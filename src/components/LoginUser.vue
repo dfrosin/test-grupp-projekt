@@ -48,7 +48,7 @@
         />
       </div>
     </form>
-    <button @click="onSubmit" type="submit" class="btn btn-success mt-3">
+    <button @click="onSubmit" type="submit" class="btn btn-secondary mt-3">
       Log In
     </button>
 
