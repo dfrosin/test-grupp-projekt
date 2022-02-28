@@ -154,22 +154,21 @@
         let index = this.projectInfo.status.indexOf(status)
         this.projectInfo.status.splice(index, 1)
         this.projectInfo.status.splice(index, 0, this.statusInput)
-        const whereToAddData = doc(firestore, `projects/${this.projectName}`)
-        setDoc(whereToAddData, this.projectInfo)
         this.editStatus = !this.editStatus
-        this.getDatabase()
+        this.postAndReload()
       },
       deleteColumn(e) {
         const status = e.target.id
         let index = this.projectInfo.status.indexOf(status)
         this.projectInfo.status.splice(index, 1)
-        const whereToAddData = doc(firestore, `projects/${this.projectName}`)
-        setDoc(whereToAddData, this.projectInfo)
         this.editStatus = !this.editStatus
-        this.getDatabase()
+        this.postAndReload()
       },
       addColumn() {
         this.projectInfo.status.push('New Column')
+        this.postAndReload()
+      },
+      postAndReload() {
         const whereToAddData = doc(firestore, `projects/${this.projectName}`)
         setDoc(whereToAddData, this.projectInfo)
         this.getDatabase()
@@ -192,6 +191,7 @@
 
   <article class="flex-container">
     <p
+      v-if="projectName != null"
       class="add-column"
       @click="addColumn"
       @mouseover="addHover = true"
@@ -264,6 +264,7 @@
         v-model="statusInput"
         type="text"
         class="status-input"
+        autofocus
       />
       <section :id="object.title" class="sections">
         <draggable
@@ -368,10 +369,12 @@
     .status-input {
       position: absolute;
       font-size: 1.5rem;
+      background-color: rgb(229, 190, 255);
       top: 0px;
       left: 5%;
       width: 90%;
       text-align: center;
+      border-radius: 10px;
     }
     .input-warning {
       position: absolute;
@@ -393,7 +396,7 @@
     }
   }
   .column {
-    min-width: 200px;
+    min-width: 180px;
     width: 20%;
     max-width: 300px;
     position: relative;
@@ -438,5 +441,10 @@
   }
   .drop-zone-height::-webkit-scrollbar {
     display: none;
+  }
+  @media screen and (max-width: 300px) {
+    .column {
+      min-width: 80%;
+    }
   }
 </style>
