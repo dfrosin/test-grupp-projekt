@@ -13,7 +13,7 @@
       </select>
 
       <div v-for="project in projects" :key="project.title">
-        <div :class="`${project.status}`">
+        <div>
           <div>
             <div>Project title</div>
             <div>{{ project.title }}</div>
@@ -28,7 +28,7 @@
           </div>
           <div>
             <div>
-              <div :class="`${project.status}`">{{ project.status }}</div>
+              <div>{{ project.status }}</div>
             </div>
           </div>
         </div>

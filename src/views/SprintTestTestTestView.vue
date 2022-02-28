@@ -95,7 +95,6 @@
           this.arrayOfProjectNames = projectNames
         })
       },
-
       detectMove(evt) {
         this.printTimestamp()
         //hämtar namnet på columnen via CSS id
@@ -143,9 +142,20 @@
           minute: 'numeric' // numeric, 2-digit
         })
       },
-      getTask(tasks) {
+      async getTask(tasks) {
         this.newTask = tasks
-        console.log('blabla', this.newTask)
+        console.log(this.newTask)
+        this.arrayOfTasks.push(this.newTask)
+        setTimeout(() => {
+          this.arrayOfTasks.forEach((allDocs) => {
+            const whereToAddData = doc(
+              firestore,
+              `${this.projectName}/${allDocs.name}`
+            )
+            setDoc(whereToAddData, allDocs)
+          }, 2000)
+        })
+        this.getDatabase()
       },
       editColumn(e) {
         this.editStatus = !this.editStatus
@@ -191,6 +201,11 @@
     </select>
     <h2 v-if="select">Project: {{ this.projectName }}</h2>
   </div>
+  <AddNewTask
+    v-if="projectInfo !== null"
+    @send-task="getTask"
+    :first-status="projectInfo.status[0]"
+  />
 
   <article class="flex-container">
     <p
