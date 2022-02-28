@@ -188,11 +188,6 @@
 </script>
 
 <template>
-  <AddNewTask
-    v-if="projectInfo !== null"
-    @send-task="getTask"
-    :first-status="projectInfo.status[0]"
-  />
   <div v-if="this.arrayOfProjectNames !== null">
     <select @change="selectProjectName">
       <option>Select a project</option>
@@ -202,6 +197,11 @@
     </select>
     <h2 v-if="select">Project: {{ this.projectName }}</h2>
   </div>
+  <AddNewTask
+    v-if="projectInfo !== null"
+    @send-task="getTask"
+    :first-status="projectInfo.status[0]"
+  />
 
   <article class="flex-container">
     <p
