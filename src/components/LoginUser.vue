@@ -33,7 +33,7 @@
           placeholder="Email"
           required
           type="email"
-          v-model="email"
+          v-model.trim="email"
           class="form-control"
         />
       </div>
@@ -52,7 +52,7 @@
       Log In
     </button>
 
-    <p>Don`t you have an account?</p>
+    <p>If you don't have an account</p>
     <routerLink class="link" to="/createaccount">Create account</routerLink>
   </div>
 </template>

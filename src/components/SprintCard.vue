@@ -67,7 +67,7 @@
       },
       async deleteTask(board, name) {
         if (confirm(`Är du säker på att du vill radera task: ${name}`)) {
-          console.log(' Delete task:', board, name)
+          console.log(' Deleted task:', board, name)
           await deleteDoc(doc(firestore, board, name))
         }
       }
@@ -212,5 +212,11 @@
 
   .task-name {
     margin-top: 2.5rem;
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .task-name::-webkit-scrollbar {
+    display: none;
   }
 </style>

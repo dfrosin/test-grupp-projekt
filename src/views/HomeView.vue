@@ -9,7 +9,7 @@
 
 <template>
   <div class="home-view-container">
-    <h1>hemma bäst</h1>
+    <h1>hemma bäst men borta bra?</h1>
     <ButtonComponent name="test" />
   </div>
   <!--  <TestTest /> -->
