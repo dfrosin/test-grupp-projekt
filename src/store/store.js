@@ -43,7 +43,7 @@ const state = {
   projectName: null,
   taskColor: null,
   arrayOfTasks: null,
-  taskOwner: null
+  projectUser: null
 }
 
 const getters = {
@@ -75,8 +75,8 @@ const mutations = {
   setColor(state, color) {
     state.taskColor = color
   },
-  setTaskOwner(state, owner) {
-    state.taskOwner = owner
+  setArrayOfUsers(state, user) {
+    state.projectUser = user
   }
 }
 

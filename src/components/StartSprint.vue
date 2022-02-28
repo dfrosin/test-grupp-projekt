@@ -1,4 +1,5 @@
 <template>
+  <!--På Kanban boardet vill vi kunna se hur lång tid det är kvar för sprinten, men det lägger vi åt sidan för nu!-->
   <div v-if="$store.state.arrayOfTasks" class="template">
     <h2 v-if="$store.state.projectName !== null">
       {{ $store.state.projectName }}
