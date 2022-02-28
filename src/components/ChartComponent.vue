@@ -1,6 +1,10 @@
 <template>
   <div>
-    <DoughnutChart :chart-data="crumbleData" :options="options" />
+    <DoughnutChart
+      :chart-data="crumbleData"
+      :options="options"
+      css-classes="chart-container"
+    />
   </div>
 </template>
 <script>
@@ -16,9 +20,9 @@
   export default defineComponent({
     components: { DoughnutChart },
     setup() {
-      let dataValue = ref([])
       const searchQuery = ref('')
       let resArr = reactive([])
+      let resArrTwo = reactive([])
       const searchedDocuments = computed(() => {
         return resArr.filter((data) => {
           return (
@@ -28,19 +32,20 @@
         })
       })
 
-      onMounted(async () => {
+      onMounted(() => {
         {
           const colRef = collection(db, 'Adamstest')
           getDocs(colRef).then((x) => {
             x.docs.forEach((doc) => {
               resArr.push({ ...doc.data(), id: doc.id })
-              return resArr
             })
+            resArrTwo.push(resArr[0].value)
+
+            console.log('Result of resArr2:', resArrTwo)
             console.log('Result of resArr:', resArr[0].value)
           })
         }
       })
-
       const options = ref({
         responsive: true,
         plugins: {
@@ -53,7 +58,6 @@
           }
         }
       })
-
       const crumbleData = {
         labels: ['Vilken data ska vi skriva ut?'],
         datasets: [
@@ -70,7 +74,7 @@
         options,
         searchedDocuments,
         searchQuery,
-        dataValue
+        resArrTwo
       }
     }
   })
