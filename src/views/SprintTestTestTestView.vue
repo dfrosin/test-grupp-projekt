@@ -42,7 +42,10 @@
         projectInfo: null,
         statusInput: '',
         editStatus: false,
-        addHover: false
+        addHover: false,
+        sortTest: '',
+        searchQuery: '',
+        test: []
       }
     },
 
@@ -182,6 +185,33 @@
         const whereToAddData = doc(firestore, `projects/${this.projectName}`)
         setDoc(whereToAddData, this.projectInfo)
         this.getDatabase()
+      },
+      filterSearch() {
+        this.test = [...this.anotherArray]
+        console.log(this.test)
+        for (let n = 0; n < this.anotherArray.length; n++) {
+          console.log(n)
+          const searchedProducts = () => {
+            return this.anotherArray[n].cards.filter((tests) => {
+              return (
+                tests.name
+                  .toLowerCase()
+                  .indexOf(this.searchQuery.toLowerCase()) != -1
+              )
+
+              /*  return tests.filter((tes) => {
+              console.log(tes.name) */
+              /*  }) */
+              /*    return (
+              tests.value
+                .toLowerCase()
+                .indexOf(this.searchQuery.value.toLowerCase()) != -1
+            ) */
+            })
+            /*    this.anotherArray = this.test */
+          }
+          return (this.anotherArray[n].cards = searchedProducts())
+        }
       }
     }
   }
@@ -202,6 +232,12 @@
     @send-task="getTask"
     :first-status="projectInfo.status[0]"
   />
+  <div class="search-container">
+    <label for="">kallllelerg</label>
+    <input type="text" placeholder="gdfgsdgsdgf" v-model="searchQuery" />
+    {{ sortTest }}
+    <button @click="filterSearch">dfsdfsdfsdf</button>
+  </div>
 
   <article class="flex-container">
     <p
@@ -301,6 +337,12 @@
 </template>
 
 <style lang="scss" scoped>
+  .search-container {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    margin: 2%;
+  }
   select {
     font-size: 1.2rem;
     padding: 1rem;
