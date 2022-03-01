@@ -18,7 +18,6 @@
       // --------------- SKAPA NY ANVÄNDARE------------------------------ //
       async createAccount() {
         if (this.password === this.confirmPassword) {
-          console.log('Ny användare skapad')
           let userCred = null
           try {
             userCred = await firebase
