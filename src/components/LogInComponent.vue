@@ -1,6 +1,7 @@
 <script>
   import { firestore } from '../firebase'
   import { getDocs, query, collection, where, limit } from 'firebase/firestore'
+
   export default {
     data() {
       return {
@@ -21,7 +22,6 @@
         })
       },
       handleLogout() {
-        console.log('du är utloggad')
         this.$store.commit('setLoggedInUser', null)
         this.$router.push('/login')
       }
@@ -75,6 +75,7 @@
       margin: 1rem 35%;
     }
   }
+
   form {
     label {
       margin-left: 35%;

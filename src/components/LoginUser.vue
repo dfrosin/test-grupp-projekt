@@ -51,7 +51,6 @@
     <button @click="onSubmit" type="submit" class="btn btn-secondary mt-3">
       Log In
     </button>
-
     <p>If you don't have an account</p>
     <routerLink class="link" to="/createaccount">Create account</routerLink>
   </div>
@@ -84,17 +83,20 @@
     display: flex;
     flex-direction: column;
     color: black;
+
     input {
       width: 30%;
       margin: 1rem 35%;
     }
   }
+
   form {
     label {
       margin-left: 35%;
       color: #fff;
     }
   }
+
   button {
     width: 10%;
     margin: 0 45%;

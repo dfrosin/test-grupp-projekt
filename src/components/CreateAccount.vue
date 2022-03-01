@@ -35,7 +35,6 @@
             userName: this.userName,
             email: this.email,
             fullName: this.fullName,
-            // password: this.password,
             profilePicture: '/assets/Frame 112.png',
             userId: userCred.user.uid,
             user: 'user'

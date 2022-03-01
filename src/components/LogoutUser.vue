@@ -14,6 +14,7 @@
     }
   }
 </script>
+
 <template>
   <button @click="handleLogout" type="submit" class="btn">Log out</button>
 </template>
