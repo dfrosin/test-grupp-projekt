@@ -12,6 +12,11 @@
     // updateDoc
   } from 'firebase/firestore'
   export default {
+    created() {
+      this.item.taskOwner.owner.forEach((owner) => {
+        this.userObject.owner.push(owner)
+      })
+    },
     props: {
       item: {
         type: [String, Object, Number, Array],
@@ -72,7 +77,9 @@
         console.log(' Deleted task:', name.target.id)
         console.log(`${this.$store.state.projectName},${name.target.id}`)
         if (
-          confirm(`Är du säker på att du vill radera task: ${name.target.id}`)
+          //Adams kod
+          confirm(`Are you sure you really want delete: ${name.target.id}?`)
+          //Slut Adams kod
         ) {
           await deleteDoc(
             doc(
@@ -85,7 +92,6 @@
       usersInProject(e) {
         //Hittar presonen du klickar på och lägger till den först i ett object,
         //med en array i för att kunna skicka upp det till Firebase
-        console.log()
         const taskName = e.target.id
         let copiedObject = JSON.parse(JSON.stringify(e.target.textContent))
         this.userObject.owner.push(copiedObject)
@@ -116,7 +122,8 @@
         this.editInfo = true
         this.edit = false
       }
-    }
+    },
+    emits: []
   }
 </script>
 <template>
@@ -138,12 +145,6 @@
         class="error-message"
       >
         <p>You need to invite colleagues to the project first</p>
-      </div>
-
-      <div class="names-in-project">
-        <p v-for="person in this.item.taskOwner" :key="person.id">
-          {{ person }}
-        </p>
       </div>
       <div class="card-owners" v-if="this.userObject.owner.length >= 1">
         <div
