@@ -1,35 +1,3 @@
-<template>
-  <div class="card card-body mt-4">
-    <form @submit.prevent="makeNewUser">
-      <div class="form-group">
-        <label>Name</label>
-        <input placeholder="Namn" v-model="firstName" class="form-control" />
-      </div>
-      <div class="form-group mt-3">
-        <label>Email</label>
-        <input placeholder="Email" v-model="email" class="form-control" />
-      </div>
-      <div class="form-group mt-3">
-        <label>Born</label>
-        <input placeholder="Born" v-model="born" class="form-control" />
-      </div>
-      <button type="submit" class="btn btn-success mt-3">Create User</button>
-    </form>
-    <button @click="readASingleDocument" class="btn btn-success mt-3 col-2">
-      Get Data from server
-    </button>
-    <button @click="addANewDocument" class="btn btn-success mt-3 col-2">
-      Add document
-    </button>
-    <button @click="listenToADocument" class="btn btn-success mt-3 col-2">
-      Listen
-    </button>
-    <button @click="queryForDocuments" class="btn btn-success mt-3 col-2">
-      Log all items
-    </button>
-  </div>
-</template>
-
 <script>
   import { firestore } from '../firebase'
   import {
@@ -138,7 +106,37 @@
   // firebase.firestore().collection('adamstest').doc('DCB9L6a5HUctOQgzk0MJ').onSnapshot(res => {
   //   res.data().task
 </script>
-
+<template>
+  <div class="card card-body mt-4">
+    <form @submit.prevent="makeNewUser">
+      <div class="form-group">
+        <label>Name</label>
+        <input placeholder="Namn" v-model="firstName" class="form-control" />
+      </div>
+      <div class="form-group mt-3">
+        <label>Email</label>
+        <input placeholder="Email" v-model="email" class="form-control" />
+      </div>
+      <div class="form-group mt-3">
+        <label>Born</label>
+        <input placeholder="Born" v-model="born" class="form-control" />
+      </div>
+      <button type="submit" class="btn btn-success mt-3">Create User</button>
+    </form>
+    <button @click="readASingleDocument" class="btn btn-success mt-3 col-2">
+      Get Data from server
+    </button>
+    <button @click="addANewDocument" class="btn btn-success mt-3 col-2">
+      Add document
+    </button>
+    <button @click="listenToADocument" class="btn btn-success mt-3 col-2">
+      Listen
+    </button>
+    <button @click="queryForDocuments" class="btn btn-success mt-3 col-2">
+      Log all items
+    </button>
+  </div>
+</template>
 <style lang="scss" scoped>
   input,
   input:focus {

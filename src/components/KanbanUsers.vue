@@ -148,7 +148,6 @@
     margin: 0.4rem;
     padding: 0.4rem;
     font-weight: bolder;
-    /* margin-top: 7%; */
   }
   .yo {
     width: 8px;
@@ -179,7 +178,6 @@
     border: 1px solid black;
   }
   .ett-klassnamn {
-    /* position: absolute; */
     margin-right: 24%;
     font-size: 1.2rem;
     padding: 1rem;

@@ -1,12 +1,3 @@
-<template>
-  <div>
-    <PieChart
-      :chart-data="crumbleData"
-      :options="options"
-      css-classes="chart-container"
-    />
-  </div>
-</template>
 <script>
   import 'firebase/compat/firestore'
   import { computed, defineComponent, ref, reactive, onMounted } from 'vue'
@@ -81,3 +72,12 @@
     }
   })
 </script>
+<template>
+  <div>
+    <PieChart
+      :chart-data="crumbleData"
+      :options="options"
+      css-classes="chart-container"
+    />
+  </div>
+</template>

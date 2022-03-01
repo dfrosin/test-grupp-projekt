@@ -1,42 +1,3 @@
-<template>
-  <div>
-    <h1>Dashboard</h1>
-
-    <div>
-      <select>
-        <option @click="sortBy('title')">
-          <span>By project name</span>
-        </option>
-        <option @click="sortBy('person')">
-          <span>By Person</span>
-        </option>
-      </select>
-
-      <div v-for="project in projects" :key="project.title">
-        <div>
-          <div>
-            <div>Project title</div>
-            <div>{{ project.title }}</div>
-          </div>
-          <div>
-            <div>Person</div>
-            <div>{{ project.person }}</div>
-          </div>
-          <div>
-            <div>Due by</div>
-            <div>{{ project.due }}</div>
-          </div>
-          <div>
-            <div>
-              <div>{{ project.status }}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script>
   export default {
     data() {
@@ -82,5 +43,44 @@
     }
   }
 </script>
+
+<template>
+  <div>
+    <h1>Dashboard</h1>
+
+    <div>
+      <select>
+        <option @click="sortBy('title')">
+          <span>By project name</span>
+        </option>
+        <option @click="sortBy('person')">
+          <span>By Person</span>
+        </option>
+      </select>
+
+      <div v-for="project in projects" :key="project.title">
+        <div>
+          <div>
+            <div>Project title</div>
+            <div>{{ project.title }}</div>
+          </div>
+          <div>
+            <div>Person</div>
+            <div>{{ project.person }}</div>
+          </div>
+          <div>
+            <div>Due by</div>
+            <div>{{ project.due }}</div>
+          </div>
+          <div>
+            <div>
+              <div>{{ project.status }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 
 <style></style>

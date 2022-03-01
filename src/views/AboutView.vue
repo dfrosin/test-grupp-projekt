@@ -1,3 +1,50 @@
+<script>
+  import ButtonComponent from '../components/ButtonComponent.vue'
+  import { /*  mapGetters, */ mapActions } from 'vuex'
+  /* import { db, firestore } from '../firebase'
+  import { collection, getDocs, setDoc, doc } from 'firebase/firestore'
+  import { v4 as uuidv4 } from 'uuid'
+  import store from '../store' */
+
+  export default {
+    name: 'TodosAboutview',
+    data() {
+      return {
+        pbItem: '',
+        pbHeading: '',
+        backlogItemInfo: {},
+        deletedArray: [],
+        arrayOfObjects: [],
+        isDeleted: false,
+        editMode: false,
+        isVisible: true,
+        showToolTip: false,
+        newName: '',
+        editProjectName: false,
+        isH2Visible: true,
+        setloading: false
+      }
+    },
+    methods: {
+      ...mapActions(['createList', 'deleteItem', 'createAccount', 'editName']),
+
+      //Snapshot of all documents as Objects & Keys.
+
+      visible() {
+        this.isVisible = false
+      },
+      toolTipOpen() {
+        this.showToolTip = true
+      },
+      toolTipClose() {
+        this.showToolTip = false
+      }
+    },
+    /*  computed: mapGetters(['allTodos']), */
+    components: { ButtonComponent }
+  }
+</script>
+
 <template>
   <div class="component">
     <h1>Product Backlog</h1>
@@ -52,53 +99,6 @@
     <ButtonComponent buttonvalue="Create Task" />
   </div>
 </template>
-
-<script>
-  import ButtonComponent from '../components/ButtonComponent.vue'
-  import { /*  mapGetters, */ mapActions } from 'vuex'
-  /* import { db, firestore } from '../firebase'
-  import { collection, getDocs, setDoc, doc } from 'firebase/firestore'
-  import { v4 as uuidv4 } from 'uuid'
-  import store from '../store' */
-
-  export default {
-    name: 'TodosAboutview',
-    data() {
-      return {
-        pbItem: '',
-        pbHeading: '',
-        backlogItemInfo: {},
-        deletedArray: [],
-        arrayOfObjects: [],
-        isDeleted: false,
-        editMode: false,
-        isVisible: true,
-        showToolTip: false,
-        newName: '',
-        editProjectName: false,
-        isH2Visible: true,
-        setloading: false
-      }
-    },
-    methods: {
-      ...mapActions(['createList', 'deleteItem', 'createAccount', 'editName']),
-
-      //Snapshot of all documents as Objects & Keys.
-
-      visible() {
-        this.isVisible = false
-      },
-      toolTipOpen() {
-        this.showToolTip = true
-      },
-      toolTipClose() {
-        this.showToolTip = false
-      }
-    },
-    /*  computed: mapGetters(['allTodos']), */
-    components: { ButtonComponent }
-  }
-</script>
 
 <style lang="scss" scoped>
   .component {

@@ -5,6 +5,93 @@
   kvar på sprinten.
 
 -->
+
+<script>
+  import {
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL
+  } from 'firebase/storage'
+  import { firestore } from '../firebase'
+  import { doc, setDoc } from 'firebase/firestore'
+
+  const storage = getStorage()
+
+  export default {
+    data() {
+      return {
+        editing: false,
+        uploading: false,
+        newPhoto: null,
+        url: null,
+        file: null,
+        fullnameCopy: '',
+        userNameCopy: '',
+        userCollection: {}
+      }
+    },
+    mounted() {
+      if (this.$store.state.loggedInUser === null) {
+        this.$router.push('/login')
+      } else {
+        this.userCollection = { ...this.$store.state.loggedInUser }
+        console.log(this.$store.state.loggedInUser)
+        this.url = this.$store.state.loggedInUser.profilePicture
+      }
+    },
+    methods: {
+      onEdit() {
+        this.editing = true
+        this.fullnameCopy = this.userCollection.fullName.slice()
+        this.userNameCopy = this.userCollection.userName.slice()
+      },
+      onCancel() {
+        this.userCollection.fullName = this.fullnameCopy
+        this.userCollection.userName = this.userNameCopy
+        this.editing = false
+        this.uploading = false
+        this.newPhoto = null
+      },
+      onSave() {
+        this.editing = false
+        const whereToAddData = doc(
+          firestore,
+          `users/${this.userCollection.userId}`
+        )
+        setDoc(whereToAddData, this.userCollection)
+        this.$store.commit('setLoggedInUser', this.userCollection)
+        this.userCollection = { ...this.$store.state.loggedInUser }
+      },
+      previewPhoto(photo) {
+        this.file = photo.target.files[0]
+        this.uploading = true
+        const imageFile = photo.target.files[0]
+        this.newPhoto = URL.createObjectURL(imageFile)
+      },
+      savePhoto() {
+        this.url = this.newPhoto
+        this.uploading = false
+        this.newPhoto = null
+        console.log(this.file)
+        const storageRef = ref(
+          storage,
+          `${this.$store.state.loggedInUser.userName}`
+        )
+        uploadBytes(storageRef, this.file).then(() => {
+          console.log('Uploaded a picture')
+          getDownloadURL(
+            ref(storage, `${this.$store.state.loggedInUser.userName}`)
+          ).then((url) => {
+            this.url = url
+            this.userCollection.profilePicture = this.url
+            console.log(this.url)
+          })
+        })
+      }
+    }
+  }
+</script>
 <template>
   <div class="profile-card">
     <h1>My Profile</h1>
@@ -176,90 +263,3 @@
     }
   }
 </style>
-
-<script>
-  import {
-    getStorage,
-    ref,
-    uploadBytes,
-    getDownloadURL
-  } from 'firebase/storage'
-  import { firestore } from '../firebase'
-  import { doc, setDoc } from 'firebase/firestore'
-
-  const storage = getStorage()
-
-  export default {
-    data() {
-      return {
-        editing: false,
-        uploading: false,
-        newPhoto: null,
-        url: null,
-        file: null,
-        fullnameCopy: '',
-        userNameCopy: '',
-        userCollection: {}
-      }
-    },
-    mounted() {
-      if (this.$store.state.loggedInUser === null) {
-        this.$router.push('/login')
-      } else {
-        this.userCollection = { ...this.$store.state.loggedInUser }
-        console.log(this.$store.state.loggedInUser)
-        this.url = this.$store.state.loggedInUser.profilePicture
-      }
-    },
-    methods: {
-      onEdit() {
-        this.editing = true
-        this.fullnameCopy = this.userCollection.fullName.slice()
-        this.userNameCopy = this.userCollection.userName.slice()
-      },
-      onCancel() {
-        this.userCollection.fullName = this.fullnameCopy
-        this.userCollection.userName = this.userNameCopy
-        this.editing = false
-        this.uploading = false
-        this.newPhoto = null
-      },
-      onSave() {
-        this.editing = false
-        const whereToAddData = doc(
-          firestore,
-          `users/${this.userCollection.userId}`
-        )
-        setDoc(whereToAddData, this.userCollection)
-        this.$store.commit('setLoggedInUser', this.userCollection)
-        this.userCollection = { ...this.$store.state.loggedInUser }
-      },
-      previewPhoto(photo) {
-        this.file = photo.target.files[0]
-        this.uploading = true
-        const imageFile = photo.target.files[0]
-        this.newPhoto = URL.createObjectURL(imageFile)
-      },
-      savePhoto() {
-        this.url = this.newPhoto
-        this.uploading = false
-        this.newPhoto = null
-        console.log(this.file)
-        const storageRef = ref(
-          storage,
-          `${this.$store.state.loggedInUser.userName}`
-        )
-        uploadBytes(storageRef, this.file).then(() => {
-          console.log('Uploaded a picture')
-          getDownloadURL(
-            ref(storage, `${this.$store.state.loggedInUser.userName}`)
-          ).then((url) => {
-            this.url = url
-            this.userCollection.profilePicture = this.url
-            console.log(this.url)
-          })
-        })
-      }
-    }
-  }
-</script>

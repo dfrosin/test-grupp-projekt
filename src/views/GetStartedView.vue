@@ -1,3 +1,9 @@
+<script>
+  import GetStartedButton from '../components/GetStartedButton.vue'
+
+  export default { components: { GetStartedButton } }
+</script>
+
 <template>
   <div>
     <img src="/assets/pagelogo.png" alt="" />
@@ -5,12 +11,6 @@
     <GetStartedButton />
   </div>
 </template>
-
-<script>
-  import GetStartedButton from '../components/GetStartedButton.vue'
-
-  export default { components: { GetStartedButton } }
-</script>
 
 <style lang="scss" scoped>
   div {

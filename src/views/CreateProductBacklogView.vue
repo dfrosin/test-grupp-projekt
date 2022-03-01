@@ -1,9 +1,3 @@
-<template>
-  <div>
-    <PBIComponent />
-  </div>
-</template>
-
 <script>
   import PBIComponent from '../components/PBIComponent.vue'
   export default {
@@ -11,4 +5,9 @@
   }
 </script>
 
+<template>
+  <div>
+    <PBIComponent />
+  </div>
+</template>
 <style lang="scss" scoped></style>

@@ -10,9 +10,6 @@
 </template>
 
 <style lang="scss" scoped>
-  * {
-    margin-top: 4.2rem;
-  }
   h1 {
     text-align: center;
     color: #fff;

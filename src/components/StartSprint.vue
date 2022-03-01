@@ -1,43 +1,3 @@
-<template>
-  <!--På Kanban boardet vill vi kunna se hur lång tid det är kvar för sprinten, men det lägger vi åt sidan för nu!-->
-  <div v-if="$store.state.arrayOfTasks" class="template">
-    <h2 v-if="$store.state.projectName !== null">
-      {{ $store.state.projectName }}
-    </h2>
-    <h2>
-      {{ $store.state.arrayOfTasks.length }} tasks will be added to this Sprint
-    </h2>
-    <div class="calendar">
-      <label for="start">Start Date</label>
-      <input type="date" id="start" v-model="date" />
-      <label for="duration">Duration</label>
-      <select @change="whatDate" v-model="selectedObject" id="duration">
-        <option>1 week</option>
-        <option>2 weeks</option>
-        <option>3 weeks</option>
-        <option>4 weeks</option>
-      </select>
-      <label for="end">End date</label>
-      <input type="date" :value="this.endDate" />
-      <label for="goal">Sprint Goal</label>
-      <input
-        class="sprint-goal"
-        v-model="sprintGoal"
-        @keyup.enter="sendSprintGoal"
-        id="goal"
-      />
-      <button
-        :disabled="sprintGoal === ''"
-        @click="sendSprintGoal"
-        type="submit"
-        class="btn btn-success mt-3"
-      >
-        Send-sprint
-      </button>
-    </div>
-  </div>
-</template>
-
 <script>
   export default {
     created() {
@@ -89,6 +49,45 @@
     computed: {}
   }
 </script>
+<template>
+  <!--På Kanban boardet vill vi kunna se hur lång tid det är kvar för sprinten, men det lägger vi åt sidan för nu!-->
+  <div v-if="$store.state.arrayOfTasks" class="template">
+    <h2 v-if="$store.state.projectName !== null">
+      {{ $store.state.projectName }}
+    </h2>
+    <h2>
+      {{ $store.state.arrayOfTasks.length }} tasks will be added to this Sprint
+    </h2>
+    <div class="calendar">
+      <label for="start">Start Date</label>
+      <input type="date" id="start" v-model="date" />
+      <label for="duration">Duration</label>
+      <select @change="whatDate" v-model="selectedObject" id="duration">
+        <option>1 week</option>
+        <option>2 weeks</option>
+        <option>3 weeks</option>
+        <option>4 weeks</option>
+      </select>
+      <label for="end">End date</label>
+      <input type="date" :value="this.endDate" />
+      <label for="goal">Sprint Goal</label>
+      <input
+        class="sprint-goal"
+        v-model="sprintGoal"
+        @keyup.enter="sendSprintGoal"
+        id="goal"
+      />
+      <button
+        :disabled="sprintGoal === ''"
+        @click="sendSprintGoal"
+        type="submit"
+        class="btn btn-success mt-3"
+      >
+        Send-sprint
+      </button>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
   .template {

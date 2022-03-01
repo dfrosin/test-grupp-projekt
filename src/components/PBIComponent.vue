@@ -1,95 +1,3 @@
-<template>
-  <div class="component">
-    <div class="column">
-      <h1>Product Backlog</h1>
-      <input
-        v-if="isVisible"
-        v-model="pbHeading"
-        class="pbHeading"
-        @keyup.enter="visible"
-        placeholder="Project Name"
-      />
-      <input
-        v-model="pbItem"
-        class="first-input"
-        type="text"
-        placeholder="Som en ___ vill jag ___ för att ___"
-        ref="firstInput"
-        @keyup.enter="createList"
-        :style="{ borderColor: getColor }"
-      />
-      <div v-if="getColor !== ''" class="color-message">
-        <p>Selected color</p>
-        <div class="color" :style="{ backgroundColor: getColor }" />
-      </div>
-      <div v-if="getColor === ''" class="color-message">
-        <p>Please select a color first!</p>
-      </div>
-
-      <div class="container-container">
-        <div class="color-container">
-          <div
-            class="color"
-            v-for="color in colorArray"
-            :key="color.id"
-            :style="{ backgroundColor: color }"
-            @click="selectColor"
-          />
-        </div>
-      </div>
-    </div>
-    <div class="column">
-      <div class="edit">
-        <div class="h2-container" v-if="isH2Visible">
-          <h2 class="exampleText" v-if="isVisible">Project Name</h2>
-          <h2
-            v-if="!isVisible"
-            @mouseenter="toolTipOpen"
-            @mouseleave="toolTipClose"
-            @click="editName"
-          >
-            {{ pbHeading }}
-          </h2>
-        </div>
-        <input
-          class="editInput"
-          v-if="editProjectName"
-          v-model="pbHeading"
-          @keyup.enter="backToBasic"
-        />
-        <div v-if="showToolTip" class="tool-tips">
-          <span class="tool-tiptext">Edit Name</span>
-        </div>
-      </div>
-      <div class="backlog-container">
-        <ul>
-          <li
-            v-for="item in arrayOfObjects"
-            :key="item.idxd"
-            :style="{ borderColor: item.color }"
-          >
-            {{ item.id }}
-            <img
-              src="/assets/trash-can.png"
-              alt=""
-              @click="deleteItem"
-              :id="item.id"
-              :style="{ borderColor: item.color }"
-            />
-          </li>
-        </ul>
-      </div>
-      <button
-        v-if="arrayOfObjects.length >= 1"
-        class="btn btn-secondary"
-        @click="createAccount"
-      >
-        Create Tasks
-      </button>
-    </div>
-  </div>
-</template>
-
 <script>
   import { db, firestore } from '../firebase'
   import { collection, getDocs, setDoc, doc } from 'firebase/firestore'
@@ -230,6 +138,98 @@
     }
   }
 </script>
+
+<template>
+  <div class="component">
+    <div class="column">
+      <h1>Product Backlog</h1>
+      <input
+        v-if="isVisible"
+        v-model="pbHeading"
+        class="pbHeading"
+        @keyup.enter="visible"
+        placeholder="Project Name"
+      />
+      <input
+        v-model="pbItem"
+        class="first-input"
+        type="text"
+        placeholder="Som en ___ vill jag ___ för att ___"
+        ref="firstInput"
+        @keyup.enter="createList"
+        :style="{ borderColor: getColor }"
+      />
+      <div v-if="getColor !== ''" class="color-message">
+        <p>Selected color</p>
+        <div class="color" :style="{ backgroundColor: getColor }" />
+      </div>
+      <div v-if="getColor === ''" class="color-message">
+        <p>Please select a color first!</p>
+      </div>
+
+      <div class="container-container">
+        <div class="color-container">
+          <div
+            class="color"
+            v-for="color in colorArray"
+            :key="color.id"
+            :style="{ backgroundColor: color }"
+            @click="selectColor"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="edit">
+        <div class="h2-container" v-if="isH2Visible">
+          <h2 class="exampleText" v-if="isVisible">Project Name</h2>
+          <h2
+            v-if="!isVisible"
+            @mouseenter="toolTipOpen"
+            @mouseleave="toolTipClose"
+            @click="editName"
+          >
+            {{ pbHeading }}
+          </h2>
+        </div>
+        <input
+          class="editInput"
+          v-if="editProjectName"
+          v-model="pbHeading"
+          @keyup.enter="backToBasic"
+        />
+        <div v-if="showToolTip" class="tool-tips">
+          <span class="tool-tiptext">Edit Name</span>
+        </div>
+      </div>
+      <div class="backlog-container">
+        <ul>
+          <li
+            v-for="item in arrayOfObjects"
+            :key="item.idxd"
+            :style="{ borderColor: item.color }"
+          >
+            {{ item.id }}
+            <img
+              src="/assets/trash-can.png"
+              alt=""
+              @click="deleteItem"
+              :id="item.id"
+              :style="{ borderColor: item.color }"
+            />
+          </li>
+        </ul>
+      </div>
+      <button
+        v-if="arrayOfObjects.length >= 1"
+        class="btn btn-secondary"
+        @click="createAccount"
+      >
+        Create Tasks
+      </button>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
   html,

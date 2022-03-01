@@ -1,22 +1,3 @@
-<template lang="">
-  <div class="filter-Container">
-    <div class="ui cards" style="margin: 10px">
-      <div class="ui icon input" style="width: 100%">
-        <input type="text" placeholder="Search..." v-model="searchQuery" />
-        <i class="search icon" />
-      </div>
-      <div
-        class="filter-post"
-        v-for="result in searchedProducts"
-        :key="result.id"
-      >
-        <!-- <PostComponent /> -->
-        {{ result.value }}
-      </div>
-    </div>
-  </div>
-</template>
-
 <script>
   // import firebase from 'firebase/compat/app'
   import 'firebase/compat/firestore'
@@ -59,6 +40,26 @@
     }
   }
 </script>
+
+<template lang="">
+  <div class="filter-Container">
+    <div class="ui cards" style="margin: 10px">
+      <div class="ui icon input" style="width: 100%">
+        <input type="text" placeholder="Search..." v-model="searchQuery" />
+        <i class="search icon" />
+      </div>
+      <div
+        class="filter-post"
+        v-for="result in searchedProducts"
+        :key="result.id"
+      >
+        <!-- <PostComponent /> -->
+        {{ result.value }}
+      </div>
+    </div>
+  </div>
+</template>
+
 <style lang="scss" scoped>
   .cards {
     width: 25%;

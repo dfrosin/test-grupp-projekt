@@ -1,4 +1,52 @@
-<template lang="">
+<script>
+  import LogoutUser from './LogoutUser.vue'
+  export default {
+    components: { LogoutUser },
+    name: 'NavbarComponent',
+    data() {
+      return {
+        scrolledNav: null,
+        mobile: null,
+        mobileNav: null,
+        windowWidth: null
+      }
+    },
+    created() {
+      window.addEventListener('resize', this.checkScreen)
+      this.checkScreen()
+    },
+    mounted() {
+      window.addEventListener('scroll', this.updateScroll)
+    },
+    methods: {
+      toggleMobileNav() {
+        this.mobileNav = !this.mobileNav
+      },
+
+      updateScroll() {
+        const scrollPosition = window.scrollY
+        if (scrollPosition > 50) {
+          this.scrolledNav = true
+          return
+        }
+        this.scrolledNav = false
+      },
+
+      checkScreen() {
+        this.windowWidth = window.innerWidth
+        if (this.windowWidth <= 750) {
+          this.mobile = true
+          return
+        }
+        this.mobile = false
+        this.mobileNav = false
+        return
+      }
+    }
+  }
+</script>
+
+<template>
   <header :class="{ 'scrolled-nav': scrolledNav }">
     <nav>
       <div>
@@ -91,71 +139,4 @@
       </transition>
     </nav>
   </header>
-  <!-- <nav>
-    <div>
-      <img id="nav-logo" src="/assets/navbarlogo.png" alt="" />
-    </div>
-    <ul>
-      <li><RouterLink to="/">My Projects</RouterLink></li>
-      <li><RouterLink to="/about">Create Project</RouterLink></li>
-      <li><RouterLink to="/contact">Sign In </RouterLink></li>
-      <li><RouterLink to="/contact">Dont have an account?</RouterLink></li>
-      <li>
-        <RouterLink to="/contact"
-          ><span v-if="$store.state.loggedInUser != null">{{
-            $store.state.loggedInUser.userName
-          }}</span>
-        </RouterLink>
-      </li>
-      <img id="profile-pic" src="/assets/Frame 112.png" alt="Adam Agerling" />
-    </ul>
-  </nav> -->
 </template>
-<script>
-  import LogoutUser from './LogoutUser.vue'
-  export default {
-    components: { LogoutUser },
-    name: 'NavbarComponent',
-    data() {
-      return {
-        scrolledNav: null,
-        mobile: null,
-        mobileNav: null,
-        windowWidth: null
-      }
-    },
-    created() {
-      window.addEventListener('resize', this.checkScreen)
-      this.checkScreen()
-    },
-    mounted() {
-      window.addEventListener('scroll', this.updateScroll)
-    },
-    methods: {
-      toggleMobileNav() {
-        this.mobileNav = !this.mobileNav
-      },
-
-      updateScroll() {
-        const scrollPosition = window.scrollY
-        if (scrollPosition > 50) {
-          this.scrolledNav = true
-          return
-        }
-        this.scrolledNav = false
-      },
-
-      checkScreen() {
-        this.windowWidth = window.innerWidth
-        if (this.windowWidth <= 750) {
-          this.mobile = true
-          return
-        }
-        this.mobile = false
-        this.mobileNav = false
-        return
-      }
-    }
-  }
-</script>
-<style lang="scss" scoped></style>

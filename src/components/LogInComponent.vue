@@ -1,32 +1,3 @@
-<template>
-  <div id="container">
-    <form @submit.prevent="onSubmit">
-      <div class="inputs">
-        <label>Username</label>
-        <input
-          placeholder="Username"
-          required
-          v-model="userName"
-          class="form-control"
-        />
-      </div>
-      <div class="inputs">
-        <label>Password</label>
-        <input
-          placeholder="password"
-          type="password"
-          required
-          v-model="password"
-          class="form-control"
-        />
-      </div>
-    </form>
-    <button @click="onSubmit" class="btn btn-success mt-3">Log In</button>
-  </div>
-
-  <button @click="handleLogout" class="btn btn-success mt-3">Logga ut</button>
-</template>
-
 <script>
   import { firestore } from '../firebase'
   import { getDocs, query, collection, where, limit } from 'firebase/firestore'
@@ -59,6 +30,35 @@
     }
   }
 </script>
+
+<template>
+  <div id="container">
+    <form @submit.prevent="onSubmit">
+      <div class="inputs">
+        <label>Username</label>
+        <input
+          placeholder="Username"
+          required
+          v-model="userName"
+          class="form-control"
+        />
+      </div>
+      <div class="inputs">
+        <label>Password</label>
+        <input
+          placeholder="password"
+          type="password"
+          required
+          v-model="password"
+          class="form-control"
+        />
+      </div>
+    </form>
+    <button @click="onSubmit" class="btn btn-success mt-3">Log In</button>
+  </div>
+
+  <button @click="handleLogout" class="btn btn-success mt-3">Logga ut</button>
+</template>
 
 <style lang="scss" scoped>
   #container {
