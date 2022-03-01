@@ -133,11 +133,15 @@
       <p class="time-stamp">
         {{ item.time }}
       </p>
-      <p v-if="noOneInvited" class="error-message">
-        You need to invite colleagues to the project first
-      </p>
+      <div
+        v-if="this.$store.state.noOneInvited && this.noOneInvited == true"
+        class="error-message"
+      >
+        <p>You need to invite colleagues to the project first</p>
+      </div>
+
       <div class="names-in-project">
-        <p v-for="person in this.item.taskOwner.owner" :key="person.id">
+        <p v-for="person in this.item.taskOwner" :key="person.id">
           {{ person }}
         </p>
       </div>

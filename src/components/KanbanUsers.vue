@@ -70,6 +70,7 @@
         //Körs när man trycker på pluss tecknet och skall visa/dölja listan med
         //användare
         this.showMaker = !this.showMaker
+        this.$store.commit('switchBetweenStatus', false)
       }
     }
   }
