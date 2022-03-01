@@ -1,5 +1,4 @@
 <script>
-  import ButtonComponent from '../components/ButtonComponent.vue'
   import { /*  mapGetters, */ mapActions } from 'vuex'
   /* import { db, firestore } from '../firebase'
   import { collection, getDocs, setDoc, doc } from 'firebase/firestore'
@@ -39,9 +38,8 @@
       toolTipClose() {
         this.showToolTip = false
       }
-    },
+    }
     /*  computed: mapGetters(['allTodos']), */
-    components: { ButtonComponent }
   }
 </script>
 
