@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
-import AboutView from './views/firebaseView.vue'
+import AboutView from './views/AboutView.vue'
 import ContactView from './views/ContactView.vue'
 import GetStartedView from './views/GetStartedView.vue'
 import CreateAccountView from './views/CreateAccountView.vue'
