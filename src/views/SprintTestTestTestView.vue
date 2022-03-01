@@ -191,28 +191,16 @@
       filterSearch() {
         this.test = [...this.anotherArray]
         console.log(this.test)
-        for (let n = 0; n < this.anotherArray.length; n++) {
-          console.log(n)
-          const searchedProducts = () => {
-            return this.anotherArray[n].cards.filter((tests) => {
+        for (let i = 0; i < this.anotherArray.length; i++) {
+          this.anotherArray[i].cards = this.anotherArray[i].cards.filter(
+            (roovah) => {
               return (
-                tests.name
+                roovah.name
                   .toLowerCase()
-                  .indexOf(this.searchQuery.toLowerCase()) != -1
+                  .indexOf(this.searchQuery.toLowerCase()) !== -1
               )
-
-              /*  return tests.filter((tes) => {
-              console.log(tes.name) */
-              /*  }) */
-              /*    return (
-              tests.value
-                .toLowerCase()
-                .indexOf(this.searchQuery.value.toLowerCase()) != -1
-            ) */
-            })
-            /*    this.anotherArray = this.test */
-          }
-          return (this.anotherArray[n].cards = searchedProducts())
+            }
+          )
         }
       }
     }
@@ -236,11 +224,10 @@
     @send-task="getTask"
     :first-status="projectInfo.status[0]"
   />
-  <div class="search-container">
-    <label for="">kallllelerg</label>
-    <input type="text" placeholder="gdfgsdgsdgf" v-model="searchQuery" />
+  <div v-if="projectInfo !== null" class="search-container">
+    <input type="text" placeholder="Type here" v-model="searchQuery" />
     {{ sortTest }}
-    <button @click="filterSearch">dfsdfsdfsdf</button>
+    <button @click="filterSearch">Filter</button>
   </div>
 
   <article class="flex-container">

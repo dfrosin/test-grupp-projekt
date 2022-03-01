@@ -75,7 +75,7 @@
       submitProjectName() {
         const allDocs = {
           project: 'project',
-          status: ['TODO', 'IN_PROGRESS', 'REVIEW', 'DONE']
+          status: ['Todo', 'In progress', 'Review', 'Done']
         }
         const whereToAddData = doc(firestore, `projects/${this.pbHeading}`)
         setDoc(whereToAddData, allDocs)

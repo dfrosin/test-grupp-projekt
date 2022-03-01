@@ -40,7 +40,7 @@
         // enter i inputfältet
         this.dataValue.color = this.selectedColor
         this.dataValue.name = this.newTask
-        this.dataValue.status = 'TODO'
+        this.dataValue.status = 'Todo'
         this.dataValue.tasks = 'tasks'
         this.dataValue.uuid = uuidv4()
         let copiedObject = JSON.parse(JSON.stringify(this.dataValue))
