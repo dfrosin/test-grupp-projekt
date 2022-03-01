@@ -192,9 +192,9 @@
         console.log(this.test)
         for (let i = 0; i < this.anotherArray.length; i++) {
           this.anotherArray[i].cards = this.anotherArray[i].cards.filter(
-            (roovah) => {
+            (card) => {
               return (
-                roovah.name
+                card.name
                   .toLowerCase()
                   .indexOf(this.searchQuery.toLowerCase()) !== -1
               )
