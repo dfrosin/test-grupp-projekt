@@ -28,6 +28,7 @@
     },
     methods: {
       getUsers() {
+        //Hämtar ut alla användare när sidan laddas lägger den i projectUsers arrayen.
         const customerOrdersQuery = query(
           collection(firestore, 'users'),
           where('user', '==', 'user'),
@@ -41,30 +42,33 @@
         })
       },
       usersInProject() {
-        // this.copyOfUser.personInProject = this.userName
+        //Körs varje gång du klickar på ett namn i listan och lägger till den i arrayen:
+        //copoOfUser
         let copiedObject = JSON.parse(JSON.stringify(this.userName))
         this.copyOfUser.personInProject.push(copiedObject)
-        // console.log(this.copyOfUser)
-        // this.copyOfUser = null
       },
       removeUser(user) {
+        //Tar bort en användare när du klickar på krysset.
         if (confirm(`Do want to remove this user? ${user.target.id}`)) {
           const taskIndex = this.copyOfUser.personInProject.indexOf(user)
           this.copyOfUser.personInProject.splice(taskIndex, 1)
         }
       },
       postUsers() {
+        //Körs när man trycker på "Invite Users", döljer även "mother-flex"
+        //med showmaker = false
         this.$store.commit('setArrayOfUsers', this.copyOfUser)
         const whereToAddData = doc(
           firestore,
           `${this.$store.state.projectName}/projectUsers`
         )
         setDoc(whereToAddData, this.copyOfUser)
-      },
-      showUsers() {
-        this.clicked = !this.clicked
+        this.showMaker = false
+        this.$store.commit('switchBetweenStatus', false)
       },
       showMakerClick() {
+        //Körs när man trycker på pluss tecknet och skall visa/dölja listan med
+        //användare
         this.showMaker = !this.showMaker
       }
     }

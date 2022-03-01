@@ -43,7 +43,8 @@ const state = {
   projectName: null,
   taskColor: null,
   arrayOfTasks: null,
-  projectUser: null
+  projectUser: null,
+  noOneInvited: true
 }
 
 const getters = {
@@ -77,6 +78,9 @@ const mutations = {
   },
   setArrayOfUsers(state, user) {
     state.projectUser = user
+  },
+  switchBetweenStatus(state, status) {
+    state.noOneInvited = status
   }
 }
 

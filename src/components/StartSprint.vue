@@ -42,7 +42,7 @@
 
       sendSprintGoal() {
         this.$store.commit('setSprintGoal', this.sprintGoal)
-        this.$router.push('/sprinttest/')
+        this.$router.push('/sprint/')
         console.log('sendSprintGoal körs från StartSprint.vue')
       }
     },
