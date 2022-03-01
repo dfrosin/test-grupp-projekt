@@ -47,6 +47,7 @@
         addHover: false,
         sortTest: '',
         searchQuery: '',
+        editId: '',
         test: []
       }
     },
@@ -164,6 +165,7 @@
       editColumn(e) {
         this.editStatus = !this.editStatus
         this.statusInput = e.target.id
+        this.editId = e.target.id
       },
       saveColumn(e) {
         const status = e.target.id
@@ -268,7 +270,8 @@
           object.cards.length < 1 &&
           editStatus &&
           statusInput.length > 0 &&
-          statusInput.length < 14
+          statusInput.length < 14 &&
+          editId === object.title
         "
         @click="saveColumn"
         class="save-column"
@@ -282,13 +285,19 @@
         v-if="
           object.cards.length < 1 &&
           (statusInput.length < 1 || statusInput.length > 14) &&
-          editStatus
+          editStatus &&
+          editId === object.title
         "
       >
         save
       </p>
       <p
-        v-if="object.cards.length < 1 && editStatus && statusInput.length < 1"
+        v-if="
+          object.cards.length < 1 &&
+          editStatus &&
+          statusInput.length < 1 &&
+          editId === object.title
+        "
         class="input-warning"
       >
         You can't have an empty title
@@ -300,7 +309,7 @@
         Title is too long
       </p>
       <p
-        v-if="object.cards.length < 1 && editStatus"
+        v-if="object.cards.length < 1 && editStatus && editId === object.title"
         placeholder="Column Title"
         @click="deleteColumn"
         class="delete-column"
@@ -309,7 +318,7 @@
         delete
       </p>
       <input
-        v-if="object.cards.length < 1 && editStatus"
+        v-if="object.cards.length < 1 && editStatus && editId === object.title"
         v-model="statusInput"
         type="text"
         class="status-input"

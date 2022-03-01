@@ -12,10 +12,11 @@
     // updateDoc
   } from 'firebase/firestore'
   export default {
-    created() {
-      this.item.taskOwner.owner.forEach((owner) => {
-        this.userObject.owner.push(owner)
-      })
+    mounted() {
+      setTimeout(() => {
+        this.pushOwners()
+      }),
+        3000
     },
     props: {
       item: {
@@ -51,8 +52,12 @@
       }
     },
     methods: {
+      pushOwners() {
+        this.item.taskOwner.owner.forEach((owner) => {
+          this.userObject.owner.push(owner)
+        })
+      },
       getUsers() {
-        console.log(this.userObject.owner.length)
         if (this.$store.state.noOneInvited === true) {
           this.noOneInvited = true
           return
@@ -73,19 +78,13 @@
         })
       },
       async deleteTask(name) {
-        //funkar inte!!
-        console.log(' Deleted task:', name.target.id)
-        console.log(`${this.$store.state.projectName},${name.target.id}`)
         if (
-          //Adams kod
-          confirm(`Are you sure you really want delete: ${name.target.id}?`)
+          //Adams kod, verkligen Adams kod
+          confirm(`Do you really want to delete: ${name.target.id}?`)
           //Slut Adams kod
         ) {
           await deleteDoc(
-            doc(
-              firestore,
-              `${this.$store.state.projectName},${name.target.id} `
-            )
+            doc(firestore, this.$store.state.projectName, name.target.id)
           )
         }
       },
@@ -152,8 +151,8 @@
           v-for="owners in this.userObject.owner"
           :key="owners.id"
         >
-          <p>{{ owners }}</p>
-          <p v-if="editInfo">X</p>
+          <p>{{ item.taskOwner.owner }}</p>
+          <p v-if="editInfo">x</p>
         </div>
       </div>
       <div class="add-user">
