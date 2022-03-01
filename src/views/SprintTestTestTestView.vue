@@ -82,6 +82,8 @@
             }
             this.anotherArray.push(dynamicObject)
           }
+          this.test = JSON.parse(JSON.stringify(this.anotherArray))
+          // gör en deep copy av this.anotherArray
         })
       },
       getAllProjectNames() {
@@ -188,18 +190,21 @@
         this.getDatabase()
       },
       filterSearch() {
-        this.test = [...this.anotherArray]
-        console.log(this.test)
-        for (let i = 0; i < this.anotherArray.length; i++) {
-          this.anotherArray[i].cards = this.anotherArray[i].cards.filter(
-            (card) => {
-              return (
-                card.name
-                  .toLowerCase()
-                  .indexOf(this.searchQuery.toLowerCase()) !== -1
-              )
-            }
-          )
+        if (this.searchQuery.length === 0) {
+          this.anotherArray = this.test
+        }
+        if (this.searchQuery.length > 2) {
+          for (let i = 0; i < this.anotherArray.length; i++) {
+            this.anotherArray[i].cards = this.anotherArray[i].cards.filter(
+              (card) => {
+                return (
+                  card.name
+                    .toLowerCase()
+                    .indexOf(this.searchQuery.toLowerCase()) !== -1
+                )
+              }
+            )
+          }
         }
       }
     }
@@ -224,9 +229,13 @@
     :first-status="projectInfo.status[0]"
   />
   <div v-if="projectInfo !== null" class="search-container">
-    <input type="text" placeholder="Type here" v-model="searchQuery" />
+    <input
+      @input="filterSearch"
+      type="text"
+      placeholder="Type here"
+      v-model="searchQuery"
+    />
     {{ sortTest }}
-    <button @click="filterSearch">Filter</button>
   </div>
 
   <article class="flex-container">
