@@ -29,7 +29,7 @@
             console.error(error)
             return
           }
-          console.log(userCred) //userCred kommer innehålla uid-värde och token
+          //userCred kommer innehålla uid-värde och token
 
           const newUser = {
             userName: this.userName,
