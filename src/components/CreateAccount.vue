@@ -18,7 +18,6 @@
       // --------------- SKAPA NY ANVÄNDARE------------------------------ //
       async createAccount() {
         if (this.password === this.confirmPassword) {
-          console.log('Ny användare skapad')
           let userCred = null
           try {
             userCred = await firebase
@@ -29,13 +28,12 @@
             console.error(error)
             return
           }
-          console.log(userCred) //userCred kommer innehålla uid-värde och token
+          //userCred kommer innehålla uid-värde och token
 
           const newUser = {
             userName: this.userName,
             email: this.email,
             fullName: this.fullName,
-            // password: this.password,
             profilePicture: '/assets/Frame 112.png',
             userId: userCred.user.uid,
             user: 'user'

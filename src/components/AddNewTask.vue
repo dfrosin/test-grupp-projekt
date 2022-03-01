@@ -26,7 +26,6 @@
         this.dataValue.color = 'rgb(0, 0, 0)'
         let copiedObject = JSON.parse(JSON.stringify(this.dataValue))
         this.tasks.push(copiedObject)
-        console.log(this.tasks)
       },
       addNewTask() {
         this.$emit('send-task', this.dataValue)

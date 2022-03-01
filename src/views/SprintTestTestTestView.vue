@@ -147,7 +147,6 @@
       },
       async getTask(tasks) {
         this.newTask = tasks
-        console.log(this.newTask)
         this.arrayOfTasks.push(this.newTask)
         setTimeout(() => {
           this.arrayOfTasks.forEach((allDocs) => {

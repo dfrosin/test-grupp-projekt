@@ -10,11 +10,11 @@
         await auth.signOut()
         this.$store.commit('setLoggedInUser', null)
         this.$router.push('/login')
-        console.log(this.$store.state.loggedInUser)
       }
     }
   }
 </script>
+
 <template>
   <button @click="handleLogout" type="submit" class="btn">Log out</button>
 </template>
