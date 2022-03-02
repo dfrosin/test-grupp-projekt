@@ -19,10 +19,17 @@
         arrayOfTasks: [],
         anotherArray: [],
         allInfoUser: [],
+
+        //Innehåller alla tasks(object) från projektet uppdelat i alla statusar
         pieChartArray: [],
         personalPieChartArray: [],
+
+        // Ska innehålla nummer med hur många kort användaren har i varje status
         personalTaskArray: [],
-        statusArray: []
+
+        //Här sparas alla status i det valda projektet som strängvärden
+        statusArray: [],
+        allInfoCopy: []
       }
     },
     components: {
@@ -54,11 +61,43 @@
                 this.$store.state.loggedInUser.userName
               )
             ) {
+              //här hamnar alla kort som man är owner till
               this.allInfoUser.push(e)
             }
           }
         })
       },
+      loopForAll() {
+        for (let n = 0; n < this.projectInfo.status.length; n++) {
+          // statusnamn utifrån array
+          let statusTitle = this.projectInfo.status[n]
+          let tasks = this.anotherArray.filter((el) => {
+            return el.status === statusTitle
+          })
+          let dynamicObject = {
+            title: statusTitle,
+            cards: tasks
+          }
+          this.statusArray.push(statusTitle)
+          this.pieChartArray.push(dynamicObject)
+        }
+      },
+      loopForMe() {
+        for (let n = 0; n < this.projectInfo.status.length; n++) {
+          let statusTitle = this.projectInfo.status[n]
+          let tasks = this.allInfoCopy.filter((el) => {
+            return el.status === statusTitle
+          })
+          let dynamicObject = {
+            title: statusTitle,
+            cards: tasks
+          }
+          let number = Number(dynamicObject.cards.length)
+          this.personalPieChartArray.push(dynamicObject)
+          this.personalTaskArray.push(number)
+        }
+      },
+
       getDatabase() {
         const customerOrdersQuery = query(
           collection(firestore, `${this.projectName}`),
@@ -75,32 +114,27 @@
           this.arrayOfTasks = tasks
           this.anotherArray = JSON.parse(JSON.stringify(this.arrayOfTasks))
           this.filterSearch()
-          for (let n = 0; n < this.projectInfo.status.length; n++) {
-            // statusnamn utifrån array
-            let statusTitle = this.projectInfo.status[n]
-            let tasks = this.arrayOfTasks.filter((el) => {
-              return el.status === statusTitle
-            })
-            let dynamicObject = {
-              title: statusTitle,
-              cards: tasks
-            }
-            this.pieChartArray.push(dynamicObject)
-          }
-          for (let n = 0; n < this.projectInfo.status.length; n++) {
-            // statusnamn utifrån array
-            let statusTitle = this.projectInfo.status[n]
-            let tasks = this.allInfoUser.filter((el) => {
-              return el.status === statusTitle
-            })
-            let dynamicObject = {
-              title: statusTitle,
-              cards: tasks
-            }
-            this.personalTaskArray.push(tasks.length)
-            this.statusArray.push(statusTitle)
-            this.personalPieChartArray.push(dynamicObject)
-          }
+          this.allInfoCopy = JSON.parse(JSON.stringify(this.allInfoUser))
+          this.loopForAll()
+          this.loopForMe()
+
+          // this.allInfoCopy = JSON.parse(JSON.stringify(this.allInfoUser))
+          // for (let n = 0; n < this.projectInfo.status.length; n++) {
+          //   // statusnamn utifrån array
+          //   let titleStatus = this.projectInfo.status[n]
+          //   let task = this.allInfoCopy.filter((el) => {
+          //     return el.status === titleStatus
+          //   })
+          //   let dynamicObject = {
+          //     title: titleStatus,
+          //     cards: task
+          //   }
+          //   console.log('loop 2')
+          //   console.log('nåt jävla objekt', dynamicObject)
+          //   console.log('en massa statusar', titleStatus)
+          //   console.log('sjukt oklart', task)
+          // }
+          // console.log(this.personalTaskArray, this.statusArray)
         })
       },
       async selectProjectName(evt) {
@@ -166,7 +200,11 @@
     </li>
   </ul>
 
-  <ChartComponent />
+  <ChartComponent
+    :pie-chart-value="personalPieChartArray"
+    :task-value="personalTaskArray"
+    :status-value="statusArray"
+  />
 </template>
 
 <style lang="scss" scoped>

@@ -9,8 +9,18 @@
   Chart.register(...registerables)
 
   export default defineComponent({
+    props: {
+      taskValue: {
+        type: [Array],
+        default: null
+      },
+      statusValue: {
+        type: [Array],
+        default: null
+      }
+    },
     components: { PieChart },
-    setup() {
+    setup(props) {
       const message = ref('ADAM ÄR SNYGG')
       const searchQuery = ref('')
       let resArr = reactive([])
@@ -50,30 +60,25 @@
           }
         }
       })
-      const fuckingArray = ['shittingArray']
       // const statusArray = statusArray
       // const personalTaskArray = personalTaskArray
-      const personalPieChartArray = {
-        labels: ['hej'],
+      const crumbleData = {
+        labels: props.statusValue,
         datasets: [
           {
-            data: [2, 3],
+            data: props.taskValue,
             backgroundColor: ['springgreen', 'yellow', 'orange', 'hotpink']
           }
         ]
       }
       return {
         resArr,
-
         options,
         searchedDocuments,
         searchQuery,
         resArrTwo,
         message,
-        personalPieChartArray,
-        // statusArray,
-        // personalTaskArray,
-        fuckingArray
+        crumbleData
       }
     }
   })
@@ -84,9 +89,6 @@
       :chart-data="crumbleData"
       :options="options"
       css-classes="chart-container"
-      :pie-chart-value="personalPieChartArray"
-      :task-value="personalTaskArray"
-      :status-value="statusArray"
     />
   </div>
 </template>
