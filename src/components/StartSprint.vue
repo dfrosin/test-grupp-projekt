@@ -50,7 +50,9 @@
 
         const updateData = {
           sprintGoal: this.sprintGoal,
-          duration: this.selectedObject
+          duration: this.selectedObject,
+          sprintStart: this.date,
+          sprintEnd: this.endDate
         }
         updateDoc(whereToAddData, updateData)
         this.$store.commit('setSprintGoal', this.sprintGoal)

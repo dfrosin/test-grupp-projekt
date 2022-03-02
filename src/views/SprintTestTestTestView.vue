@@ -385,6 +385,7 @@
               :key="card.id"
               :item="card"
               class="drag-element"
+              @update-docs-in-parent="getDatabase"
             />
           </draggable>
         </section>

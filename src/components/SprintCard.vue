@@ -12,11 +12,8 @@
     // updateDoc
   } from 'firebase/firestore'
   export default {
-    mounted() {
-      setTimeout(() => {
-        this.pushOwners()
-      }),
-        3000
+    created() {
+      this.splitArrayWithUsers()
     },
     props: {
       item: {
@@ -50,15 +47,11 @@
         editInfo: false,
         noOneInvited: false,
         showPBIName: false,
-        showHide: 'Show PBI'
+        showHide: 'Show PBI',
+        taskName: ''
       }
     },
     methods: {
-      pushOwners() {
-        // this.item.taskOwner.owner.forEach((owner) => {
-        //   this.userObject.owner.push(owner)
-        // })
-      },
       getUsers() {
         if (this.$store.state.noOneInvited === true) {
           this.noOneInvited = true
@@ -89,18 +82,22 @@
             doc(firestore, this.$store.state.projectName, name.target.id)
           )
         }
+        this.$emit('update-docs-in-parent')
+        //lägg till en emit som skickas upp till parent och kör GetDatabase Funktionen.
       },
       usersInProject(e) {
         //Hittar presonen du klickar på och lägger till den först i ett object,
         //med en array i för att kunna skicka upp det till Firebase
-        const taskName = e.target.id
+        this.taskName = e.target.id
         let copiedObject = JSON.parse(JSON.stringify(e.target.textContent))
         this.userObject.owner.push(copiedObject)
         this.add = false
-
+        this.updateFirebase()
+      },
+      updateFirebase() {
         const whereToAddData = doc(
           firestore,
-          `${this.$store.state.projectName}/${taskName}`
+          `${this.$store.state.projectName}/${this.taskName}`
         )
 
         const updateData = {
@@ -114,7 +111,9 @@
           user.target.parentNode.firstChild.textContent
         )
         this.userObject.owner.splice(taskIndex, 1)
+        this.taskName = user.target.parentNode.firstChild.textContent
         this.editInfo = false
+        this.updateFirebase()
       },
       editMenu() {
         this.edit = !this.edit
@@ -131,9 +130,15 @@
           this.showHide = 'Show PBI'
         }
         this.edit = false
+      },
+      splitArrayWithUsers() {
+        console.log('Körs denna funktionen??')
+        this.item.taskOwner.owner.forEach((owner) => {
+          this.userObject.owner.push(owner)
+        })
       }
     },
-    emits: []
+    emits: ['update-docs-in-parent']
   }
 </script>
 <template>
@@ -160,15 +165,15 @@
       >
         <p>You need to invite colleagues to the project first</p>
       </div>
-      <div class="card-owners" v-if="this.userObject.owner.length >= 1">
-        <div
-          @click="removeUser"
-          v-for="owners in this.userObject"
-          :key="owners.id"
-        >
-          <p>{{ item.taskOwner }}</p>
-          <p v-if="editInfo">x</p>
-        </div>
+      <div
+        class="card-owners"
+        v-for="owners in userObject.owner"
+        :key="owners.id"
+      >
+        <p>
+          {{ owners }}
+        </p>
+        <p v-if="editInfo" @click="removeUser">x</p>
       </div>
       <div class="add-user">
         <img class="get-user" src="/assets/add.png" @click="getUsers" />
@@ -205,10 +210,6 @@
     right: 10px;
     cursor: pointer;
   }
-  .PBI-name {
-    font-size: 1.8rem;
-    margin-top: 0.5rem;
-  }
   .error-message {
     color: red;
     font-size: 12px;
@@ -235,19 +236,6 @@
     justify-content: center;
   }
 
-  .trashImg {
-    // display: flex;
-    width: 15px;
-    height: 15px;
-    cursor: pointer;
-    // align-self: flex-end;
-    margin-right: 3px;
-    margin-bottom: 3px;
-    position: absolute;
-    top: 3px;
-    right: 10px;
-  }
-
   .add-user {
     display: flex;
     justify-content: flex-end;
@@ -264,18 +252,13 @@
 
   .card-owners {
     display: flex;
-    justify-content: flex-end;
+    flex-wrap: wrap;
     p {
       margin: 3px;
       cursor: pointer;
     }
   }
-  .closeImg {
-    margin-right: 1rem;
-    width: 8px;
-    height: 10px;
-    cursor: pointer;
-  }
+
   .users-list {
     display: flex;
     justify-content: flex-end;
