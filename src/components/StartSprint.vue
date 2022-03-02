@@ -1,4 +1,6 @@
 <script>
+  import { firestore } from '../firebase.js'
+  import { doc, updateDoc } from 'firebase/firestore'
   export default {
     created() {
       let todaysDate = new Date().getTime()
@@ -41,9 +43,18 @@
       },
 
       sendSprintGoal() {
+        const whereToAddData = doc(
+          firestore,
+          `projects/${this.$store.state.projectName}`
+        )
+
+        const updateData = {
+          sprintGoal: this.sprintGoal,
+          duration: this.selectedObject
+        }
+        updateDoc(whereToAddData, updateData)
         this.$store.commit('setSprintGoal', this.sprintGoal)
         this.$router.push('/sprint/')
-        console.log('sendSprintGoal körs från StartSprint.vue')
       }
     },
     computed: {}
