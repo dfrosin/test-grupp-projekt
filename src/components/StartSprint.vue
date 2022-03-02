@@ -113,6 +113,11 @@
     border: 3px;
     border-color: white;
     border-style: solid;
+    border-radius: 10px;
+
+    h2 {
+      margin-left: 20px;
+    }
   }
   .sprint-goal {
     width: 40rem;
@@ -121,6 +126,7 @@
     font-size: 1.3rem;
     width: 80%;
     height: 80%;
+    margin-left: 20px;
   }
   label {
     display: block;
@@ -141,5 +147,11 @@
     width: 7rem;
     height: 2rem;
     margin-bottom: 1rem;
+  }
+  .btn {
+    margin-left: 340px;
+    grid-row: 10;
+    grid-column: 2;
+    margin-bottom: 16px;
   }
 </style>

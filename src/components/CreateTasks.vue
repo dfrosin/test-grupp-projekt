@@ -205,6 +205,7 @@
     border: 3px;
     border-style: solid;
     border-color: white;
+    border-radius: 10px;
   }
   .task-name {
     width: 78%;
