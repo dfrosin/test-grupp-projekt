@@ -3,24 +3,6 @@ import { db, firestore } from '../firebase'
 import { collection, getDocs, getDoc, setDoc, doc } from 'firebase/firestore'
 import { v4 as uuidv4 } from 'uuid'
 import { auth } from '../firebase'
-/*  import { fs, db } from '..firebase/'
-
-
-async addANewDocument() {
-  const Newcollection = collection(firestore, 'Andreas')
-  const newDoc = await addDoc(Newcollection, this.newUser)
-  console.log(newDoc.path)
-},
-
-const mutations = {
-    setLoggedInUser(state, user) {
-      state.loggedInUser = user
-    },
-    adduser(state, User){
-state.newUser
-    }
-
-  }, */
 
 const state = {
   pbItem: '',
@@ -107,9 +89,8 @@ const actions = {
     }
   },
 
+  //hämtar ut det som ligger i users
   async fetchAndSetLoggedInUser({ commit }, user) {
-    //hämtar ut det som ligger i users
-    console.log('fetchAndSetLoggedInUser', user)
     //hämtar ut det som ligger i users för det givna uid:t
     const userDoc = doc(firestore, `users/${user.uid}`)
     const userSnapshot = await getDoc(userDoc)
