@@ -25,11 +25,13 @@
         personalPieChartArray: [],
 
         // Ska innehålla nummer med hur många kort användaren har i varje status
-        personalTaskArray: [],
+        personalTaskArray: '',
 
         //Här sparas alla status i det valda projektet som strängvärden
         statusArray: [],
-        allInfoCopy: []
+        chartNumber: '',
+        allInfoCopy: [],
+        numberFucker: ''
       }
     },
     components: {
@@ -46,6 +48,10 @@
       },
       taskValue: {
         type: [String, Object, Number, Array],
+        default: ''
+      },
+      projectValue: {
+        type: String,
         default: ''
       }
     },
@@ -80,6 +86,7 @@
           }
           this.statusArray.push(statusTitle)
           this.pieChartArray.push(dynamicObject)
+          this.chartNumber = this.chartNumber + dynamicObject.cards.length
         }
       },
       loopForMe() {
@@ -88,13 +95,10 @@
           let tasks = this.allInfoCopy.filter((el) => {
             return el.status === statusTitle
           })
-          let dynamicObject = {
-            title: statusTitle,
-            cards: tasks
-          }
-          let number = Number(dynamicObject.cards.length)
+          let dynamicObject = { title: statusTitle, cards: tasks }
+          this.personalTaskArray =
+            this.personalTaskArray + dynamicObject.cards.length
           this.personalPieChartArray.push(dynamicObject)
-          this.personalTaskArray.push(number)
         }
       },
 
@@ -201,7 +205,9 @@
   </ul>
 
   <ChartComponent
+    v-if="personalTaskArray"
     :pie-chart-value="personalPieChartArray"
+    :project-value="chartNumber"
     :task-value="personalTaskArray"
     :status-value="statusArray"
   />

@@ -11,18 +11,23 @@
   export default defineComponent({
     props: {
       taskValue: {
-        type: [Array],
-        default: null
+        type: String,
+        default: ''
       },
       statusValue: {
         type: [Array],
         default: null
+      },
+      projectValue: {
+        type: String,
+        default: ''
       }
     },
     components: { PieChart },
     setup(props) {
       const message = ref('ADAM ÄR SNYGG')
       const searchQuery = ref('')
+      Chart.defaults.color = 'white'
       let resArr = reactive([])
       let resArrTwo = reactive([])
       const searchedDocuments = computed(() => {
@@ -33,6 +38,8 @@
           )
         })
       })
+      console.log(props.taskValue)
+      console.log(props.statusValue)
 
       onMounted(() => {
         {
@@ -67,7 +74,17 @@
         datasets: [
           {
             data: props.taskValue,
-            backgroundColor: ['springgreen', 'yellow', 'orange', 'hotpink']
+            backgroundColor: [
+              'rgb(255, 107, 107)',
+              'rgb(255, 242, 124)',
+              'rgb(6, 170, 221)',
+              'rgb(48, 214, 174)',
+              'rgb(255, 204, 129)',
+              'rgb(255, 91, 219)',
+              'rgb(161, 40, 181)',
+              'rgb(172, 255, 190)',
+              'rgb(152, 143, 255)'
+            ]
           }
         ]
       }
