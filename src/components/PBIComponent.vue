@@ -49,6 +49,7 @@
           this.backlogItemInfo.color = this.getColor
           this.backlogItemInfo.id = this.pbItem
           this.backlogItemInfo.docId = uuidv4()
+          this.backlogItemInfo.PBI = 'PBI'
           let copiedObject = JSON.parse(JSON.stringify(this.backlogItemInfo))
           this.arrayOfObjects.push(copiedObject)
           this.pbItem = ''
