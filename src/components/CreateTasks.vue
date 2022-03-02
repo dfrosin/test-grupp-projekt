@@ -13,14 +13,13 @@
         editing: null,
         editTaskName: '',
         taskName: '',
-        selectedColor: ''
+        selectedColor: '',
+        nameOnPbi: ''
       }
     },
     methods: {
       selectedPbi(e) {
-        // console.log(e.target.value)
         this.selectedColor = e.target.value
-        // console.log(e.target.color)
       },
       removeTask(task) {
         const taskIndex = this.tasks.indexOf(task)
@@ -43,6 +42,7 @@
         this.dataValue.status = 'Todo'
         this.dataValue.tasks = 'tasks'
         this.dataValue.uuid = uuidv4()
+        this.dataValue.PBI = this.nameOnPbi
         let copiedObject = JSON.parse(JSON.stringify(this.dataValue))
         this.tasks.push(copiedObject)
         console.log(this.tasks)
@@ -59,6 +59,10 @@
             setDoc(whereToAddData, allDocs)
           }, 2000)
         })
+      },
+      nameOfPBI(e) {
+        this.nameOnPbi = e.target.id
+        console.log(this.nameOnPbi)
       }
     }
   }
@@ -81,7 +85,8 @@
         v-for="object in this.$store.state.arrayOfObjects"
         :key="object.id"
         :value="object.color"
-        id="PBI"
+        :id="object.id"
+        @click="nameOfPBI"
       >
         {{ object.id }}
       </option>

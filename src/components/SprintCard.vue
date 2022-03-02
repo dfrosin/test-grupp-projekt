@@ -48,14 +48,16 @@
         },
         edit: false,
         editInfo: false,
-        noOneInvited: false
+        noOneInvited: false,
+        showPBIName: false,
+        showHide: 'Show PBI'
       }
     },
     methods: {
       pushOwners() {
-        this.item.taskOwner.owner.forEach((owner) => {
-          this.userObject.owner.push(owner)
-        })
+        // this.item.taskOwner.owner.forEach((owner) => {
+        //   this.userObject.owner.push(owner)
+        // })
       },
       getUsers() {
         if (this.$store.state.noOneInvited === true) {
@@ -120,6 +122,15 @@
       editMode() {
         this.editInfo = true
         this.edit = false
+      },
+      showPBI() {
+        this.showPBIName = !this.showPBIName
+        if (this.showPBIName === true) {
+          this.showHide = 'Hide PBI'
+        } else {
+          this.showHide = 'Show PBI'
+        }
+        this.edit = false
       }
     },
     emits: []
@@ -127,10 +138,14 @@
 </script>
 <template>
   <div class="sprint-card" :id="item.uuid" :style="{ borderColor: item.color }">
-    <img class="trashImg" src="/assets/edit.png" alt="" @click="editMenu" />
+    <p class="edit-dots" @click="editMenu">...</p>
     <div class="edit-menu" v-if="edit">
       <p @click="editMode">Edit</p>
+      <p @click="showPBI">{{ this.showHide }}</p>
       <p class="delete" @click="deleteTask" :id="item.name">Delete</p>
+    </div>
+    <div class="PBI-div" v-if="showPBIName">
+      <p>{{ item.PBI }}</p>
     </div>
     <p class="task-name">
       {{ item.name }}
@@ -148,10 +163,10 @@
       <div class="card-owners" v-if="this.userObject.owner.length >= 1">
         <div
           @click="removeUser"
-          v-for="owners in this.userObject.owner"
+          v-for="owners in this.userObject"
           :key="owners.id"
         >
-          <p>{{ item.taskOwner.owner }}</p>
+          <p>{{ item.taskOwner }}</p>
           <p v-if="editInfo">x</p>
         </div>
       </div>
@@ -176,12 +191,23 @@
 </template>
 
 <style lang="scss" scoped>
-  .names-in-project {
-    display: flex;
-    justify-content: space-between;
+  .PBI-div {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.144);
     p {
-      font-size: 12px;
+      margin-top: 1.9rem;
+      font-weight: 800;
     }
+  }
+  .edit-dots {
+    font-weight: 900;
+    position: absolute;
+    top: 1px;
+    right: 10px;
+    cursor: pointer;
+  }
+  .PBI-name {
+    font-size: 1.8rem;
+    margin-top: 0.5rem;
   }
   .error-message {
     color: red;
@@ -195,6 +221,7 @@
     right: -1rem;
     background-color: white;
     padding: 10px;
+    z-index: 100;
 
     p:hover {
       text-decoration: underline;
