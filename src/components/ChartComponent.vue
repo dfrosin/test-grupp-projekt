@@ -50,24 +50,30 @@
           }
         }
       })
-      const crumbleData = {
-        labels: [`Jag tycker ${message.value}`],
+      const fuckingArray = ['shittingArray']
+      // const statusArray = statusArray
+      // const personalTaskArray = personalTaskArray
+      const personalPieChartArray = {
+        labels: ['hej'],
         datasets: [
           {
-            data: [resArrTwo],
+            data: [2, 3],
             backgroundColor: ['springgreen', 'yellow', 'orange', 'hotpink']
           }
         ]
       }
-
       return {
         resArr,
-        crumbleData,
+
         options,
         searchedDocuments,
         searchQuery,
         resArrTwo,
-        message
+        message,
+        personalPieChartArray,
+        // statusArray,
+        // personalTaskArray,
+        fuckingArray
       }
     }
   })
@@ -78,6 +84,9 @@
       :chart-data="crumbleData"
       :options="options"
       css-classes="chart-container"
+      :pie-chart-value="personalPieChartArray"
+      :task-value="personalTaskArray"
+      :status-value="statusArray"
     />
   </div>
 </template>

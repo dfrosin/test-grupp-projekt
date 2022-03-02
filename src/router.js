@@ -12,7 +12,7 @@ import CreateSprintView from './views/CreateSprintView.vue'
 import SprintOverviewView from './views/SprintOverviewView.vue'
 import SprintTestTestTestView from './views/SprintTestTestTestView.vue'
 import SortComponent from './components/SortComponent.vue'
-import ChartComponent from './components/ChartComponent.vue'
+import ChartView from './views/ChartView.vue'
 
 export default createRouter({
   history: createWebHashHistory(),
@@ -68,7 +68,7 @@ export default createRouter({
       path: '/sorted'
     },
     {
-      component: ChartComponent,
+      component: ChartView,
       path: '/chart'
     }
   ]
