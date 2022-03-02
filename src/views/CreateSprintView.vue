@@ -32,5 +32,6 @@
     height: fit-content;
     margin: auto;
     margin-top: 10rem;
+    padding-bottom: 120px;
   }
 </style>

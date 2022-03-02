@@ -108,8 +108,11 @@
     background-color: rgba(245, 245, 245, 0.418);
     display: block;
     width: 85%;
-    height: 40vh;
+    height: auto;
     margin: auto;
+    border: 3px;
+    border-color: white;
+    border-style: solid;
   }
   .sprint-goal {
     width: 40rem;
