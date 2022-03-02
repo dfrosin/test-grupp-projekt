@@ -49,6 +49,7 @@
           this.backlogItemInfo.color = this.getColor
           this.backlogItemInfo.id = this.pbItem
           this.backlogItemInfo.docId = uuidv4()
+          this.backlogItemInfo.PBI = 'PBI'
           let copiedObject = JSON.parse(JSON.stringify(this.backlogItemInfo))
           this.arrayOfObjects.push(copiedObject)
           this.pbItem = ''
@@ -75,7 +76,7 @@
       submitProjectName() {
         const allDocs = {
           project: 'project',
-          status: ['Todo', 'In progress', 'Review', 'Done']
+          status: ['Todo', 'In Progress', 'Review', 'Done']
         }
         const whereToAddData = doc(firestore, `projects/${this.pbHeading}`)
         setDoc(whereToAddData, allDocs)

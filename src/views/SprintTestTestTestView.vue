@@ -48,6 +48,7 @@
         sortTest: '',
         searchQuery: '',
         editId: '',
+        columnCounter: 0,
         test: []
       }
     },
@@ -183,7 +184,13 @@
         this.postAndReload()
       },
       addColumn() {
-        this.projectInfo.status.push('New Column')
+        if (this.columnCounter === 0) {
+          this.projectInfo.status.push('New Column')
+          this.columnCounter++
+        } else {
+          this.projectInfo.status.push('New Column ' + this.columnCounter)
+          this.columnCounter++
+        }
         this.postAndReload()
       },
       postAndReload() {
