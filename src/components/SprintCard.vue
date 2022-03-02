@@ -133,10 +133,13 @@
         this.edit = false
       },
       splitArrayWithUsers() {
-        console.log('Körs denna funktionen??')
-        this.item.taskOwner.owner.forEach((owner) => {
-          this.userObject.owner.push(owner)
-        })
+        if (this.item.taskOwner !== undefined) {
+          this.item.taskOwner.owner.forEach((owner) => {
+            this.userObject.owner.push(owner)
+          })
+        } else {
+          return
+        }
       }
     },
     emits: ['update-docs-in-parent']
@@ -166,12 +169,8 @@
       >
         <p>You need to invite colleagues to the project first</p>
       </div>
-      <div
-        class="card-owners"
-        v-for="owners in userObject.owner"
-        :key="owners.id"
-      >
-        <p>
+      <div class="card-owners" v-if="item.taskOwner !== null">
+        <p v-for="owners in userObject.owner" :key="owners.id">
           {{ owners }}
         </p>
         <p v-if="editInfo" @click="removeUser" :id="item.id">x</p>
