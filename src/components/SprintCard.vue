@@ -106,12 +106,13 @@
         updateDoc(whereToAddData, updateData)
       },
       removeUser(user) {
+        this.taskName = user.target.id
         //Tar bort användare från arrayen. Stänger även divven
         const taskIndex = this.userObject.owner.indexOf(
           user.target.parentNode.firstChild.textContent
         )
         this.userObject.owner.splice(taskIndex, 1)
-        this.taskName = user.target.parentNode.firstChild.textContent
+
         this.editInfo = false
         this.updateFirebase()
       },
@@ -173,7 +174,7 @@
         <p>
           {{ owners }}
         </p>
-        <p v-if="editInfo" @click="removeUser">x</p>
+        <p v-if="editInfo" @click="removeUser" :id="item.id">x</p>
       </div>
       <div class="add-user">
         <img class="get-user" src="/assets/add.png" @click="getUsers" />
