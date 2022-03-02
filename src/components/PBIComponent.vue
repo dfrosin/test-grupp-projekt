@@ -49,7 +49,6 @@
           this.backlogItemInfo.color = this.getColor
           this.backlogItemInfo.id = this.pbItem
           this.backlogItemInfo.docId = uuidv4()
-          this.backlogItemInfo.PBI = 'PBI'
           let copiedObject = JSON.parse(JSON.stringify(this.backlogItemInfo))
           this.arrayOfObjects.push(copiedObject)
           this.pbItem = ''
@@ -76,7 +75,7 @@
       submitProjectName() {
         const allDocs = {
           project: 'project',
-          status: ['Todo', 'In Progress', 'Review', 'Done']
+          status: ['Todo', 'In progress', 'Review', 'Done']
         }
         const whereToAddData = doc(firestore, `projects/${this.pbHeading}`)
         setDoc(whereToAddData, allDocs)
@@ -143,6 +142,7 @@
 <template>
   <div class="component">
     <div class="column">
+      <form action="" />
       <h1>Product Backlog</h1>
       <input
         v-if="isVisible"
@@ -151,19 +151,7 @@
         @keyup.enter="visible"
         placeholder="Project Name"
       />
-      <input
-        v-model="pbItem"
-        class="first-input"
-        type="text"
-        placeholder="Som en ___ vill jag ___ för att ___"
-        ref="firstInput"
-        @keyup.enter="createList"
-        :style="{ borderColor: getColor }"
-      />
-      <div v-if="getColor !== ''" class="color-message">
-        <p>Selected color</p>
-        <div class="color" :style="{ backgroundColor: getColor }" />
-      </div>
+      <button @click="visible">clicka ok</button>
       <div v-if="getColor === ''" class="color-message">
         <p>Please select a color first!</p>
       </div>
@@ -178,6 +166,20 @@
             @click="selectColor"
           />
         </div>
+      </div>
+      <input
+        v-model="pbItem"
+        class="first-input"
+        type="text"
+        placeholder="Som en ___ vill jag ___ för att ___"
+        ref="firstInput"
+        @keyup.enter="createList"
+        :style="{ borderColor: getColor }"
+      />
+      <button @click="createList">clicka ok</button>
+      <div v-if="getColor !== ''" class="color-message">
+        <p>Selected color</p>
+        <div class="color" :style="{ backgroundColor: getColor }" />
       </div>
     </div>
     <div class="column">

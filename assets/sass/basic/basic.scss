@@ -5,6 +5,8 @@ body {
     rgb(128, 56, 229) 44%,
     rgba(205, 39, 198, 0.8100373938637955) 99%
   );
-  height: 100vh;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100%;
   margin-top: $margin-top;
 }
