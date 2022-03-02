@@ -77,8 +77,8 @@
     <label for="PBI">Select PBI: </label>
     <select
       @change="selectedPbi"
-      class="form-select form-select-sm"
-      aria-label=".form-select-sm example"
+      class="form-select form-select-lg mb-3"
+      aria-label=".form-select-lg example"
     >
       <option value="Select PBI" />
       <option
@@ -163,6 +163,21 @@
 <style lang="scss" scoped>
   .select-pbi {
     width: 30%;
+
+    select {
+      background-color: transparent;
+      color: white;
+    }
+    select:hover {
+      background-color: white;
+      color: black;
+      border-color: #0dcaf0;
+      border-style: solid;
+      border-width: 3px;
+    }
+    option {
+      background-color: white;
+    }
   }
   #color {
     margin: 3rem;
@@ -187,6 +202,9 @@
     margin-top: auto;
     margin-top: 10rem;
     margin-bottom: 3rem;
+    border: 3px;
+    border-style: solid;
+    border-color: white;
   }
   .task-name {
     width: 78%;
@@ -196,6 +214,7 @@
   }
 
   .h2-add {
+    align-items: center;
     margin-left: 2rem;
     grid-row: 1;
     grid-column: 1;
