@@ -24,6 +24,8 @@
         this.dataValue.tasks = 'tasks'
         this.dataValue.uuid = uuidv4()
         this.dataValue.color = 'rgb(0, 0, 0)'
+        this.dataValue.status = 'Todo'
+        this.dataValue.PBI = 'Not assigned'
         let copiedObject = JSON.parse(JSON.stringify(this.dataValue))
         this.tasks.push(copiedObject)
       },
@@ -70,7 +72,6 @@
   .add-new-task {
     position: absolute;
     right: 12.5rem;
-    bottom: 40rem;
   }
 
   input {

@@ -115,6 +115,7 @@
           snapshot.docs.forEach((doc) => {
             this.pbiArray.push({ ...doc.data(), id: doc.id })
           })
+          this.$store.commit('setArrayOfObjects', this.pbiArray)
         })
       },
       detectMove(evt) {
@@ -249,11 +250,11 @@
       </select>
       <h2 v-if="select">Project: {{ this.projectName }}</h2>
     </div>
-    <AddNewTask
+    <!-- <AddNewTask
       v-if="projectInfo !== null"
       @send-task="getTask"
       :first-status="projectInfo.status[0]"
-    />
+    /> -->
     <div v-if="projectInfo !== null" class="search-container">
       <input
         @input="filterSearch"

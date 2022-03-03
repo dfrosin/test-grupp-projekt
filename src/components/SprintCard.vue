@@ -48,7 +48,10 @@
         noOneInvited: false,
         showPBIName: false,
         showHide: 'Show PBI',
-        taskName: ''
+        taskName: '',
+        PBIIsAssigned: '',
+        borderColor: this.item.color,
+        taskColor: ''
       }
     },
     methods: {
@@ -116,8 +119,12 @@
         this.editInfo = false
         this.updateFirebase()
       },
-      editMenu() {
-        this.edit = !this.edit
+      editMenu(e) {
+        this.PBIIsAssigned = e.target.id
+        if (this.PBIIsAssigned === 'Not assigned') {
+          this.showHide = 'Assing to PBI'
+          this.edit = !this.edit
+        } else this.edit = !this.edit
       },
       editMode() {
         this.editInfo = true
@@ -140,21 +147,54 @@
         } else {
           return
         }
+      },
+      assignPBI(e) {
+        this.selectedPBI = e.target.textContent
+        this.taskName = e.target.id
+        this.taskColor = e.target.attributes[1].textContent
+
+        const whereToAddData = doc(
+          firestore,
+          `${this.$store.state.projectName}/${this.taskName}`
+        )
+
+        const updateData = {
+          PBI: this.selectedPBI,
+          color: this.taskColor
+        }
+        updateDoc(whereToAddData, updateData)
+        this.$emit('update-docs-in-parent')
       }
     },
     emits: ['update-docs-in-parent']
   }
 </script>
 <template>
-  <div class="sprint-card" :id="item.uuid" :style="{ borderColor: item.color }">
-    <p class="edit-dots" @click="editMenu">...</p>
+  <div
+    class="sprint-card"
+    :id="item.uuid"
+    :style="{ borderColor: this.borderColor }"
+  >
+    <p class="edit-dots" @click="editMenu" :id="item.PBI">...</p>
     <div class="edit-menu" v-if="edit">
       <p @click="editMode">Edit</p>
       <p @click="showPBI">{{ this.showHide }}</p>
       <p class="delete" @click="deleteTask" :id="item.name">Delete</p>
     </div>
     <div class="PBI-div" v-if="showPBIName">
-      <p>{{ item.PBI }}</p>
+      <p v-if="this.PBIIsAssigned !== 'Not assigned'">{{ item.PBI }}</p>
+      <select v-if="this.PBIIsAssigned === 'Not assigned'">
+        <option>Select PBI</option>
+        <option
+          v-for="objects in $store.state.arrayOfObjects"
+          :id="item.id"
+          :color="objects.color"
+          :key="objects.id"
+          @click="assignPBI"
+        >
+          {{ objects.id }}
+        </option>
+      </select>
     </div>
     <p class="task-name">
       {{ item.name }}
