@@ -25,12 +25,13 @@
         personalPieChartArray: [],
 
         // Ska innehålla nummer med hur många kort användaren har i varje status
-        personalTaskArray: '',
+        personalTaskString: '',
 
         //Här sparas alla status i det valda projektet som strängvärden
         statusArray: [],
         chartNumber: '',
         allInfoCopy: [],
+        chartReload: true,
         numberFucker: ''
       }
     },
@@ -60,6 +61,7 @@
     },
     methods: {
       filterSearch() {
+        this.allInfoUser = []
         this.anotherArray.forEach((e) => {
           if (e.taskOwner) {
             if (
@@ -74,6 +76,9 @@
         })
       },
       loopForAll() {
+        this.chartNumber = ''
+        this.statusArray = []
+        this.pieChartArray
         for (let n = 0; n < this.projectInfo.status.length; n++) {
           // statusnamn utifrån array
           let statusTitle = this.projectInfo.status[n]
@@ -90,19 +95,22 @@
         }
       },
       loopForMe() {
+        this.personalTaskString = ''
         for (let n = 0; n < this.projectInfo.status.length; n++) {
           let statusTitle = this.projectInfo.status[n]
           let tasks = this.allInfoCopy.filter((el) => {
             return el.status === statusTitle
           })
           let dynamicObject = { title: statusTitle, cards: tasks }
-          this.personalTaskArray =
-            this.personalTaskArray + dynamicObject.cards.length
+          this.personalTaskString =
+            this.personalTaskString + dynamicObject.cards.length
           this.personalPieChartArray.push(dynamicObject)
         }
+        this.chartReload = false
       },
 
       getDatabase() {
+        this.chartReload = true
         const customerOrdersQuery = query(
           collection(firestore, `${this.projectName}`),
           where('tasks', '==', 'tasks'),
@@ -121,24 +129,6 @@
           this.allInfoCopy = JSON.parse(JSON.stringify(this.allInfoUser))
           this.loopForAll()
           this.loopForMe()
-
-          // this.allInfoCopy = JSON.parse(JSON.stringify(this.allInfoUser))
-          // for (let n = 0; n < this.projectInfo.status.length; n++) {
-          //   // statusnamn utifrån array
-          //   let titleStatus = this.projectInfo.status[n]
-          //   let task = this.allInfoCopy.filter((el) => {
-          //     return el.status === titleStatus
-          //   })
-          //   let dynamicObject = {
-          //     title: titleStatus,
-          //     cards: task
-          //   }
-          //   console.log('loop 2')
-          //   console.log('nåt jävla objekt', dynamicObject)
-          //   console.log('en massa statusar', titleStatus)
-          //   console.log('sjukt oklart', task)
-          // }
-          // console.log(this.personalTaskArray, this.statusArray)
         })
       },
       async selectProjectName(evt) {
@@ -169,61 +159,89 @@
 </script>
 
 <template>
-  <select @change="selectProjectName" class="project-select">
-    <option>Select a project</option>
-    <option v-for="projects in this.arrayOfProjectNames" :key="projects.id">
-      {{ projects.id }}
-    </option>
-  </select>
+  <div class="column-container">
+    <div class="list-column">
+      <select @change="selectProjectName" class="project-select">
+        <option>Select a project</option>
+        <option v-for="projects in this.arrayOfProjectNames" :key="projects.id">
+          {{ projects.id }}
+        </option>
+      </select>
 
-  <ul v-if="allInfoUser">
-    <li v-for="item in allInfoUser" :key="item.id">
-      <div
-        class="sprint-card"
-        :id="item.uuid"
-        :style="{ borderColor: item.color }"
-      >
-        <div class="PBI-div">
-          <p>{{ item.PBI }}</p>
-        </div>
-        <p class="task-name">
-          {{ item.name }}
-        </p>
-        <section class="select-user">
-          <p class="time-stamp">
-            {{ item.time }}
-          </p>
-
-          <div class="card-owners">
-            <p v-for="person in item.taskOwner.owner" :key="person.id">
-              {{ person }}
+      <ul v-if="allInfoUser">
+        <li v-for="item in allInfoUser" :key="item.id">
+          <div
+            class="sprint-card"
+            :id="item.uuid"
+            :style="{ borderColor: item.color }"
+          >
+            <div class="PBI-div">
+              <p>{{ item.PBI }}</p>
+            </div>
+            <p class="task-name">
+              {{ item.name }}
             </p>
-          </div>
-        </section>
-      </div>
-    </li>
-  </ul>
+            <section class="select-user">
+              <p class="time-stamp">
+                {{ item.time }}
+              </p>
 
-  <ChartComponent
-    v-if="personalTaskArray"
-    :pie-chart-value="personalPieChartArray"
-    :project-value="chartNumber"
-    :task-value="personalTaskArray"
-    :status-value="statusArray"
-  />
+              <div class="card-owners">
+                <p v-for="person in item.taskOwner.owner" :key="person.id">
+                  {{ person }}
+                </p>
+              </div>
+            </section>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="chart-column">
+      <ChartComponent
+        v-if="!chartReload"
+        :project-value="chartNumber"
+        :task-value="personalTaskString"
+        :status-value="statusArray"
+      />
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
+  .column-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 5%;
+  }
   .project-select {
     font-size: 1.2rem;
     padding: 1rem;
     border-radius: 10px;
     margin-left: 4rem;
   }
+  .list-column {
+    width: 33%;
+  }
+  .chart-column {
+    width: 67%;
+  }
+  ul {
+    margin-top: 30px;
+    background-color: rgba(235, 235, 235, 0.3);
+    border-radius: 10px;
+    padding: 2%;
+    padding: 10px;
+    overflow: scroll;
+    height: 500px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  ul::-webkit-scrollbar {
+    display: none;
+  }
   li {
     list-style: none;
-    width: 40%;
-    background-color: rgba(235, 235, 235, 0.3);
+    margin-bottom: 10px;
   }
   .PBI-div {
     border-bottom: 1px solid rgba(0, 0, 0, 0.144);
@@ -235,10 +253,8 @@
 
   .sprint-card {
     border: 5px solid;
-    width: 33%;
     background: #fff;
     border-radius: 10px;
-    margin-top: 5%;
   }
 
   .card-owners {
