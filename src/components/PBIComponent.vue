@@ -160,11 +160,7 @@
         @keyup.enter="visible"
         placeholder="Project Name"
       />
-      <button @click="visible">clicka ok</button>
-      <div v-if="getColor === ''" class="color-message">
-        <p>Please select a color first!</p>
-      </div>
-
+      <button v-if="isVisible" @click="visible">clicka ok</button>
       <div class="container-container">
         <div class="color-container">
           <div
@@ -176,16 +172,22 @@
           />
         </div>
       </div>
-      <input
-        v-model="pbItem"
-        class="first-input"
-        type="text"
-        placeholder="Som en ___ vill jag ___ för att ___"
-        ref="firstInput"
-        @keyup.enter="createList"
-        :style="{ borderColor: getColor }"
-      />
-      <button @click="createList">clicka ok</button>
+      <div v-if="getColor === ''" class="color-message">
+        <p>Please select a color first!</p>
+      </div>
+      <div class="input-container">
+        <input
+          v-model="pbItem"
+          class="first-input"
+          type="text"
+          placeholder="Enter PBI"
+          ref="firstInput"
+          @keyup.enter="createList"
+          :style="{ borderColor: getColor }"
+        />
+
+        <button class="btn btn-secondary" @click="createList">OK</button>
+      </div>
       <div v-if="getColor !== ''" class="color-message">
         <p>Selected color</p>
         <div class="color" :style="{ backgroundColor: getColor }" />
@@ -272,6 +274,13 @@
         margin-top: 4px;
         border: 2px solid rgba(0, 0, 0, 0.3);
       }
+      .input-container {
+        display: flex;
+        flex-direction: row;
+        btn {
+          margin-left: 1rem;
+        }
+      }
     }
     .color {
       width: 24px;
@@ -283,15 +292,14 @@
     }
     .container-container {
       background-color: rgba(255, 255, 255, 0.5);
-      width: 108px;
-      height: 82px;
+      max-width: 90%;
       border-radius: 14px;
       padding: 3px;
       margin: 2rem;
       .color-container {
         display: flex;
         flex-wrap: wrap;
-        width: 106px;
+        width: 100%;
         gap: 2px;
       }
     }
@@ -369,16 +377,15 @@
       border-bottom: 2px solid rgba(204, 201, 226, 0.616);
       color: #fff;
       font-size: 2rem;
-      width: 80%;
+      width: 70%;
       align-self: center;
-      margin-left: 2rem;
     }
     .editInput {
       background-color: transparent;
       border-bottom: 2px solid rgba(204, 201, 226, 0.616);
       color: #fff;
       font-size: calc(1.325rem + 0.9vw);
-      width: 20rem;
+      width: 30%;
       align-self: center;
       margin-left: 2rem;
     }
@@ -387,12 +394,10 @@
       color: #ffff;
     }
     .btn {
-      align-self: center;
-      justify-self: center;
-      width: 20rem;
-      height: 4rem;
-      border-radius: 20px;
-      font-size: 1.4rem;
+      width: 4rem;
+      height: 3rem;
+      border-radius: 7px;
+      padding: 0.5rem;
     }
     .backlog-container {
       height: 40rem;
