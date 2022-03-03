@@ -45,24 +45,21 @@
         },
         edit: false,
         editInfo: false,
-        noOneInvited: false,
         showPBIName: false,
         showHide: 'Show PBI',
         taskName: '',
         PBIIsAssigned: '',
         borderColor: this.item.color,
-        taskColor: ''
+        taskColor: '',
+        showUsers: false,
+        error: false
       }
     },
     methods: {
       getUsers() {
-        if (this.$store.state.noOneInvited === true) {
-          this.noOneInvited = true
-          return
-        }
-        //this.add öppnar och stänger listan med användare
-        else this.add = !this.add
-        //Körs när du trycker på plusstecknet
+        this.error = !this.error
+        this.showUsers === true
+        this.add = !this.add
         const customerOrdersQuery = query(
           collection(firestore, `${this.$store.state.projectName}`),
           where('user', '==', 'user'),
@@ -96,6 +93,7 @@
         this.userObject.owner.push(copiedObject)
         this.add = false
         this.updateFirebase()
+        this.$emit('update-docs-in-parent')
       },
       updateFirebase() {
         const whereToAddData = doc(
@@ -118,6 +116,7 @@
 
         this.editInfo = false
         this.updateFirebase()
+        this.$emit('update-docs-in-parent')
       },
       editMenu(e) {
         this.PBIIsAssigned = e.target.id
@@ -127,7 +126,7 @@
         } else this.edit = !this.edit
       },
       editMode() {
-        this.editInfo = true
+        this.editInfo = !this.editInfo
         this.edit = false
       },
       showPBI() {
@@ -183,7 +182,7 @@
     </div>
     <div class="PBI-div" v-if="showPBIName">
       <p v-if="this.PBIIsAssigned !== 'Not assigned'">{{ item.PBI }}</p>
-      <select v-if="this.PBIIsAssigned === 'Not assigned'">
+      <select class="select-PBI" v-if="this.PBIIsAssigned === 'Not assigned'">
         <option>Select PBI</option>
         <option
           v-for="objects in $store.state.arrayOfObjects"
@@ -203,24 +202,29 @@
       <p class="time-stamp">
         {{ item.time }}
       </p>
-      <div
-        v-if="this.$store.state.noOneInvited && this.noOneInvited == true"
-        class="error-message"
-      >
-        <p>You need to invite colleagues to the project first</p>
-      </div>
-      <div class="card-owners" v-if="item.taskOwner !== null">
-        <p v-for="owners in userObject.owner" :key="owners.id">
-          {{ owners }}
+      <!-- <div v-if="error" class="error-message">
+        <p v-if="!userArray[0].personInProject">
+          You need to invite colleagues to the project first
         </p>
-        <p v-if="editInfo" @click="removeUser" :id="item.id">x</p>
+      </div> -->
+      <div class="card-owners" v-if="userObject.owner">
+        <p class="taskowner">Task owner:</p>
+        <div v-for="owners in userObject.owner" :key="owners.id">
+          <p>{{ owners }}</p>
+          <img
+            v-if="editInfo"
+            src="assets/trash-can.png"
+            @click="removeUser"
+            :id="item.id"
+          />
+        </div>
       </div>
       <div class="add-user">
         <img class="get-user" src="/assets/add.png" @click="getUsers" />
       </div>
       <div class="users-list" v-if="add">
         <ul class="card-list-style" v-if="this.userArray.length >= 1">
-          <li><h3>Select task owner:</h3></li>
+          <li class="h3"><h3>Select task owner:</h3></li>
           <li
             v-for="kebab in this.userArray[0].personInProject"
             :key="kebab.id"
@@ -236,6 +240,11 @@
 </template>
 
 <style lang="scss" scoped>
+  .select-PBI {
+    margin-top: 10px;
+    background-color: #fff;
+    padding: 5px;
+  }
   .PBI-div {
     border-bottom: 1px solid rgba(0, 0, 0, 0.144);
     p {
@@ -292,11 +301,27 @@
 
   .card-owners {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
+    div {
+      display: flex;
+    }
     p {
+      cursor: pointer;
       margin: 3px;
+    }
+    img {
+      width: 12px;
+      height: 12px;
+      align-self: center;
       cursor: pointer;
     }
+  }
+  .taskowner {
+    font-size: 1.3rem;
+    display: block;
+    width: 100%;
+    text-align: center;
   }
 
   .users-list {
@@ -307,6 +332,11 @@
     li:hover {
       color: aqua;
       text-decoration: underline;
+    }
+    .h3:hover {
+      text-decoration: none;
+      color: black;
+      cursor: default;
     }
 
     select {
@@ -336,6 +366,12 @@
     background-color: white;
     padding: 10px;
     z-index: 1;
+    h3 {
+      font-size: 1.2rem;
+    }
+    li {
+      font-size: 1.3rem;
+    }
   }
 
   .task-name {

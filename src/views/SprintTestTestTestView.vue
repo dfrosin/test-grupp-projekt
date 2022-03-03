@@ -217,7 +217,7 @@
       },
       filterSearch() {
         if (this.searchQuery.length === 0) {
-          this.anotherArray = this.test
+          this.anotherArray = JSON.parse(JSON.stringify(this.test))
         }
         if (this.searchQuery.length > 2) {
           for (let i = 0; i < this.anotherArray.length; i++) {
@@ -239,27 +239,22 @@
 
 <template>
   <div class="kanban-board">
-    <KanbanUsers />
-    <AddNewTask @send-task="getTask" />
-    <div v-if="this.arrayOfProjectNames !== null">
+    <div class="header" v-if="this.arrayOfProjectNames !== null">
       <select @change="selectProjectName">
         <option>Select a project</option>
         <option v-for="projects in this.arrayOfProjectNames" :key="projects.id">
           {{ projects.id }}
         </option>
       </select>
-      <h2 v-if="select">Project: {{ this.projectName }}</h2>
+      <!-- <h2 v-if="select">Project: {{ this.projectName }}</h2> -->
+      <KanbanUsers />
+      <AddNewTask @send-task="getTask" />
     </div>
-    <!-- <AddNewTask
-      v-if="projectInfo !== null"
-      @send-task="getTask"
-      :first-status="projectInfo.status[0]"
-    /> -->
     <div v-if="projectInfo !== null" class="search-container">
       <input
         @input="filterSearch"
         type="text"
-        placeholder="Type here"
+        placeholder="Filter tasks"
         v-model="searchQuery"
       />
       {{ sortTest }}
@@ -396,25 +391,40 @@
 </template>
 
 <style lang="scss" scoped>
+  .header {
+    h2 {
+      width: fit-content;
+      margin: auto;
+    }
+  }
   .kanban-board {
     position: relative;
     .search-container {
       display: flex;
       flex-direction: column;
       width: 25%;
-      margin: 2%;
+      margin-left: 9%;
+      margin-bottom: 0;
+      input {
+        background-color: transparent;
+        border-bottom: 2px solid rgba(204, 201, 226, 0.616);
+        color: #fff;
+        font-size: 2rem;
+        width: 20rem;
+        margin-left: 2rem;
+      }
     }
     select {
       font-size: 1.2rem;
       padding: 1rem;
       border-radius: 10px;
-      margin-left: 4rem;
+      margin-left: 10%;
     }
     h2 {
-      margin-left: 4rem;
       color: white;
+      margin-top: -30px;
     }
-    h3 {
+    s h3 {
       color: white;
       margin: 3rem 0 1rem 0;
     }
@@ -459,7 +469,8 @@
     }
     .flex-container {
       background-color: rgba(235, 235, 235, 0.3);
-      margin: 30px auto;
+      margin: 5px auto;
+      //trbl
       max-width: 80%;
       padding-top: 20px;
       display: flex;

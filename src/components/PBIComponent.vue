@@ -72,6 +72,14 @@
         })
         this.$router.push('/createsprint')
         this.submitProjectName()
+        this.setProjectUsers()
+      },
+      setProjectUsers() {
+        const projectUsers = {
+          user: 'user'
+        }
+        const whereToAddData = doc(firestore, `${this.pbHeading}/projectUsers`)
+        setDoc(whereToAddData, projectUsers)
       },
       submitProjectName() {
         const allDocs = {

@@ -7,7 +7,7 @@
     limit,
     getDocs,
     doc,
-    setDoc
+    updateDoc
   } from 'firebase/firestore'
   export default {
     data() {
@@ -15,8 +15,7 @@
         projectUsers: [],
         selectedUsers: [],
         copyOfUser: {
-          personInProject: [],
-          user: 'user'
+          personInProject: []
         },
         userName: '',
         clicked: false,
@@ -62,7 +61,7 @@
           firestore,
           `${this.$store.state.projectName}/projectUsers`
         )
-        setDoc(whereToAddData, this.copyOfUser)
+        updateDoc(whereToAddData, this.copyOfUser)
         this.showMaker = false
         this.$store.commit('switchBetweenStatus', false)
       },
@@ -70,7 +69,6 @@
         //Körs när man trycker på pluss tecknet och skall visa/dölja listan med
         //användare
         this.showMaker = !this.showMaker
-        this.$store.commit('switchBetweenStatus', false)
       }
     }
   }
@@ -127,7 +125,7 @@
 
 <style scoped>
   .main-content {
-    grid-column: 2;
+    display: flex;
     justify-content: flex-end;
   }
   .mother-flex {
@@ -160,13 +158,12 @@
   }
   .h3styling {
     display: flex;
-    width: 100%;
+    justify-content: flex-end;
+    width: 40%;
     color: #fff;
-    align-items: center;
   }
   .margarin {
-    display: grid;
-    grid-template-columns: 55% 45%;
+    margin-right: 10%;
   }
   .cursor {
     display: flex;

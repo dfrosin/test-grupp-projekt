@@ -71,11 +71,15 @@
 <style lang="scss" scoped>
   .add-new-task {
     position: absolute;
-    right: 12.5rem;
+    right: 10%;
   }
 
   input {
-    margin: 1rem;
-    padding-bottom: 1rem;
+    background-color: transparent;
+    border-bottom: 2px solid rgba(204, 201, 226, 0.616);
+    color: #fff;
+    font-size: 2rem;
+    width: 20rem;
+    margin-left: 2rem;
   }
 </style>
