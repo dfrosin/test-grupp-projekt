@@ -160,7 +160,9 @@
         @keyup.enter="visible"
         placeholder="Project Name"
       />
-      <button v-if="isVisible" @click="visible">clicka ok</button>
+      <button class="btn btn-secondary" v-if="isVisible" @click="visible">
+        OK
+      </button>
       <div class="container-container">
         <div class="color-container">
           <div
