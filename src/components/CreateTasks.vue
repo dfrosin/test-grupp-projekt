@@ -104,7 +104,7 @@
         id="newTask"
         placeholder="Add Task"
       />
-      <button v-if="newTask" type="submit" class="btn btn-success mt-3">
+      <button v-if="newTask" type="submit" class="btn btn-secondary mt-3">
         Add task
       </button>
     </form>
@@ -153,7 +153,7 @@
     <button
       v-if="tasks != 0"
       @click="createAccount"
-      class="btn btn-success mt-3"
+      class="btn btn-secondary mt-3"
     >
       Create Task
     </button>

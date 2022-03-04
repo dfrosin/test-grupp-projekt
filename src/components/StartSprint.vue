@@ -94,7 +94,7 @@
         :disabled="sprintGoal === ''"
         @click="sendSprintGoal"
         type="submit"
-        class="btn btn-success mt-3"
+        class="btn btn-secondary mt-3"
       >
         Send-sprint
       </button>
