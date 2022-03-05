@@ -100,7 +100,7 @@
   <input
     type="button"
     @click="allOrUser"
-    :value="chartButton"
+    value="Switch View"
     class="chart-button"
   />
   <div>
@@ -120,8 +120,14 @@
 </template>
 <style lang="scss" scoped>
   .chart-button {
-    width: 15%;
-    height: 30px;
-    border-radius: 7px;
+    background-color: white;
+    font-size: 1.2rem;
+    padding: 1rem;
+    border-radius: 10px;
+    width: 60%;
+    margin: 0 20%;
+  }
+  .chart-button:hover {
+    background-color: rgba(255, 255, 255, 0.557);
   }
 </style>
