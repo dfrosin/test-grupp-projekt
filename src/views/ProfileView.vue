@@ -511,6 +511,16 @@
   .task-name::-webkit-scrollbar {
     display: none;
   }
+  img {
+    width: 150px;
+    height: 150px;
+    border-radius: 75px;
+    margin: 5%;
+    object-fit: cover;
+    box-shadow: 0 12px 20px 0 rgba(0, 0, 0, 0.2),
+      0 16px 44px 0 rgba(0, 0, 0, 0.19);
+  }
+
   @media screen and (max-width: 500px) {
     .list-column {
       width: 100%;
@@ -529,22 +539,6 @@
         display: none;
       }
     }
-    img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50px;
-      margin: 5%;
-      object-fit: cover;
-    }
-  }
-  @media screen and (min-width: 401px) {
-    img {
-      width: 150px;
-      height: 150px;
-      border-radius: 75px;
-      margin: 5%;
-      object-fit: cover;
-    }
   }
   @media screen and (max-width: 400px) {
     .saved-information {
@@ -553,9 +547,9 @@
       }
     }
     img {
-      width: 120px;
-      height: 120px;
-      border-radius: 60px;
+      width: 130px;
+      height: 130px;
+      border-radius: 65px;
       margin: 5%;
       object-fit: cover;
     }
@@ -568,9 +562,9 @@
       }
     }
     img {
-      width: 90px;
-      height: 90px;
-      border-radius: 45px;
+      width: 110px;
+      height: 110px;
+      border-radius: 55px;
       margin: 5%;
       object-fit: cover;
     }
