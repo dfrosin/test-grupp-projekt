@@ -60,15 +60,17 @@
         numberFucker: ''
       }
     },
-    mounted() {
-      if (this.$store.state.loggedInUser === null) {
-        this.$router.push('/login')
-      } else {
-        this.userCollection = { ...this.$store.state.loggedInUser }
-        console.log(this.$store.state.loggedInUser)
-        this.url = this.$store.state.loggedInUser.profilePicture
-      }
-      this.getAllProjectNames()
+    created() {
+      setTimeout(() => {
+        if (this.$store.state.loggedInUser === null) {
+          this.$router.push('/login')
+        } else {
+          this.userCollection = { ...this.$store.state.loggedInUser }
+          console.log(this.$store.state.loggedInUser)
+          this.url = this.$store.state.loggedInUser.profilePicture
+        }
+        this.getAllProjectNames()
+      }, 400)
     },
     components: {
       ChartComponent
@@ -272,8 +274,8 @@
           {{ projects.id }}
         </option>
       </select>
-      <h3>Your tasks</h3>
-      <ul v-if="allInfoUser">
+      <h3 v-if="projectInfo">Your tasks</h3>
+      <ul v-if="projectInfo">
         <li v-for="item in allInfoUser" :key="item.id">
           <div
             class="sprint-card"
@@ -383,13 +385,6 @@
           background-color: transparent;
         }
       }
-      img {
-        width: 150px;
-        height: 150px;
-        border-radius: 75px;
-        margin: 5%;
-        object-fit: cover;
-      }
     }
     .card-body {
       display: flex;
@@ -403,11 +398,9 @@
         flex-direction: column;
         p {
           height: 20px;
-          width: 20rem;
           font-size: 1rem;
           background-color: transparent;
           border-bottom: 2px solid rgba(255, 255, 255, 0);
-          width: 80%;
           color: white;
           margin: 0;
           padding: 0;
@@ -448,6 +441,7 @@
     font-size: 1.2rem;
     padding: 1rem;
     border-radius: 10px;
+    width: 100%;
   }
   .list-column {
     width: 33%;
@@ -516,5 +510,69 @@
   }
   .task-name::-webkit-scrollbar {
     display: none;
+  }
+  @media screen and (max-width: 500px) {
+    .list-column {
+      width: 100%;
+    }
+    .chart-column {
+      width: 100%;
+    }
+    .saved-information {
+      p {
+        width: 60%;
+        overflow: scroll;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      p::-webkit-scrollbar {
+        display: none;
+      }
+    }
+    img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50px;
+      margin: 5%;
+      object-fit: cover;
+    }
+  }
+  @media screen and (min-width: 401px) {
+    img {
+      width: 150px;
+      height: 150px;
+      border-radius: 75px;
+      margin: 5%;
+      object-fit: cover;
+    }
+  }
+  @media screen and (max-width: 400px) {
+    .saved-information {
+      p {
+        width: 50%;
+      }
+    }
+    img {
+      width: 120px;
+      height: 120px;
+      border-radius: 60px;
+      margin: 5%;
+      object-fit: cover;
+    }
+  }
+
+  @media screen and (max-width: 300px) {
+    .saved-information {
+      p {
+        width: 40%;
+      }
+    }
+    img {
+      width: 90px;
+      height: 90px;
+      border-radius: 45px;
+      margin: 5%;
+      object-fit: cover;
+    }
   }
 </style>

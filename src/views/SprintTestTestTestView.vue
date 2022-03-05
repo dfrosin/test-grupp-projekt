@@ -105,6 +105,7 @@
         })
       },
       getPbi() {
+        this.pbiArray = []
         const allPbi = query(
           collection(firestore, `${this.projectName}`),
           where('PBI', '==', 'PBI'),
