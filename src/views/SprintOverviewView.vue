@@ -291,6 +291,9 @@
       >
         +
       </p>
+      <h2 v-if="projectInfo" class="sprint-goal">
+        "{{ projectInfo.sprintGoal }}"
+      </h2>
       <p v-if="addHover" class="tool-tip">Add a new column</p>
       <sprint-list
         class="column"
@@ -389,11 +392,33 @@
           </draggable>
         </section>
       </sprint-list>
+      <div class="goalz">
+        <div>
+          <h4>Duration:</h4>
+          <p>{{ projectInfo.duration }}</p>
+        </div>
+        <div>
+          <h4>Startdate:</h4>
+          <p>{{ projectInfo.sprintStart }}</p>
+        </div>
+        <div>
+          <h4>Enddate:</h4>
+          <p>{{ projectInfo.sprintEnd }}</p>
+        </div>
+      </div>
     </article>
   </div>
 </template>
 
 <style lang="scss" scoped>
+  .sprint-goal {
+    display: block;
+    font-size: 1.5rem;
+    height: fit-content;
+    margin-bottom: 1.3rem;
+    width: 100%;
+    font-style: oblique;
+  }
   .add-task-and-filter {
     display: flex;
     flex-wrap: wrap;
@@ -432,7 +457,6 @@
     }
     h2 {
       color: white;
-      margin-top: -30px;
     }
     s h3 {
       color: white;
@@ -639,6 +663,14 @@
           }
         }
       }
+    }
+    .goalz {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      width: 100%;
+      height: 10%;
+      color: white;
     }
   }
 </style>
