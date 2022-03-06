@@ -280,6 +280,12 @@
           {{ pbi.id }}
         </p>
       </div>
+      <h4>Duration:</h4>
+      <p>{{ projectInfo.duration }}</p>
+      <h4>Startdate:</h4>
+      <p>{{ projectInfo.sprintStart }}</p>
+      <h4>Enddate:</h4>
+      <p>{{ projectInfo.sprintEnd }}</p>
     </div>
     <article class="flex-container">
       <p
@@ -291,6 +297,9 @@
       >
         +
       </p>
+      <h2 v-if="projectInfo" class="sprint-goal">
+        "{{ projectInfo.sprintGoal }}"
+      </h2>
       <p v-if="addHover" class="tool-tip">Add a new column</p>
       <sprint-list
         class="column"
@@ -406,6 +415,15 @@
       margin: auto;
     }
   }
+  .sprint-goal {
+    display: block;
+    font-size: 1.5rem;
+    height: fit-content;
+    margin-bottom: 1.3rem;
+    margin-top: -5px;
+    width: 100%;
+    font-style: oblique;
+  }
   .kanban-board {
     position: relative;
     .search-container {
@@ -431,27 +449,29 @@
     }
     h2 {
       color: white;
-      margin-top: -30px;
+      // margin-top: -30px;
     }
     s h3 {
       color: white;
       margin: 3rem 0 1rem 0;
     }
+
     .pbi-container {
       z-index: 500;
-      top: 20%;
+      height: 84%;
+      top: 16%;
       left: 3%;
       position: absolute;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      border-radius: 20px;
+      border-radius: 10px;
       gap: 10px;
       padding-bottom: 5px;
       padding-top: 5px;
       background-color: rgba(235, 235, 235, 0.3);
-      width: 30px;
+      min-width: 6%;
       color: white;
       p {
         font-size: 1.2rem;
@@ -474,6 +494,9 @@
           left: 30px;
           padding: 5px;
         }
+      }
+      h4 {
+        margin-top: 2rem;
       }
     }
     .flex-container {

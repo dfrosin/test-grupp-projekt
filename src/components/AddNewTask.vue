@@ -72,11 +72,6 @@
 </template>
 
 <style lang="scss" scoped>
-  // .add-new-task {
-  //   position: absolute;
-  //   right: 10%;
-  // }
-
   input {
     background-color: transparent;
     border-bottom: 2px solid rgba(204, 201, 226, 0.616);

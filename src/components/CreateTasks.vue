@@ -24,7 +24,6 @@
       removeTask(task) {
         const taskIndex = this.tasks.indexOf(task)
         this.tasks.splice(taskIndex, 1)
-        console.log('efter du tagit bort:' + this.tasks)
       },
       editTask(taskId) {
         this.editing = taskId
@@ -45,7 +44,6 @@
         this.dataValue.PBI = this.nameOnPbi
         let copiedObject = JSON.parse(JSON.stringify(this.dataValue))
         this.tasks.push(copiedObject)
-        console.log(this.tasks)
         this.newTask = ''
       },
       createAccount() {
@@ -62,7 +60,6 @@
       },
       nameOfPBI(e) {
         this.nameOnPbi = e.target.id
-        console.log(this.nameOnPbi)
       }
     }
   }
@@ -74,7 +71,7 @@
     v-if="this.$store.state.arrayOfObjects !== null"
     id="userstories"
   >
-    <label for="PBI">Select PBI: </label>
+    <label for="PBI"> <h2>Select PBI:</h2> </label>
     <select
       @change="selectedPbi"
       class="form-select form-select-lg mb-3"
@@ -162,14 +159,20 @@
 
 <style lang="scss" scoped>
   .select-pbi {
+    h2 {
+      padding-bottom: 2rem;
+    }
     width: 30%;
+    margin-left: 8%;
+    margin-top: 2%;
 
     select {
       background-color: transparent;
       color: white;
+      border-radius: 8px;
     }
     select:hover {
-      background-color: white;
+      background-color: rgba(255, 255, 255, 0.705);
       color: black;
       border-color: #0dcaf0;
       border-style: solid;
@@ -216,6 +219,7 @@
 
   .h2-add {
     align-items: center;
+    margin-bottom: 2rem;
     margin-left: 2rem;
     grid-row: 1;
     grid-column: 1;

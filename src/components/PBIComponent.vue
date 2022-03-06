@@ -2,7 +2,6 @@
   import { db, firestore } from '../firebase'
   import { collection, getDocs, setDoc, doc } from 'firebase/firestore'
   import { v4 as uuidv4 } from 'uuid'
-  // import store from '../store'
 
   export default {
     data() {
@@ -55,7 +54,6 @@
           this.pbItem = ''
           this.getColor = ''
           this.errorMessage = false
-          console.log(this.backlogItemInfo)
         }
       },
       createAccount() {
@@ -118,7 +116,6 @@
         this.editProjectName = true
         this.isVisible = false
         this.$store.commit('setProjectName', this.pbHeading)
-        console.log(this.$store.state.projectName)
       },
       visible() {
         this.isVisible = false
@@ -140,7 +137,6 @@
         }
         let color = e.target.style.backgroundColor
         this.getColor = color
-        console.log(color)
         let index = this.colorArray.indexOf(color)
         this.colorArray.splice(index, 1)
       }
@@ -242,6 +238,7 @@
       <button
         v-if="arrayOfObjects.length >= 1"
         class="btn btn-secondary"
+        id="create-task"
         @click="createAccount"
       >
         Create Tasks
@@ -326,16 +323,15 @@
         width: 100%;
       }
       .tool-tips {
-        width: 8rem;
-        height: 3rem;
+        width: 10rem;
+        text-align: center;
         background-color: rgba(83, 87, 105, 0.315);
         color: #fff;
-        justify-content: center;
-        align-content: center;
-        padding: 5px 0;
+        padding: 5px;
         border-radius: 6px;
         position: fixed;
-        margin-top: 35px;
+        margin-top: 40px;
+        margin-left: 8rem;
 
         .tool-tiptext {
           font-size: 1.2rem;
@@ -375,7 +371,6 @@
       font-size: 2rem;
       width: 80%;
       align-self: center;
-      margin-left: 2rem;
     }
     .first-input {
       background-color: transparent;
@@ -386,17 +381,19 @@
       align-self: center;
     }
     .editInput {
+      margin-top: 4rem;
       background-color: transparent;
       border-bottom: 2px solid rgba(204, 201, 226, 0.616);
       color: #fff;
       font-size: calc(1.325rem + 0.9vw);
       width: 30%;
       align-self: center;
-      margin-left: 2rem;
     }
     h1 {
-      padding: 4rem;
       color: #ffff;
+      margin-top: 4rem;
+      align-self: flex-start;
+      padding: 3rem;
     }
     .btn {
       width: 4rem;
@@ -418,5 +415,9 @@
   }
   .project-input-container {
     display: flex;
+  }
+  #create-task {
+    width: 12rem;
+    height: 4.5rem;
   }
 </style>
