@@ -249,16 +249,18 @@
       </select>
       <!-- <h2 v-if="select">Project: {{ this.projectName }}</h2> -->
       <KanbanUsers />
-      <AddNewTask @send-task="getTask" v-if="projectName" />
     </div>
-    <div v-if="projectInfo !== null" class="search-container">
-      <input
-        @input="filterSearch"
-        type="text"
-        placeholder="Filter tasks"
-        v-model="searchQuery"
-      />
-      {{ sortTest }}
+    <div class="add-task-and-filter">
+      <div v-if="projectInfo !== null" class="search-container">
+        <input
+          @input="filterSearch"
+          type="text"
+          placeholder="Filter tasks"
+          v-model="searchQuery"
+        />
+        {{ sortTest }}
+      </div>
+      <AddNewTask @send-task="getTask" v-if="projectName" />
     </div>
     <div v-if="projectInfo !== null" class="pbi-container">
       <p>PBI:</p>
@@ -392,6 +394,12 @@
 </template>
 
 <style lang="scss" scoped>
+  .add-task-and-filter {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 10% 0 0;
+    justify-content: space-between;
+  }
   .header {
     h2 {
       width: fit-content;
@@ -403,7 +411,7 @@
     .search-container {
       display: flex;
       flex-direction: column;
-      width: 25%;
+      width: 20rem;
       margin-left: 9%;
       margin-bottom: 0;
       input {

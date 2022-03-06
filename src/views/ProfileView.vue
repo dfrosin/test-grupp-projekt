@@ -56,8 +56,7 @@
         statusArray: [],
         chartNumber: '',
         allInfoCopy: [],
-        chartReload: true,
-        numberFucker: ''
+        chartReload: true
       }
     },
     created() {
@@ -66,7 +65,6 @@
           this.$router.push('/login')
         } else {
           this.userCollection = { ...this.$store.state.loggedInUser }
-          console.log(this.$store.state.loggedInUser)
           this.url = this.$store.state.loggedInUser.profilePicture
         }
         this.getAllProjectNames()
@@ -108,19 +106,16 @@
         this.url = this.newPhoto
         this.uploading = false
         this.newPhoto = null
-        console.log(this.file)
         const storageRef = ref(
           storage,
           `${this.$store.state.loggedInUser.userName}`
         )
         uploadBytes(storageRef, this.file).then(() => {
-          console.log('Uploaded a picture')
           getDownloadURL(
             ref(storage, `${this.$store.state.loggedInUser.userName}`)
           ).then((url) => {
             this.url = url
             this.userCollection.profilePicture = this.url
-            console.log(this.url)
           })
         })
       },
@@ -155,8 +150,11 @@
           }
           this.statusArray.push(statusTitle)
           this.pieChartArray.push(dynamicObject)
-          this.chartNumber = this.chartNumber + dynamicObject.cards.length
+          this.chartNumber =
+            this.chartNumber + ` ${dynamicObject.cards.length},`
         }
+        this.chartNumber = this.chartNumber.slice(1)
+        this.chartNumber = JSON.parse(`[${this.chartNumber.slice(0, -1)}]`)
       },
       loopForMe() {
         this.personalTaskString = ''
