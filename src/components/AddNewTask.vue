@@ -72,10 +72,10 @@
 </template>
 
 <style lang="scss" scoped>
-  .add-new-task {
-    position: absolute;
-    right: 10%;
-  }
+  // .add-new-task {
+  //   position: absolute;
+  //   right: 10%;
+  // }
 
   input {
     background-color: transparent;
