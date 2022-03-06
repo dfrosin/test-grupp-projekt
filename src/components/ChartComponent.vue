@@ -13,12 +13,12 @@
         default: ''
       },
       statusValue: {
-        type: [Array],
+        type: Array,
         default: null
       },
       projectValue: {
-        type: String,
-        default: ''
+        type: Array,
+        default: null
       }
     },
     components: { PieChart },
@@ -71,6 +71,7 @@
         datasets: [
           {
             data: props.projectValue,
+            // data: [3, 10, 0, 16],
             backgroundColor: [
               'rgb(255, 107, 107)',
               'rgb(255, 242, 124)',
