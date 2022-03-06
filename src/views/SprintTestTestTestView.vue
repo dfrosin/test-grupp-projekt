@@ -280,12 +280,6 @@
           {{ pbi.id }}
         </p>
       </div>
-      <h4>Duration:</h4>
-      <p>{{ projectInfo.duration }}</p>
-      <h4>Startdate:</h4>
-      <p>{{ projectInfo.sprintStart }}</p>
-      <h4>Enddate:</h4>
-      <p>{{ projectInfo.sprintEnd }}</p>
     </div>
     <article class="flex-container">
       <p
@@ -398,6 +392,20 @@
           </draggable>
         </section>
       </sprint-list>
+      <div class="goalz">
+        <div>
+          <h4>Duration:</h4>
+          <p>{{ projectInfo.duration }}</p>
+        </div>
+        <div>
+          <h4>Startdate:</h4>
+          <p>{{ projectInfo.sprintStart }}</p>
+        </div>
+        <div>
+          <h4>Enddate:</h4>
+          <p>{{ projectInfo.sprintEnd }}</p>
+        </div>
+      </div>
     </article>
   </div>
 </template>
@@ -458,7 +466,7 @@
 
     .pbi-container {
       z-index: 500;
-      height: 84%;
+      height: 600px;
       top: 16%;
       left: 3%;
       position: absolute;
@@ -472,6 +480,7 @@
       padding-top: 5px;
       background-color: rgba(235, 235, 235, 0.3);
       min-width: 6%;
+      max-width: 6%;
       color: white;
       p {
         font-size: 1.2rem;
@@ -641,10 +650,26 @@
     .drop-zone-height::-webkit-scrollbar {
       display: none;
     }
+    @media screen and (max-width: 980px) {
+      .flex-container {
+        max-width: 90%;
+        margin-left: 10%;
+      }
+      .pbi-container {
+        width: 20%;
+      }
+    }
     @media screen and (max-width: 300px) {
       .column {
         min-width: 80%;
       }
+    }
+    .goalz {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      height: 10%;
+      color: white;
     }
   }
 </style>
