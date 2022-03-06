@@ -153,16 +153,18 @@
     <div class="column">
       <form action="" />
       <h1>Product Backlog</h1>
-      <input
-        v-if="isVisible"
-        v-model="pbHeading"
-        class="pbHeading"
-        @keyup.enter="visible"
-        placeholder="Project Name"
-      />
-      <button class="btn btn-secondary" v-if="isVisible" @click="visible">
-        OK
-      </button>
+      <div class="project-input-container">
+        <input
+          v-if="isVisible"
+          v-model="pbHeading"
+          class="pbHeading"
+          @keyup.enter="visible"
+          placeholder="Project Name"
+        />
+        <button class="btn btn-secondary" v-if="isVisible" @click="visible">
+          OK
+        </button>
+      </div>
       <div class="container-container">
         <div class="color-container">
           <div
@@ -177,6 +179,7 @@
       <div v-if="getColor === ''" class="color-message">
         <p>Please select a color first!</p>
       </div>
+
       <div class="input-container">
         <input
           v-model="pbItem"
@@ -412,5 +415,8 @@
     .backlog-container::-webkit-scrollbar {
       display: none;
     }
+  }
+  .project-input-container {
+    display: flex;
   }
 </style>
