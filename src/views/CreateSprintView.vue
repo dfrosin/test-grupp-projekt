@@ -6,12 +6,6 @@
     components: {
       CreateTasks,
       StartSprint
-    },
-
-    methods: {
-      getColor() {
-        console.log('hej')
-      }
     }
   }
 </script>
