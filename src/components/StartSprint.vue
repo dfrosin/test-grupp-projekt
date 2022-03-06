@@ -7,7 +7,6 @@
       let TodaysCalendarDate = new Date(todaysDate)
       let calendarDate = TodaysCalendarDate.toISOString().substr(0, 10)
       this.date = calendarDate
-      console.log(this.$store.state.projectName)
     },
     data() {
       return {

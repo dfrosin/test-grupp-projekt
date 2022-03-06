@@ -30,8 +30,6 @@
               test.push({ ...doc.data(), id: doc.id })
             })
           })
-
-          console.log('kalle anka', test)
         } catch (e) {
           console.log('Error Loading Products')
         }

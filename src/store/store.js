@@ -122,7 +122,6 @@ const actions = {
         PBI.push({ ...doc.data(), id: doc.id })
       })
       this.arrayOfObjects = PBI
-      console.log(PBI)
     })
   },
 
