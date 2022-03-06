@@ -249,7 +249,7 @@
       </select>
       <!-- <h2 v-if="select">Project: {{ this.projectName }}</h2> -->
       <KanbanUsers />
-      <AddNewTask @send-task="getTask" />
+      <AddNewTask @send-task="getTask" v-if="projectName" />
     </div>
     <div v-if="projectInfo !== null" class="search-container">
       <input

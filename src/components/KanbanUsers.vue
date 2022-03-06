@@ -116,7 +116,7 @@
           type="button"
           @click="postUsers"
           value="Invite Users"
-          class="btn-own-walla"
+          class="btn btn-secondary mt-3"
         />
       </section>
     </section>
@@ -132,25 +132,25 @@
     display: flex;
     flex-direction: column;
   }
-  .btn-own-walla {
-    width: 15%;
+  /* .btn-own-walla {
+    width: 45%;
     padding: 1rem;
     height: 30px;
     margin-left: 15px;
     background-color: red;
     border-radius: 7px;
-  }
+  } */
   .userList {
     display: flex;
     flex-wrap: wrap;
   }
   .names {
-    background-color: #fff;
-    border: 1px solid black;
+    background-color: rgba(235, 235, 235, 0.3);
     border-radius: 4px;
     margin: 0.4rem;
     padding: 0.4rem;
     font-weight: bolder;
+    color: #fff;
   }
   .yo {
     width: 8px;
@@ -182,8 +182,8 @@
   .ett-klassnamn {
     margin-right: 24%;
     font-size: 1.2rem;
-    padding: 1rem;
+    padding: 0.8rem;
     border-radius: 10px;
-    width: 30%;
+    width: 18rem;
   }
 </style>

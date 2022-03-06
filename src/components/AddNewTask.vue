@@ -31,6 +31,9 @@
       },
       addNewTask() {
         this.$emit('send-task', this.dataValue)
+        setTimeout(() => {
+          this.newTask = ''
+        }, 500)
       }
     }
   }
