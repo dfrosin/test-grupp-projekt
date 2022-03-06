@@ -397,7 +397,7 @@
   .add-task-and-filter {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 10% 0 0;
+    margin: 0 10% 0 10%;
     justify-content: space-between;
   }
   .header {
@@ -412,7 +412,6 @@
       display: flex;
       flex-direction: column;
       width: 20rem;
-      margin-left: 9%;
       margin-bottom: 0;
       input {
         background-color: transparent;
@@ -420,7 +419,9 @@
         color: #fff;
         font-size: 2rem;
         width: 20rem;
-        margin-left: 2rem;
+      }
+      ::placeholder {
+        color: rgba(204, 201, 226, 0.616);
       }
     }
     select {
@@ -621,6 +622,22 @@
     @media screen and (max-width: 300px) {
       .column {
         min-width: 80%;
+      }
+    }
+    @media screen and (max-width: 600px) {
+      .add-task-and-filter {
+        margin: 0;
+      }
+      .pbi-container {
+        left: 0;
+        background-color: rgb(190, 66, 244);
+        box-shadow: 0 6px 7px 0 rgba(0, 0, 0, 0.5),
+          0 8px 22px 0 rgba(0, 0, 0, 0.19);
+        .pbi-color {
+          p {
+            width: 125px;
+          }
+        }
       }
     }
   }

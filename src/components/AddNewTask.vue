@@ -83,6 +83,8 @@
     color: #fff;
     font-size: 2rem;
     width: 20rem;
-    margin-left: 2rem;
+  }
+  ::placeholder {
+    color: rgba(204, 201, 226, 0.616);
   }
 </style>
